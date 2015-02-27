@@ -59,7 +59,7 @@
             this.LoggerTxt.DetectUrls = false;
             this.LoggerTxt.Dock = System.Windows.Forms.DockStyle.Fill;
             this.LoggerTxt.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.LoggerTxt.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(225)))), ((int)(((byte)(225)))));
+            this.LoggerTxt.ForeColor = System.Drawing.Color.OrangeRed;
             this.LoggerTxt.HideSelection = false;
             this.LoggerTxt.Location = new System.Drawing.Point(0, 24);
             this.LoggerTxt.Name = "LoggerTxt";

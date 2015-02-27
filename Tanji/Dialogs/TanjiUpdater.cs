@@ -54,7 +54,7 @@ namespace Tanji.Dialogs
         }
         private void DetailsBtn_Click(object sender, EventArgs e)
         {
-            const string DBTanjiThread = "http://Darkbox.nl/showthread.php?tid=42";
+            const string DBTanjiThread = "http://arachish.github.io/Tanji/";
             Process.Start(DBTanjiThread);
         }
 

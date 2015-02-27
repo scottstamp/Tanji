@@ -31,16 +31,9 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.TanjiStrip = new System.Windows.Forms.StatusStrip();
+            this.VersionTxt = new System.Windows.Forms.ToolStripStatusLabel();
             this.SchedulesTxt = new System.Windows.Forms.ToolStripStatusLabel();
             this.ExtensionsActiveTxt = new System.Windows.Forms.ToolStripStatusLabel();
-            this.VersionTxt = new System.Windows.Forms.ToolStripStatusLabel();
-            this.ICConstructMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.ICSendToClientBtn = new System.Windows.Forms.ToolStripMenuItem();
-            this.ICSendToServerBtn = new System.Windows.Forms.ToolStripMenuItem();
-            this.IConstructSeperator = new System.Windows.Forms.ToolStripSeparator();
-            this.ICCopyPacketBtn = new System.Windows.Forms.ToolStripMenuItem();
-            this.ICTransferToBtn = new System.Windows.Forms.ToolStripMenuItem();
-            this.ICSchedulerBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.EExtensionMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.EOpenBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.EUninstallBtn = new System.Windows.Forms.ToolStripMenuItem();
@@ -48,22 +41,35 @@
             this.EInstallExtensionBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.ChooseExtensionDlg = new System.Windows.Forms.OpenFileDialog();
             this.TanjiTip = new System.Windows.Forms.ToolTip(this.components);
-            this.ISTanjiScheduler = new Sulakore.Components.SKoreScheduler();
             this.ISBurstTxt = new System.Windows.Forms.NumericUpDown();
             this.ISIntervalTxt = new System.Windows.Forms.NumericUpDown();
             this.ISDescriptionTxt = new System.Windows.Forms.TextBox();
+            this.ISTanjiScheduler = new Sulakore.Components.SKoreScheduler();
+            this.PacketCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.DestinationCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.BurstCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.IntervalCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.StatusCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ICConstructMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.ICCopyPacketBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.ICTransferToBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.ICSchedulerBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.ICPrimitiveBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.ICTransferSeparator = new System.Windows.Forms.ToolStripSeparator();
+            this.ICInjectionBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.TanjiTabs = new Sulakore.Components.SKoreTabControl();
             this.InjectionTab = new System.Windows.Forms.TabPage();
             this.IPacketTxt = new System.Windows.Forms.TextBox();
-            this.PSendToClientBtn = new Sulakore.Components.SKoreButton();
-            this.PSendToServerBtn = new Sulakore.Components.SKoreButton();
+            this.ISendToClientBtn = new Sulakore.Components.SKoreButton();
+            this.ISendToServerBtn = new Sulakore.Components.SKoreButton();
             this.IInjectionTabs = new Sulakore.Components.SKoreTabControl();
             this.IConstructerTab = new System.Windows.Forms.TabPage();
+            this.ICChunksRightGlowPnl = new System.Windows.Forms.Panel();
+            this.ICChunksLeftGlowPnl = new System.Windows.Forms.Panel();
+            this.ICChunkCountLbl = new System.Windows.Forms.Label();
             this.ICCountTxt = new System.Windows.Forms.NumericUpDown();
             this.ICCountLbl = new System.Windows.Forms.Label();
-            this.ICEditBtn = new Sulakore.Components.SKoreButton();
             this.ICRemoveBtn = new Sulakore.Components.SKoreButton();
-            this.ICTransferBtn = new Sulakore.Components.SKoreButton();
             this.ICMoveDownBtn = new Sulakore.Components.SKoreButton();
             this.ICMoveUpBtn = new Sulakore.Components.SKoreButton();
             this.ICClearBtn = new Sulakore.Components.SKoreButton();
@@ -75,18 +81,21 @@
             this.ICValueLbl = new System.Windows.Forms.Label();
             this.ICValueTxt = new System.Windows.Forms.TextBox();
             this.ICTanjiConstructer = new Sulakore.Components.SKoreConstructer();
+            this.TypeCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ValueCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.EncodedCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ISchedulerTab = new System.Windows.Forms.TabPage();
+            this.ISClearBtn = new Sulakore.Components.SKoreButton();
             this.ISAutoStartChckbx = new System.Windows.Forms.CheckBox();
             this.ISBurstLbl = new System.Windows.Forms.Label();
             this.ISStopAllBtn = new Sulakore.Components.SKoreButton();
             this.ISIntervalLbl = new System.Windows.Forms.Label();
-            this.ISDirectionLbl = new System.Windows.Forms.Label();
-            this.ISDirectionTxt = new System.Windows.Forms.ComboBox();
+            this.ISDestinationLbl = new System.Windows.Forms.Label();
+            this.ISDestinationTxt = new System.Windows.Forms.ComboBox();
             this.ISPacketLbl = new System.Windows.Forms.Label();
             this.ISPacketTxt = new System.Windows.Forms.TextBox();
             this.ISDescriptionLbl = new System.Windows.Forms.Label();
             this.ISStartAllBtn = new Sulakore.Components.SKoreButton();
-            this.ISEditBtn = new Sulakore.Components.SKoreButton();
             this.ISRemoveBtn = new Sulakore.Components.SKoreButton();
             this.ISCreateBtn = new Sulakore.Components.SKoreButton();
             this.IPrimitiveTab = new System.Windows.Forms.TabPage();
@@ -95,11 +104,10 @@
             this.IPPacketTxt = new System.Windows.Forms.TextBox();
             this.ITriggersTab = new System.Windows.Forms.TabPage();
             this.IFiltersTab = new System.Windows.Forms.TabPage();
-            this.tanjiTabControl3 = new Sulakore.Components.SKoreTabControl();
+            this.IFFilterTabs = new Sulakore.Components.SKoreTabControl();
             this.IFBlockTab = new System.Windows.Forms.TabPage();
             this.IFSwitchTab = new System.Windows.Forms.TabPage();
             this.IFModifyTab = new System.Windows.Forms.TabPage();
-            this.IFRepeatTab = new System.Windows.Forms.TabPage();
             this.EncoderDecoderTab = new System.Windows.Forms.TabPage();
             this.ModernEncodingGrpbx = new System.Windows.Forms.GroupBox();
             this.ModernShortOutputTxt = new System.Windows.Forms.TextBox();
@@ -112,12 +120,13 @@
             this.ModernIntegerInputTxt = new System.Windows.Forms.TextBox();
             this.ToolboxTab = new System.Windows.Forms.TabPage();
             this.ExtensionsTab = new System.Windows.Forms.TabPage();
-            this.EPriorityLbl = new System.Windows.Forms.Label();
-            this.EPriorityTxt = new System.Windows.Forms.ComboBox();
             this.EMiddleGlowPnl = new System.Windows.Forms.Panel();
             this.EExtensionLogoPctbx = new System.Windows.Forms.PictureBox();
             this.ETopGlowPnl = new System.Windows.Forms.Panel();
             this.ETanjiExtensionViewer = new Sulakore.Components.SKoreExtensionView();
+            this.NameCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.AuthorCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.VersionCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.OptionsTab = new System.Windows.Forms.TabPage();
             this.OOptionsTab = new Sulakore.Components.SKoreTabControl();
             this.OSettingsTab = new System.Windows.Forms.TabPage();
@@ -130,10 +139,10 @@
             this.OSCloseOnDisconnectChckbx = new System.Windows.Forms.CheckBox();
             this.OAboutTab = new System.Windows.Forms.TabPage();
             this.TanjiStrip.SuspendLayout();
-            this.ICConstructMenu.SuspendLayout();
             this.EExtensionMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ISBurstTxt)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ISIntervalTxt)).BeginInit();
+            this.ICConstructMenu.SuspendLayout();
             this.TanjiTabs.SuspendLayout();
             this.InjectionTab.SuspendLayout();
             this.IInjectionTabs.SuspendLayout();
@@ -142,7 +151,7 @@
             this.ISchedulerTab.SuspendLayout();
             this.IPrimitiveTab.SuspendLayout();
             this.IFiltersTab.SuspendLayout();
-            this.tanjiTabControl3.SuspendLayout();
+            this.IFFilterTabs.SuspendLayout();
             this.EncoderDecoderTab.SuspendLayout();
             this.ModernEncodingGrpbx.SuspendLayout();
             this.ExtensionsTab.SuspendLayout();
@@ -168,6 +177,17 @@
             this.TanjiStrip.TabIndex = 4;
             this.TanjiStrip.Text = "statusStrip1";
             // 
+            // VersionTxt
+            // 
+            this.VersionTxt.ActiveLinkColor = System.Drawing.Color.Firebrick;
+            this.VersionTxt.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
+            this.VersionTxt.LinkColor = System.Drawing.SystemColors.HotTrack;
+            this.VersionTxt.Name = "VersionTxt";
+            this.VersionTxt.Size = new System.Drawing.Size(50, 19);
+            this.VersionTxt.Text = "v0.0.0.0";
+            this.VersionTxt.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
+            this.VersionTxt.Click += new System.EventHandler(this.VersionTxt_Click);
+            // 
             // SchedulesTxt
             // 
             this.SchedulesTxt.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
@@ -181,69 +201,6 @@
             this.ExtensionsActiveTxt.Name = "ExtensionsActiveTxt";
             this.ExtensionsActiveTxt.Size = new System.Drawing.Size(125, 19);
             this.ExtensionsActiveTxt.Text = "Extensions Active: 0/0";
-            // 
-            // VersionTxt
-            // 
-            this.VersionTxt.ActiveLinkColor = System.Drawing.Color.Firebrick;
-            this.VersionTxt.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
-            this.VersionTxt.LinkColor = System.Drawing.SystemColors.HotTrack;
-            this.VersionTxt.Name = "VersionTxt";
-            this.VersionTxt.Size = new System.Drawing.Size(50, 19);
-            this.VersionTxt.Text = "v0.0.0.0";
-            this.VersionTxt.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
-            this.VersionTxt.Click += new System.EventHandler(this.VersionTxt_Click);
-            // 
-            // ICConstructMenu
-            // 
-            this.ICConstructMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ICSendToClientBtn,
-            this.ICSendToServerBtn,
-            this.IConstructSeperator,
-            this.ICCopyPacketBtn,
-            this.ICTransferToBtn});
-            this.ICConstructMenu.Name = "ConstructMenu";
-            this.ICConstructMenu.Size = new System.Drawing.Size(153, 98);
-            // 
-            // ICSendToClientBtn
-            // 
-            this.ICSendToClientBtn.Name = "ICSendToClientBtn";
-            this.ICSendToClientBtn.Size = new System.Drawing.Size(152, 22);
-            this.ICSendToClientBtn.Text = "Send To Client";
-            this.ICSendToClientBtn.Click += new System.EventHandler(this.ICSendToClientBtn_Click);
-            // 
-            // ICSendToServerBtn
-            // 
-            this.ICSendToServerBtn.Name = "ICSendToServerBtn";
-            this.ICSendToServerBtn.Size = new System.Drawing.Size(152, 22);
-            this.ICSendToServerBtn.Text = "Send To Server";
-            this.ICSendToServerBtn.Click += new System.EventHandler(this.ICSendToServerBtn_Click);
-            // 
-            // IConstructSeperator
-            // 
-            this.IConstructSeperator.Name = "IConstructSeperator";
-            this.IConstructSeperator.Size = new System.Drawing.Size(149, 6);
-            // 
-            // ICCopyPacketBtn
-            // 
-            this.ICCopyPacketBtn.Name = "ICCopyPacketBtn";
-            this.ICCopyPacketBtn.Size = new System.Drawing.Size(152, 22);
-            this.ICCopyPacketBtn.Text = "Copy Packet";
-            this.ICCopyPacketBtn.Click += new System.EventHandler(this.ICCopyPacketBtn_Click);
-            // 
-            // ICTransferToBtn
-            // 
-            this.ICTransferToBtn.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ICSchedulerBtn});
-            this.ICTransferToBtn.Name = "ICTransferToBtn";
-            this.ICTransferToBtn.Size = new System.Drawing.Size(152, 22);
-            this.ICTransferToBtn.Text = "Transfer To";
-            // 
-            // ICSchedulerBtn
-            // 
-            this.ICSchedulerBtn.Name = "ICSchedulerBtn";
-            this.ICSchedulerBtn.Size = new System.Drawing.Size(126, 22);
-            this.ICSchedulerBtn.Text = "Scheduler";
-            this.ICSchedulerBtn.Click += new System.EventHandler(this.ICSchedulerBtn_Click);
             // 
             // EExtensionMenu
             // 
@@ -261,7 +218,7 @@
             this.EOpenBtn.Name = "EOpenBtn";
             this.EOpenBtn.Size = new System.Drawing.Size(158, 22);
             this.EOpenBtn.Text = "Open";
-            this.EOpenBtn.Click += new System.EventHandler(this.EOpenBtn_Click);
+            this.EOpenBtn.Click += new System.EventHandler(this.EOpenExtensionBtn_Click);
             // 
             // EUninstallBtn
             // 
@@ -269,7 +226,7 @@
             this.EUninstallBtn.Name = "EUninstallBtn";
             this.EUninstallBtn.Size = new System.Drawing.Size(158, 22);
             this.EUninstallBtn.Text = "Uninstall";
-            this.EUninstallBtn.Click += new System.EventHandler(this.EUninstallBtn_Click);
+            this.EUninstallBtn.Click += new System.EventHandler(this.EUninstallExtensionBtn_Click);
             // 
             // EExtensionsSeperator
             // 
@@ -289,28 +246,9 @@
             this.ChooseExtensionDlg.Filter = "Dynamic Link Library (*.dll)|*.dll";
             this.ChooseExtensionDlg.Title = "Tanji ~ Choose Extension";
             // 
-            // ISTanjiScheduler
-            // 
-            this.ISTanjiScheduler.FullRowSelect = true;
-            this.ISTanjiScheduler.GridLines = true;
-            this.ISTanjiScheduler.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.ISTanjiScheduler.Location = new System.Drawing.Point(6, 6);
-            this.ISTanjiScheduler.LockColumns = true;
-            this.ISTanjiScheduler.MultiSelect = false;
-            this.ISTanjiScheduler.Name = "ISTanjiScheduler";
-            this.ISTanjiScheduler.ShowItemToolTips = true;
-            this.ISTanjiScheduler.Size = new System.Drawing.Size(379, 141);
-            this.ISTanjiScheduler.TabIndex = 41;
-            this.TanjiTip.SetToolTip(this.ISTanjiScheduler, "To toggle, double click the selected schedule.");
-            this.ISTanjiScheduler.UseCompatibleStateImageBehavior = false;
-            this.ISTanjiScheduler.View = System.Windows.Forms.View.Details;
-            this.ISTanjiScheduler.ScheduleTriggered += new System.EventHandler<Sulakore.Protocol.HScheduleTriggeredEventArgs>(this.ISTanjiScheduler_ScheduleTriggered);
-            this.ISTanjiScheduler.ItemActivate += new System.EventHandler(this.ISTanjiScheduler_ItemActivate);
-            this.ISTanjiScheduler.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ISTanjiScheduler_ItemSelectionChanged);
-            // 
             // ISBurstTxt
             // 
-            this.ISBurstTxt.Location = new System.Drawing.Point(315, 214);
+            this.ISBurstTxt.Location = new System.Drawing.Point(316, 214);
             this.ISBurstTxt.Minimum = new decimal(new int[] {
             1,
             0,
@@ -329,7 +267,7 @@
             // 
             // ISIntervalTxt
             // 
-            this.ISIntervalTxt.Location = new System.Drawing.Point(315, 175);
+            this.ISIntervalTxt.Location = new System.Drawing.Point(316, 175);
             this.ISIntervalTxt.Maximum = new decimal(new int[] {
             -1,
             0,
@@ -355,10 +293,112 @@
             // 
             this.ISDescriptionTxt.Location = new System.Drawing.Point(6, 214);
             this.ISDescriptionTxt.Name = "ISDescriptionTxt";
-            this.ISDescriptionTxt.Size = new System.Drawing.Size(303, 20);
+            this.ISDescriptionTxt.Size = new System.Drawing.Size(228, 20);
             this.ISDescriptionTxt.TabIndex = 31;
             this.TanjiTip.SetToolTip(this.ISDescriptionTxt, "The desciption of the schedule, this will be shown when hovering over the item in" +
         " the list.");
+            // 
+            // ISTanjiScheduler
+            // 
+            this.ISTanjiScheduler.CheckBoxes = true;
+            this.ISTanjiScheduler.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.PacketCol,
+            this.DestinationCol,
+            this.BurstCol,
+            this.IntervalCol,
+            this.StatusCol});
+            this.ISTanjiScheduler.FullRowSelect = true;
+            this.ISTanjiScheduler.GridLines = true;
+            this.ISTanjiScheduler.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.ISTanjiScheduler.HideSelection = false;
+            this.ISTanjiScheduler.Location = new System.Drawing.Point(6, 6);
+            this.ISTanjiScheduler.MultiSelect = false;
+            this.ISTanjiScheduler.Name = "ISTanjiScheduler";
+            this.ISTanjiScheduler.ShowItemToolTips = true;
+            this.ISTanjiScheduler.Size = new System.Drawing.Size(380, 150);
+            this.ISTanjiScheduler.TabIndex = 41;
+            this.TanjiTip.SetToolTip(this.ISTanjiScheduler, "To toggle, double click the selected schedule.");
+            this.ISTanjiScheduler.UseCompatibleStateImageBehavior = false;
+            this.ISTanjiScheduler.View = System.Windows.Forms.View.Details;
+            this.ISTanjiScheduler.ScheduleTriggered += new System.EventHandler<Sulakore.Protocol.HScheduleTriggeredEventArgs>(this.ISTanjiScheduler_ScheduleTriggered);
+            this.ISTanjiScheduler.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ISTanjiScheduler_ItemSelectionChanged);
+            // 
+            // PacketCol
+            // 
+            this.PacketCol.Text = "Packet";
+            this.PacketCol.Width = 145;
+            // 
+            // DestinationCol
+            // 
+            this.DestinationCol.Text = "Destination";
+            this.DestinationCol.Width = 65;
+            // 
+            // BurstCol
+            // 
+            this.BurstCol.Text = "Burst";
+            this.BurstCol.Width = 48;
+            // 
+            // IntervalCol
+            // 
+            this.IntervalCol.Text = "Interval";
+            this.IntervalCol.Width = 48;
+            // 
+            // StatusCol
+            // 
+            this.StatusCol.Text = "Status";
+            this.StatusCol.Width = 52;
+            // 
+            // ICConstructMenu
+            // 
+            this.ICConstructMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ICCopyPacketBtn,
+            this.ICTransferToBtn});
+            this.ICConstructMenu.Name = "ConstructMenu";
+            this.ICConstructMenu.Size = new System.Drawing.Size(141, 48);
+            // 
+            // ICCopyPacketBtn
+            // 
+            this.ICCopyPacketBtn.Name = "ICCopyPacketBtn";
+            this.ICCopyPacketBtn.Size = new System.Drawing.Size(140, 22);
+            this.ICCopyPacketBtn.Text = "Copy Packet";
+            this.ICCopyPacketBtn.Click += new System.EventHandler(this.ICCopyPacketBtn_Click);
+            // 
+            // ICTransferToBtn
+            // 
+            this.ICTransferToBtn.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ICSchedulerBtn,
+            this.ICPrimitiveBtn,
+            this.ICTransferSeparator,
+            this.ICInjectionBtn});
+            this.ICTransferToBtn.Name = "ICTransferToBtn";
+            this.ICTransferToBtn.Size = new System.Drawing.Size(140, 22);
+            this.ICTransferToBtn.Text = "Transfer To";
+            // 
+            // ICSchedulerBtn
+            // 
+            this.ICSchedulerBtn.Name = "ICSchedulerBtn";
+            this.ICSchedulerBtn.Size = new System.Drawing.Size(163, 22);
+            this.ICSchedulerBtn.Text = "Scheduler";
+            this.ICSchedulerBtn.Click += new System.EventHandler(this.ICSchedulerBtn_Click);
+            // 
+            // ICPrimitiveBtn
+            // 
+            this.ICPrimitiveBtn.Name = "ICPrimitiveBtn";
+            this.ICPrimitiveBtn.Size = new System.Drawing.Size(163, 22);
+            this.ICPrimitiveBtn.Text = "Primitive";
+            this.ICPrimitiveBtn.Click += new System.EventHandler(this.ICPrimitiveBtn_Click);
+            // 
+            // ICTransferSeparator
+            // 
+            this.ICTransferSeparator.Name = "ICTransferSeparator";
+            this.ICTransferSeparator.Size = new System.Drawing.Size(160, 6);
+            // 
+            // ICInjectionBtn
+            // 
+            this.ICInjectionBtn.Name = "ICInjectionBtn";
+            this.ICInjectionBtn.Size = new System.Drawing.Size(163, 22);
+            this.ICInjectionBtn.Text = "Injection (Below)";
+            this.ICInjectionBtn.Click += new System.EventHandler(this.ICInjectionBtn_Click);
             // 
             // TanjiTabs
             // 
@@ -382,8 +422,8 @@
             // 
             this.InjectionTab.BackColor = System.Drawing.Color.White;
             this.InjectionTab.Controls.Add(this.IPacketTxt);
-            this.InjectionTab.Controls.Add(this.PSendToClientBtn);
-            this.InjectionTab.Controls.Add(this.PSendToServerBtn);
+            this.InjectionTab.Controls.Add(this.ISendToClientBtn);
+            this.InjectionTab.Controls.Add(this.ISendToServerBtn);
             this.InjectionTab.Controls.Add(this.IInjectionTabs);
             this.InjectionTab.Location = new System.Drawing.Point(4, 28);
             this.InjectionTab.Name = "InjectionTab";
@@ -402,31 +442,31 @@
             this.IPacketTxt.Size = new System.Drawing.Size(247, 20);
             this.IPacketTxt.TabIndex = 5;
             // 
-            // PSendToClientBtn
+            // ISendToClientBtn
             // 
-            this.PSendToClientBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.PSendToClientBtn.BackColor = System.Drawing.Color.Transparent;
-            this.PSendToClientBtn.DialogResult = System.Windows.Forms.DialogResult.None;
-            this.PSendToClientBtn.Location = new System.Drawing.Point(259, 285);
-            this.PSendToClientBtn.Name = "PSendToClientBtn";
-            this.PSendToClientBtn.Size = new System.Drawing.Size(100, 22);
-            this.PSendToClientBtn.Skin = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
-            this.PSendToClientBtn.TabIndex = 4;
-            this.PSendToClientBtn.Text = "Send To Client";
-            this.PSendToClientBtn.Click += new System.EventHandler(this.SendToClientBtn_Click);
+            this.ISendToClientBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.ISendToClientBtn.BackColor = System.Drawing.Color.Transparent;
+            this.ISendToClientBtn.DialogResult = System.Windows.Forms.DialogResult.None;
+            this.ISendToClientBtn.Location = new System.Drawing.Point(259, 285);
+            this.ISendToClientBtn.Name = "ISendToClientBtn";
+            this.ISendToClientBtn.Size = new System.Drawing.Size(100, 22);
+            this.ISendToClientBtn.Skin = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
+            this.ISendToClientBtn.TabIndex = 4;
+            this.ISendToClientBtn.Text = "Send To Client";
+            this.ISendToClientBtn.Click += new System.EventHandler(this.SendToClientBtn_Click);
             // 
-            // PSendToServerBtn
+            // ISendToServerBtn
             // 
-            this.PSendToServerBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.PSendToServerBtn.BackColor = System.Drawing.Color.Transparent;
-            this.PSendToServerBtn.DialogResult = System.Windows.Forms.DialogResult.None;
-            this.PSendToServerBtn.Location = new System.Drawing.Point(365, 285);
-            this.PSendToServerBtn.Name = "PSendToServerBtn";
-            this.PSendToServerBtn.Size = new System.Drawing.Size(100, 22);
-            this.PSendToServerBtn.Skin = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
-            this.PSendToServerBtn.TabIndex = 3;
-            this.PSendToServerBtn.Text = "Send To Server";
-            this.PSendToServerBtn.Click += new System.EventHandler(this.SendToServerBtn_Click);
+            this.ISendToServerBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.ISendToServerBtn.BackColor = System.Drawing.Color.Transparent;
+            this.ISendToServerBtn.DialogResult = System.Windows.Forms.DialogResult.None;
+            this.ISendToServerBtn.Location = new System.Drawing.Point(365, 285);
+            this.ISendToServerBtn.Name = "ISendToServerBtn";
+            this.ISendToServerBtn.Size = new System.Drawing.Size(100, 22);
+            this.ISendToServerBtn.Skin = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
+            this.ISendToServerBtn.TabIndex = 3;
+            this.ISendToServerBtn.Text = "Send To Server";
+            this.ISendToServerBtn.Click += new System.EventHandler(this.SendToServerBtn_Click);
             // 
             // IInjectionTabs
             // 
@@ -453,11 +493,12 @@
             // IConstructerTab
             // 
             this.IConstructerTab.BackColor = System.Drawing.Color.White;
+            this.IConstructerTab.Controls.Add(this.ICChunksRightGlowPnl);
+            this.IConstructerTab.Controls.Add(this.ICChunksLeftGlowPnl);
+            this.IConstructerTab.Controls.Add(this.ICChunkCountLbl);
             this.IConstructerTab.Controls.Add(this.ICCountTxt);
             this.IConstructerTab.Controls.Add(this.ICCountLbl);
-            this.IConstructerTab.Controls.Add(this.ICEditBtn);
             this.IConstructerTab.Controls.Add(this.ICRemoveBtn);
-            this.IConstructerTab.Controls.Add(this.ICTransferBtn);
             this.IConstructerTab.Controls.Add(this.ICMoveDownBtn);
             this.IConstructerTab.Controls.Add(this.ICMoveUpBtn);
             this.IConstructerTab.Controls.Add(this.ICClearBtn);
@@ -476,6 +517,31 @@
             this.IConstructerTab.TabIndex = 1;
             this.IConstructerTab.Text = "Constructer";
             // 
+            // ICChunksRightGlowPnl
+            // 
+            this.ICChunksRightGlowPnl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
+            this.ICChunksRightGlowPnl.Location = new System.Drawing.Point(385, 240);
+            this.ICChunksRightGlowPnl.Name = "ICChunksRightGlowPnl";
+            this.ICChunksRightGlowPnl.Size = new System.Drawing.Size(1, 22);
+            this.ICChunksRightGlowPnl.TabIndex = 27;
+            // 
+            // ICChunksLeftGlowPnl
+            // 
+            this.ICChunksLeftGlowPnl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
+            this.ICChunksLeftGlowPnl.Location = new System.Drawing.Point(270, 240);
+            this.ICChunksLeftGlowPnl.Name = "ICChunksLeftGlowPnl";
+            this.ICChunksLeftGlowPnl.Size = new System.Drawing.Size(1, 22);
+            this.ICChunksLeftGlowPnl.TabIndex = 26;
+            // 
+            // ICChunkCountLbl
+            // 
+            this.ICChunkCountLbl.Location = new System.Drawing.Point(273, 240);
+            this.ICChunkCountLbl.Name = "ICChunkCountLbl";
+            this.ICChunkCountLbl.Size = new System.Drawing.Size(110, 22);
+            this.ICChunkCountLbl.TabIndex = 25;
+            this.ICChunkCountLbl.Text = "Chunk Count: 0";
+            this.ICChunkCountLbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // ICCountTxt
             // 
             this.ICCountTxt.Location = new System.Drawing.Point(326, 19);
@@ -490,7 +556,7 @@
             0,
             0});
             this.ICCountTxt.Name = "ICCountTxt";
-            this.ICCountTxt.Size = new System.Drawing.Size(59, 20);
+            this.ICCountTxt.Size = new System.Drawing.Size(60, 20);
             this.ICCountTxt.TabIndex = 24;
             this.ICCountTxt.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.ICCountTxt.Value = new decimal(new int[] {
@@ -508,46 +574,19 @@
             this.ICCountLbl.TabIndex = 23;
             this.ICCountLbl.Text = "Count";
             // 
-            // ICEditBtn
-            // 
-            this.ICEditBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.ICEditBtn.BackColor = System.Drawing.Color.Transparent;
-            this.ICEditBtn.DialogResult = System.Windows.Forms.DialogResult.None;
-            this.ICEditBtn.Enabled = false;
-            this.ICEditBtn.Location = new System.Drawing.Point(114, 240);
-            this.ICEditBtn.Name = "ICEditBtn";
-            this.ICEditBtn.Size = new System.Drawing.Size(57, 22);
-            this.ICEditBtn.Skin = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
-            this.ICEditBtn.TabIndex = 22;
-            this.ICEditBtn.Text = "Edit";
-            this.ICEditBtn.Click += new System.EventHandler(this.ICEditBtn_Click);
-            // 
             // ICRemoveBtn
             // 
             this.ICRemoveBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.ICRemoveBtn.BackColor = System.Drawing.Color.Transparent;
             this.ICRemoveBtn.DialogResult = System.Windows.Forms.DialogResult.None;
             this.ICRemoveBtn.Enabled = false;
-            this.ICRemoveBtn.Location = new System.Drawing.Point(177, 240);
+            this.ICRemoveBtn.Location = new System.Drawing.Point(6, 240);
             this.ICRemoveBtn.Name = "ICRemoveBtn";
-            this.ICRemoveBtn.Size = new System.Drawing.Size(57, 22);
+            this.ICRemoveBtn.Size = new System.Drawing.Size(82, 22);
             this.ICRemoveBtn.Skin = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
             this.ICRemoveBtn.TabIndex = 21;
             this.ICRemoveBtn.Text = "Remove";
             this.ICRemoveBtn.Click += new System.EventHandler(this.ICRemoveBtn_Click);
-            // 
-            // ICTransferBtn
-            // 
-            this.ICTransferBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.ICTransferBtn.BackColor = System.Drawing.Color.Transparent;
-            this.ICTransferBtn.DialogResult = System.Windows.Forms.DialogResult.None;
-            this.ICTransferBtn.Location = new System.Drawing.Point(7, 240);
-            this.ICTransferBtn.Name = "ICTransferBtn";
-            this.ICTransferBtn.Size = new System.Drawing.Size(101, 22);
-            this.ICTransferBtn.Skin = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
-            this.ICTransferBtn.TabIndex = 20;
-            this.ICTransferBtn.Text = "Transfer (Below)";
-            this.ICTransferBtn.Click += new System.EventHandler(this.ICTransferBtn_Click);
             // 
             // ICMoveDownBtn
             // 
@@ -555,9 +594,9 @@
             this.ICMoveDownBtn.BackColor = System.Drawing.Color.Transparent;
             this.ICMoveDownBtn.DialogResult = System.Windows.Forms.DialogResult.None;
             this.ICMoveDownBtn.Enabled = false;
-            this.ICMoveDownBtn.Location = new System.Drawing.Point(240, 240);
+            this.ICMoveDownBtn.Location = new System.Drawing.Point(182, 240);
             this.ICMoveDownBtn.Name = "ICMoveDownBtn";
-            this.ICMoveDownBtn.Size = new System.Drawing.Size(70, 22);
+            this.ICMoveDownBtn.Size = new System.Drawing.Size(82, 22);
             this.ICMoveDownBtn.Skin = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
             this.ICMoveDownBtn.TabIndex = 19;
             this.ICMoveDownBtn.Text = "Move Down";
@@ -569,9 +608,9 @@
             this.ICMoveUpBtn.BackColor = System.Drawing.Color.Transparent;
             this.ICMoveUpBtn.DialogResult = System.Windows.Forms.DialogResult.None;
             this.ICMoveUpBtn.Enabled = false;
-            this.ICMoveUpBtn.Location = new System.Drawing.Point(316, 240);
+            this.ICMoveUpBtn.Location = new System.Drawing.Point(94, 240);
             this.ICMoveUpBtn.Name = "ICMoveUpBtn";
-            this.ICMoveUpBtn.Size = new System.Drawing.Size(70, 22);
+            this.ICMoveUpBtn.Size = new System.Drawing.Size(82, 22);
             this.ICMoveUpBtn.Skin = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
             this.ICMoveUpBtn.TabIndex = 18;
             this.ICMoveUpBtn.Text = "Move Up";
@@ -585,7 +624,7 @@
             this.ICClearBtn.Location = new System.Drawing.Point(7, 45);
             this.ICClearBtn.Name = "ICClearBtn";
             this.ICClearBtn.Size = new System.Drawing.Size(67, 22);
-            this.ICClearBtn.Skin = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
+            this.ICClearBtn.Skin = System.Drawing.Color.SlateGray;
             this.ICClearBtn.TabIndex = 17;
             this.ICClearBtn.Text = "Clear";
             this.ICClearBtn.Click += new System.EventHandler(this.ICClearBtn_Click);
@@ -646,6 +685,7 @@
             this.ICHeaderTxt.Size = new System.Drawing.Size(67, 20);
             this.ICHeaderTxt.TabIndex = 12;
             this.ICHeaderTxt.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.ICHeaderTxt.TextChanged += new System.EventHandler(this.ICHeaderTxt_TextChanged);
             // 
             // ICValueLbl
             // 
@@ -663,17 +703,23 @@
             this.ICValueTxt.Size = new System.Drawing.Size(241, 20);
             this.ICValueTxt.TabIndex = 10;
             this.ICValueTxt.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.ICValueTxt.TextChanged += new System.EventHandler(this.ICValueTxt_TextChanged);
             // 
             // ICTanjiConstructer
             // 
             this.ICTanjiConstructer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.ICTanjiConstructer.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.TypeCol,
+            this.ValueCol,
+            this.EncodedCol});
             this.ICTanjiConstructer.ContextMenuStrip = this.ICConstructMenu;
             this.ICTanjiConstructer.FullRowSelect = true;
             this.ICTanjiConstructer.GridLines = true;
+            this.ICTanjiConstructer.Header = ((ushort)(0));
             this.ICTanjiConstructer.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.ICTanjiConstructer.HideSelection = false;
             this.ICTanjiConstructer.Location = new System.Drawing.Point(6, 73);
-            this.ICTanjiConstructer.LockColumns = false;
             this.ICTanjiConstructer.MultiSelect = false;
             this.ICTanjiConstructer.Name = "ICTanjiConstructer";
             this.ICTanjiConstructer.ShowItemToolTips = true;
@@ -684,26 +730,41 @@
             this.ICTanjiConstructer.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ICTanjiConstructer_ItemSelectionChanged);
             this.ICTanjiConstructer.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ICTanjiConstructer_MouseDoubleClick);
             // 
+            // TypeCol
+            // 
+            this.TypeCol.Text = "Type";
+            this.TypeCol.Width = 72;
+            // 
+            // ValueCol
+            // 
+            this.ValueCol.Text = "Value";
+            this.ValueCol.Width = 137;
+            // 
+            // EncodedCol
+            // 
+            this.EncodedCol.Text = "Encoded";
+            this.EncodedCol.Width = 150;
+            // 
             // ISchedulerTab
             // 
             this.ISchedulerTab.BackColor = System.Drawing.Color.White;
+            this.ISchedulerTab.Controls.Add(this.ISClearBtn);
             this.ISchedulerTab.Controls.Add(this.ISAutoStartChckbx);
-            this.ISchedulerTab.Controls.Add(this.ISTanjiScheduler);
             this.ISchedulerTab.Controls.Add(this.ISBurstLbl);
             this.ISchedulerTab.Controls.Add(this.ISBurstTxt);
             this.ISchedulerTab.Controls.Add(this.ISStopAllBtn);
             this.ISchedulerTab.Controls.Add(this.ISIntervalLbl);
             this.ISchedulerTab.Controls.Add(this.ISIntervalTxt);
-            this.ISchedulerTab.Controls.Add(this.ISDirectionLbl);
-            this.ISchedulerTab.Controls.Add(this.ISDirectionTxt);
+            this.ISchedulerTab.Controls.Add(this.ISDestinationLbl);
+            this.ISchedulerTab.Controls.Add(this.ISDestinationTxt);
             this.ISchedulerTab.Controls.Add(this.ISPacketLbl);
             this.ISchedulerTab.Controls.Add(this.ISPacketTxt);
             this.ISchedulerTab.Controls.Add(this.ISDescriptionLbl);
             this.ISchedulerTab.Controls.Add(this.ISDescriptionTxt);
             this.ISchedulerTab.Controls.Add(this.ISStartAllBtn);
-            this.ISchedulerTab.Controls.Add(this.ISEditBtn);
             this.ISchedulerTab.Controls.Add(this.ISRemoveBtn);
             this.ISchedulerTab.Controls.Add(this.ISCreateBtn);
+            this.ISchedulerTab.Controls.Add(this.ISTanjiScheduler);
             this.ISchedulerTab.Location = new System.Drawing.Point(4, 4);
             this.ISchedulerTab.Name = "ISchedulerTab";
             this.ISchedulerTab.Padding = new System.Windows.Forms.Padding(3);
@@ -711,12 +772,24 @@
             this.ISchedulerTab.TabIndex = 2;
             this.ISchedulerTab.Text = "Scheduler";
             // 
+            // ISClearBtn
+            // 
+            this.ISClearBtn.BackColor = System.Drawing.Color.Transparent;
+            this.ISClearBtn.DialogResult = System.Windows.Forms.DialogResult.None;
+            this.ISClearBtn.Enabled = false;
+            this.ISClearBtn.Location = new System.Drawing.Point(158, 240);
+            this.ISClearBtn.Name = "ISClearBtn";
+            this.ISClearBtn.Size = new System.Drawing.Size(76, 22);
+            this.ISClearBtn.Skin = System.Drawing.Color.SlateGray;
+            this.ISClearBtn.TabIndex = 43;
+            this.ISClearBtn.Text = "Clear";
+            // 
             // ISAutoStartChckbx
             // 
             this.ISAutoStartChckbx.AutoSize = true;
             this.ISAutoStartChckbx.Checked = true;
             this.ISAutoStartChckbx.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.ISAutoStartChckbx.Location = new System.Drawing.Point(160, 158);
+            this.ISAutoStartChckbx.Location = new System.Drawing.Point(244, 158);
             this.ISAutoStartChckbx.Name = "ISAutoStartChckbx";
             this.ISAutoStartChckbx.Size = new System.Drawing.Size(73, 17);
             this.ISAutoStartChckbx.TabIndex = 42;
@@ -726,7 +799,7 @@
             // ISBurstLbl
             // 
             this.ISBurstLbl.AutoSize = true;
-            this.ISBurstLbl.Location = new System.Drawing.Point(312, 198);
+            this.ISBurstLbl.Location = new System.Drawing.Point(313, 198);
             this.ISBurstLbl.Name = "ISBurstLbl";
             this.ISBurstLbl.Size = new System.Drawing.Size(31, 13);
             this.ISBurstLbl.TabIndex = 40;
@@ -737,9 +810,9 @@
             this.ISStopAllBtn.BackColor = System.Drawing.Color.Transparent;
             this.ISStopAllBtn.DialogResult = System.Windows.Forms.DialogResult.None;
             this.ISStopAllBtn.Enabled = false;
-            this.ISStopAllBtn.Location = new System.Drawing.Point(6, 240);
+            this.ISStopAllBtn.Location = new System.Drawing.Point(82, 240);
             this.ISStopAllBtn.Name = "ISStopAllBtn";
-            this.ISStopAllBtn.Size = new System.Drawing.Size(75, 22);
+            this.ISStopAllBtn.Size = new System.Drawing.Size(70, 22);
             this.ISStopAllBtn.Skin = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
             this.ISStopAllBtn.TabIndex = 28;
             this.ISStopAllBtn.Text = "Stop All";
@@ -748,32 +821,32 @@
             // ISIntervalLbl
             // 
             this.ISIntervalLbl.AutoSize = true;
-            this.ISIntervalLbl.Location = new System.Drawing.Point(312, 159);
+            this.ISIntervalLbl.Location = new System.Drawing.Point(313, 159);
             this.ISIntervalLbl.Name = "ISIntervalLbl";
             this.ISIntervalLbl.Size = new System.Drawing.Size(64, 13);
             this.ISIntervalLbl.TabIndex = 38;
             this.ISIntervalLbl.Text = "Interval (ms)";
             // 
-            // ISDirectionLbl
+            // ISDestinationLbl
             // 
-            this.ISDirectionLbl.AutoSize = true;
-            this.ISDirectionLbl.Location = new System.Drawing.Point(230, 159);
-            this.ISDirectionLbl.Name = "ISDirectionLbl";
-            this.ISDirectionLbl.Size = new System.Drawing.Size(49, 13);
-            this.ISDirectionLbl.TabIndex = 36;
-            this.ISDirectionLbl.Text = "Direction";
+            this.ISDestinationLbl.AutoSize = true;
+            this.ISDestinationLbl.Location = new System.Drawing.Point(237, 197);
+            this.ISDestinationLbl.Name = "ISDestinationLbl";
+            this.ISDestinationLbl.Size = new System.Drawing.Size(60, 13);
+            this.ISDestinationLbl.TabIndex = 36;
+            this.ISDestinationLbl.Text = "Destination";
             // 
-            // ISDirectionTxt
+            // ISDestinationTxt
             // 
-            this.ISDirectionTxt.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ISDirectionTxt.FormattingEnabled = true;
-            this.ISDirectionTxt.Items.AddRange(new object[] {
+            this.ISDestinationTxt.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ISDestinationTxt.FormattingEnabled = true;
+            this.ISDestinationTxt.Items.AddRange(new object[] {
             "Client",
             "Server"});
-            this.ISDirectionTxt.Location = new System.Drawing.Point(233, 174);
-            this.ISDirectionTxt.Name = "ISDirectionTxt";
-            this.ISDirectionTxt.Size = new System.Drawing.Size(76, 21);
-            this.ISDirectionTxt.TabIndex = 35;
+            this.ISDestinationTxt.Location = new System.Drawing.Point(240, 213);
+            this.ISDestinationTxt.Name = "ISDestinationTxt";
+            this.ISDestinationTxt.Size = new System.Drawing.Size(70, 21);
+            this.ISDestinationTxt.TabIndex = 35;
             // 
             // ISPacketLbl
             // 
@@ -789,7 +862,7 @@
             this.ISPacketTxt.Location = new System.Drawing.Point(6, 175);
             this.ISPacketTxt.MaxLength = 2147483647;
             this.ISPacketTxt.Name = "ISPacketTxt";
-            this.ISPacketTxt.Size = new System.Drawing.Size(221, 20);
+            this.ISPacketTxt.Size = new System.Drawing.Size(304, 20);
             this.ISPacketTxt.TabIndex = 33;
             // 
             // ISDescriptionLbl
@@ -806,7 +879,7 @@
             this.ISStartAllBtn.BackColor = System.Drawing.Color.Transparent;
             this.ISStartAllBtn.DialogResult = System.Windows.Forms.DialogResult.None;
             this.ISStartAllBtn.Enabled = false;
-            this.ISStartAllBtn.Location = new System.Drawing.Point(87, 240);
+            this.ISStartAllBtn.Location = new System.Drawing.Point(6, 240);
             this.ISStartAllBtn.Name = "ISStartAllBtn";
             this.ISStartAllBtn.Size = new System.Drawing.Size(70, 22);
             this.ISStartAllBtn.Skin = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
@@ -814,25 +887,12 @@
             this.ISStartAllBtn.Text = "Start All";
             this.ISStartAllBtn.Click += new System.EventHandler(this.ISStartAllBtn_Click);
             // 
-            // ISEditBtn
-            // 
-            this.ISEditBtn.BackColor = System.Drawing.Color.Transparent;
-            this.ISEditBtn.DialogResult = System.Windows.Forms.DialogResult.None;
-            this.ISEditBtn.Enabled = false;
-            this.ISEditBtn.Location = new System.Drawing.Point(239, 240);
-            this.ISEditBtn.Name = "ISEditBtn";
-            this.ISEditBtn.Size = new System.Drawing.Size(70, 22);
-            this.ISEditBtn.Skin = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
-            this.ISEditBtn.TabIndex = 27;
-            this.ISEditBtn.Text = "Edit";
-            this.ISEditBtn.Click += new System.EventHandler(this.ISEditBtn_Click);
-            // 
             // ISRemoveBtn
             // 
             this.ISRemoveBtn.BackColor = System.Drawing.Color.Transparent;
             this.ISRemoveBtn.DialogResult = System.Windows.Forms.DialogResult.None;
             this.ISRemoveBtn.Enabled = false;
-            this.ISRemoveBtn.Location = new System.Drawing.Point(163, 240);
+            this.ISRemoveBtn.Location = new System.Drawing.Point(240, 240);
             this.ISRemoveBtn.Name = "ISRemoveBtn";
             this.ISRemoveBtn.Size = new System.Drawing.Size(70, 22);
             this.ISRemoveBtn.Skin = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
@@ -844,7 +904,7 @@
             // 
             this.ISCreateBtn.BackColor = System.Drawing.Color.Transparent;
             this.ISCreateBtn.DialogResult = System.Windows.Forms.DialogResult.None;
-            this.ISCreateBtn.Location = new System.Drawing.Point(315, 240);
+            this.ISCreateBtn.Location = new System.Drawing.Point(316, 240);
             this.ISCreateBtn.Name = "ISCreateBtn";
             this.ISCreateBtn.Size = new System.Drawing.Size(70, 22);
             this.ISCreateBtn.Skin = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
@@ -907,7 +967,7 @@
             // IFiltersTab
             // 
             this.IFiltersTab.BackColor = System.Drawing.Color.White;
-            this.IFiltersTab.Controls.Add(this.tanjiTabControl3);
+            this.IFiltersTab.Controls.Add(this.IFFilterTabs);
             this.IFiltersTab.Location = new System.Drawing.Point(4, 4);
             this.IFiltersTab.Name = "IFiltersTab";
             this.IFiltersTab.Padding = new System.Windows.Forms.Padding(3);
@@ -915,23 +975,22 @@
             this.IFiltersTab.TabIndex = 4;
             this.IFiltersTab.Text = "Filters";
             // 
-            // tanjiTabControl3
+            // IFFilterTabs
             // 
-            this.tanjiTabControl3.Alignment = System.Windows.Forms.TabAlignment.Bottom;
-            this.tanjiTabControl3.Controls.Add(this.IFBlockTab);
-            this.tanjiTabControl3.Controls.Add(this.IFSwitchTab);
-            this.tanjiTabControl3.Controls.Add(this.IFModifyTab);
-            this.tanjiTabControl3.Controls.Add(this.IFRepeatTab);
-            this.tanjiTabControl3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tanjiTabControl3.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
-            this.tanjiTabControl3.Location = new System.Drawing.Point(3, 3);
-            this.tanjiTabControl3.Multiline = true;
-            this.tanjiTabControl3.Name = "tanjiTabControl3";
-            this.tanjiTabControl3.SelectedIndex = 0;
-            this.tanjiTabControl3.Size = new System.Drawing.Size(386, 262);
-            this.tanjiTabControl3.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
-            this.tanjiTabControl3.Skin = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
-            this.tanjiTabControl3.TabIndex = 0;
+            this.IFFilterTabs.Alignment = System.Windows.Forms.TabAlignment.Bottom;
+            this.IFFilterTabs.Controls.Add(this.IFBlockTab);
+            this.IFFilterTabs.Controls.Add(this.IFSwitchTab);
+            this.IFFilterTabs.Controls.Add(this.IFModifyTab);
+            this.IFFilterTabs.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.IFFilterTabs.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
+            this.IFFilterTabs.Location = new System.Drawing.Point(3, 3);
+            this.IFFilterTabs.Multiline = true;
+            this.IFFilterTabs.Name = "IFFilterTabs";
+            this.IFFilterTabs.SelectedIndex = 0;
+            this.IFFilterTabs.Size = new System.Drawing.Size(386, 262);
+            this.IFFilterTabs.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
+            this.IFFilterTabs.Skin = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
+            this.IFFilterTabs.TabIndex = 0;
             // 
             // IFBlockTab
             // 
@@ -949,7 +1008,7 @@
             this.IFSwitchTab.Name = "IFSwitchTab";
             this.IFSwitchTab.Size = new System.Drawing.Size(378, 230);
             this.IFSwitchTab.TabIndex = 1;
-            this.IFSwitchTab.Text = "Switch";
+            this.IFSwitchTab.Text = "Replace";
             // 
             // IFModifyTab
             // 
@@ -959,15 +1018,6 @@
             this.IFModifyTab.Size = new System.Drawing.Size(378, 230);
             this.IFModifyTab.TabIndex = 2;
             this.IFModifyTab.Text = "Modify";
-            // 
-            // IFRepeatTab
-            // 
-            this.IFRepeatTab.BackColor = System.Drawing.Color.White;
-            this.IFRepeatTab.Location = new System.Drawing.Point(4, 4);
-            this.IFRepeatTab.Name = "IFRepeatTab";
-            this.IFRepeatTab.Size = new System.Drawing.Size(378, 230);
-            this.IFRepeatTab.TabIndex = 3;
-            this.IFRepeatTab.Text = "Repeat";
             // 
             // EncoderDecoderTab
             // 
@@ -1090,8 +1140,6 @@
             // ExtensionsTab
             // 
             this.ExtensionsTab.BackColor = System.Drawing.Color.White;
-            this.ExtensionsTab.Controls.Add(this.EPriorityLbl);
-            this.ExtensionsTab.Controls.Add(this.EPriorityTxt);
             this.ExtensionsTab.Controls.Add(this.EMiddleGlowPnl);
             this.ExtensionsTab.Controls.Add(this.EExtensionLogoPctbx);
             this.ExtensionsTab.Controls.Add(this.ETopGlowPnl);
@@ -1102,28 +1150,6 @@
             this.ExtensionsTab.Size = new System.Drawing.Size(471, 313);
             this.ExtensionsTab.TabIndex = 5;
             this.ExtensionsTab.Text = "Extensions";
-            // 
-            // EPriorityLbl
-            // 
-            this.EPriorityLbl.AutoSize = true;
-            this.EPriorityLbl.Location = new System.Drawing.Point(303, 289);
-            this.EPriorityLbl.Name = "EPriorityLbl";
-            this.EPriorityLbl.Size = new System.Drawing.Size(41, 13);
-            this.EPriorityLbl.TabIndex = 4;
-            this.EPriorityLbl.Text = "Priority:";
-            // 
-            // EPriorityTxt
-            // 
-            this.EPriorityTxt.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.EPriorityTxt.Enabled = false;
-            this.EPriorityTxt.FormattingEnabled = true;
-            this.EPriorityTxt.Items.AddRange(new object[] {
-            "Normal",
-            "High"});
-            this.EPriorityTxt.Location = new System.Drawing.Point(344, 286);
-            this.EPriorityTxt.Name = "EPriorityTxt";
-            this.EPriorityTxt.Size = new System.Drawing.Size(121, 21);
-            this.EPriorityTxt.TabIndex = 3;
             // 
             // EMiddleGlowPnl
             // 
@@ -1156,14 +1182,17 @@
             // ETanjiExtensionViewer
             // 
             this.ETanjiExtensionViewer.AllowDrop = true;
+            this.ETanjiExtensionViewer.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.NameCol,
+            this.AuthorCol,
+            this.VersionCol});
             this.ETanjiExtensionViewer.ContextMenuStrip = this.EExtensionMenu;
-            this.ETanjiExtensionViewer.Contractor = null;
             this.ETanjiExtensionViewer.Dock = System.Windows.Forms.DockStyle.Top;
             this.ETanjiExtensionViewer.FullRowSelect = true;
             this.ETanjiExtensionViewer.GridLines = true;
             this.ETanjiExtensionViewer.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.ETanjiExtensionViewer.HideSelection = false;
             this.ETanjiExtensionViewer.Location = new System.Drawing.Point(3, 3);
-            this.ETanjiExtensionViewer.LockColumns = false;
             this.ETanjiExtensionViewer.MultiSelect = false;
             this.ETanjiExtensionViewer.Name = "ETanjiExtensionViewer";
             this.ETanjiExtensionViewer.ShowItemToolTips = true;
@@ -1175,6 +1204,21 @@
             this.ETanjiExtensionViewer.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ETanjiExtensionViewer_ItemSelectionChanged);
             this.ETanjiExtensionViewer.DragDrop += new System.Windows.Forms.DragEventHandler(this.ExtensionViewer_DragDrop);
             this.ETanjiExtensionViewer.DragEnter += new System.Windows.Forms.DragEventHandler(this.ExtensionViewer_DragEnter);
+            // 
+            // NameCol
+            // 
+            this.NameCol.Text = "Name";
+            this.NameCol.Width = 140;
+            // 
+            // AuthorCol
+            // 
+            this.AuthorCol.Text = "Author";
+            this.AuthorCol.Width = 110;
+            // 
+            // VersionCol
+            // 
+            this.VersionCol.Text = "Version";
+            this.VersionCol.Width = 101;
             // 
             // OptionsTab
             // 
@@ -1331,10 +1375,10 @@
             this.Load += new System.EventHandler(this.Main_Load);
             this.TanjiStrip.ResumeLayout(false);
             this.TanjiStrip.PerformLayout();
-            this.ICConstructMenu.ResumeLayout(false);
             this.EExtensionMenu.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ISBurstTxt)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ISIntervalTxt)).EndInit();
+            this.ICConstructMenu.ResumeLayout(false);
             this.TanjiTabs.ResumeLayout(false);
             this.InjectionTab.ResumeLayout(false);
             this.InjectionTab.PerformLayout();
@@ -1347,12 +1391,11 @@
             this.IPrimitiveTab.ResumeLayout(false);
             this.IPrimitiveTab.PerformLayout();
             this.IFiltersTab.ResumeLayout(false);
-            this.tanjiTabControl3.ResumeLayout(false);
+            this.IFFilterTabs.ResumeLayout(false);
             this.EncoderDecoderTab.ResumeLayout(false);
             this.ModernEncodingGrpbx.ResumeLayout(false);
             this.ModernEncodingGrpbx.PerformLayout();
             this.ExtensionsTab.ResumeLayout(false);
-            this.ExtensionsTab.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.EExtensionLogoPctbx)).EndInit();
             this.OptionsTab.ResumeLayout(false);
             this.OOptionsTab.ResumeLayout(false);
@@ -1379,8 +1422,8 @@
         private System.Windows.Forms.TabPage IPrimitiveTab;
         private System.Windows.Forms.TabPage IConstructerTab;
         private System.Windows.Forms.TextBox IPacketTxt;
-        private Sulakore.Components.SKoreButton PSendToClientBtn;
-        private Sulakore.Components.SKoreButton PSendToServerBtn;
+        private Sulakore.Components.SKoreButton ISendToClientBtn;
+        private Sulakore.Components.SKoreButton ISendToServerBtn;
         private System.Windows.Forms.TabPage ISchedulerTab;
         private System.Windows.Forms.TabPage ITriggersTab;
         private System.Windows.Forms.TabPage IFiltersTab;
@@ -1404,16 +1447,9 @@
         private Sulakore.Components.SKoreButton ICAppendStringBtn;
         private Sulakore.Components.SKoreButton ICAppendIntegerBtn;
         private Sulakore.Components.SKoreButton ICClearBtn;
-        private Sulakore.Components.SKoreButton ICEditBtn;
         private Sulakore.Components.SKoreButton ICRemoveBtn;
-        private Sulakore.Components.SKoreButton ICTransferBtn;
         private Sulakore.Components.SKoreButton ICMoveDownBtn;
         private Sulakore.Components.SKoreButton ICMoveUpBtn;
-        private System.Windows.Forms.ContextMenuStrip ICConstructMenu;
-        private System.Windows.Forms.ToolStripMenuItem ICSendToClientBtn;
-        private System.Windows.Forms.ToolStripMenuItem ICSendToServerBtn;
-        private System.Windows.Forms.ToolStripSeparator IConstructSeperator;
-        private System.Windows.Forms.ToolStripMenuItem ICCopyPacketBtn;
         private System.Windows.Forms.ContextMenuStrip EExtensionMenu;
         private System.Windows.Forms.ToolStripMenuItem EOpenBtn;
         private System.Windows.Forms.ToolStripMenuItem EUninstallBtn;
@@ -1423,15 +1459,14 @@
         private System.Windows.Forms.NumericUpDown ISBurstTxt;
         private System.Windows.Forms.Label ISIntervalLbl;
         private System.Windows.Forms.NumericUpDown ISIntervalTxt;
-        private System.Windows.Forms.Label ISDirectionLbl;
-        private System.Windows.Forms.ComboBox ISDirectionTxt;
+        private System.Windows.Forms.Label ISDestinationLbl;
+        private System.Windows.Forms.ComboBox ISDestinationTxt;
         private System.Windows.Forms.Label ISPacketLbl;
         private System.Windows.Forms.TextBox ISPacketTxt;
         private System.Windows.Forms.Label ISDescriptionLbl;
         private System.Windows.Forms.TextBox ISDescriptionTxt;
         private Sulakore.Components.SKoreButton ISStartAllBtn;
         private Sulakore.Components.SKoreButton ISStopAllBtn;
-        private Sulakore.Components.SKoreButton ISEditBtn;
         private Sulakore.Components.SKoreButton ISRemoveBtn;
         private Sulakore.Components.SKoreButton ISCreateBtn;
         private Sulakore.Components.SKoreScheduler ISTanjiScheduler;
@@ -1441,8 +1476,6 @@
         private System.Windows.Forms.TextBox IPPacketTxt;
         private System.Windows.Forms.Label IPPacketInfoLbl;
         private System.Windows.Forms.Label IPIsCorruptedLbl;
-        private System.Windows.Forms.ToolStripMenuItem ICTransferToBtn;
-        private System.Windows.Forms.ToolStripMenuItem ICSchedulerBtn;
         private System.Windows.Forms.CheckBox ISAutoStartChckbx;
         private Sulakore.Components.SKoreExtensionView ETanjiExtensionViewer;
         private Sulakore.Components.SKoreTabControl OOptionsTab;
@@ -1457,16 +1490,35 @@
         private System.Windows.Forms.ToolStripStatusLabel VersionTxt;
         private System.Windows.Forms.CheckBox OSAlwaysOnTopChckbx;
         private System.Windows.Forms.CheckBox OSDeactivatedChckbx;
-        private Sulakore.Components.SKoreTabControl tanjiTabControl3;
+        private Sulakore.Components.SKoreTabControl IFFilterTabs;
         private System.Windows.Forms.TabPage IFBlockTab;
         private System.Windows.Forms.TabPage IFSwitchTab;
         private System.Windows.Forms.TabPage IFModifyTab;
-        private System.Windows.Forms.TabPage IFRepeatTab;
         private System.Windows.Forms.Panel ETopGlowPnl;
         private System.Windows.Forms.PictureBox EExtensionLogoPctbx;
         private System.Windows.Forms.Panel EMiddleGlowPnl;
-        private System.Windows.Forms.Label EPriorityLbl;
-        private System.Windows.Forms.ComboBox EPriorityTxt;
+        private System.Windows.Forms.ColumnHeader TypeCol;
+        private System.Windows.Forms.ColumnHeader ValueCol;
+        private System.Windows.Forms.ColumnHeader EncodedCol;
+        private System.Windows.Forms.Label ICChunkCountLbl;
+        private System.Windows.Forms.Panel ICChunksLeftGlowPnl;
+        private System.Windows.Forms.Panel ICChunksRightGlowPnl;
+        private System.Windows.Forms.ContextMenuStrip ICConstructMenu;
+        private System.Windows.Forms.ToolStripMenuItem ICCopyPacketBtn;
+        private System.Windows.Forms.ToolStripMenuItem ICTransferToBtn;
+        private System.Windows.Forms.ToolStripMenuItem ICSchedulerBtn;
+        private System.Windows.Forms.ToolStripMenuItem ICPrimitiveBtn;
+        private System.Windows.Forms.ColumnHeader PacketCol;
+        private System.Windows.Forms.ColumnHeader DestinationCol;
+        private System.Windows.Forms.ColumnHeader BurstCol;
+        private System.Windows.Forms.ColumnHeader IntervalCol;
+        private System.Windows.Forms.ColumnHeader StatusCol;
+        private Sulakore.Components.SKoreButton ISClearBtn;
+        private System.Windows.Forms.ToolStripSeparator ICTransferSeparator;
+        private System.Windows.Forms.ToolStripMenuItem ICInjectionBtn;
+        private System.Windows.Forms.ColumnHeader NameCol;
+        private System.Windows.Forms.ColumnHeader AuthorCol;
+        private System.Windows.Forms.ColumnHeader VersionCol;
 
     }
 }

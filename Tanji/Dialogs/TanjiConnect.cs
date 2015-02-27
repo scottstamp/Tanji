@@ -11,6 +11,7 @@ using Sulakore;
 using Sulakore.Editor;
 using Sulakore.Editor.Tags;
 using Sulakore.Communication;
+using Sulakore.Habbo;
 
 namespace Tanji.Dialogs
 {
@@ -57,6 +58,7 @@ namespace Tanji.Dialogs
         #region Public Properties
         public Mode TanjiMode { get; private set; }
         public string PlayerName { get; private set; }
+        public HGameData GameData { get; private set; }
 
         public bool UseCustomClient { get; private set; }
         public string FlashClientRevision { get; private set; }
@@ -272,7 +274,6 @@ namespace Tanji.Dialogs
                 string extractedHost = flashVars.GetChild(InfoHost, ',').Trim();
                 string extractedPort = flashVars.GetChild(InfoPort, ',').Trim();
 
-                #region Extract 'connection.info.host'
                 if (string.IsNullOrEmpty(_maskHost))
                 {
                     if (!extractedHost.StartsWith("\""))
@@ -282,8 +283,7 @@ namespace Tanji.Dialogs
                     }
                     else _maskHost = extractedHost.Split('"')[1];
                 }
-                #endregion
-                #region Extract 'connection.info.port'
+
                 if (_maskPort == 0)
                 {
                     if (!extractedPort.StartsWith("\""))
@@ -293,12 +293,12 @@ namespace Tanji.Dialogs
                     }
                     else _maskPort = ushort.Parse(extractedPort.Split(',')[0].Split('"')[1]);
                 }
-                #endregion
-                #region Extract 'PlayerName'
-                if (response.Contains(HabboName))
-                    PlayerName = response.GetChild(HabboName, '"');
-                else PlayerName = string.Empty;
-                #endregion
+
+                PlayerName = response.Contains(HabboName)
+                    ? response.GetChild(HabboName, '"') : string.Empty;
+
+                if (!string.IsNullOrEmpty(PlayerName))
+                    GameData = HGameData.Parse(response);
 
                 if (!UseCustomClient)
                 {
@@ -402,7 +402,7 @@ namespace Tanji.Dialogs
                     string encodedKeys = binDat.GetChild(dummyFieldPrefix, '"');
                     ExtractRSAKeys(encodedKeys);
 
-                    string encodedFakeKeys = EncodeRSAKeys(_main.RsaKeys[0][0], _main.RsaKeys[0][1]);
+                    string encodedFakeKeys = EncodeRSAKeys(Main.FEXPONENT.ToString(), Main.FMODULUS);
                     binDat = binDat.Replace(encodedKeys, encodedFakeKeys);
 
                     binTag.Data = _encoding.GetBytes(binDat);
@@ -417,10 +417,10 @@ namespace Tanji.Dialogs
             string mergedKeys = _encoding.GetString(data);
 
             int modLength = mergedKeys[0];
-            Main.RealModulus = mergedKeys.Substring(1, modLength);
+            Main.RModulus = mergedKeys.Substring(1, modLength);
 
             mergedKeys = mergedKeys.Substring(modLength);
-            Main.RealExponent = int.Parse(mergedKeys.Substring(2));
+            Main.RExponent = int.Parse(mergedKeys.Substring(2));
         }
         private string EncodeRSAKeys(string exponent, string modulus)
         {

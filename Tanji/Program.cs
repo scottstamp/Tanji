@@ -14,7 +14,7 @@ namespace Tanji
             Eavesdropper.Terminate();
 
             #region Run As Administrator Check
-            WindowsPrincipal windowsPrincipal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
+            var windowsPrincipal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
             if (!windowsPrincipal.IsInRole(WindowsBuiltInRole.Administrator))
             {
                 const string MustRunAsAdmin = "Tanji must be ran with administrative privileges; If you are not being prompted to run as admin, make sure your UAC settings are properly adjusted.";

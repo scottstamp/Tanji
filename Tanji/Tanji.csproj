@@ -67,18 +67,6 @@
     <Compile Include="Dialogs\TanjiConnect.Designer.cs">
       <DependentUpon>TanjiConnect.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\TanjiConstructerEdit.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Dialogs\TanjiConstructerEdit.Designer.cs">
-      <DependentUpon>TanjiConstructerEdit.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Dialogs\TanjiSchedulerEdit.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Dialogs\TanjiSchedulerEdit.Designer.cs">
-      <DependentUpon>TanjiSchedulerEdit.cs</DependentUpon>
-    </Compile>
     <Compile Include="Dialogs\TanjiUpdater.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -99,12 +87,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\TanjiConnect.resx">
       <DependentUpon>TanjiConnect.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\TanjiConstructerEdit.resx">
-      <DependentUpon>TanjiConstructerEdit.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\TanjiSchedulerEdit.resx">
-      <DependentUpon>TanjiSchedulerEdit.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\TanjiUpdater.resx">
       <DependentUpon>TanjiUpdater.cs</DependentUpon>

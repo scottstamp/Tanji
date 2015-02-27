@@ -18,16 +18,15 @@ namespace Tanji.Applications
         private bool _loaded, _wasClosed, _queueRunning;
 
         private readonly object _queuePushLock;
-        private readonly Color _defaultHightlight;
 
-        private const string TitlePrefix = "Tanji ~ Packetlogger";
         private const string InfoChunkFormat = "( {0} - {1} )";
         private const string IncomingFormat = "<- Incoming{0} <- {1}";
         private const string OutgoingFormat = "-> Outgoing{0} -> {1}";
-        private const string CorruptedChunkFormat = "( Corrupted - {0} )";
         #endregion
 
-        #region Public Properties
+        public Color BlockHighlight { get; set; }
+        public Color RepeatHighlight { get; set; }
+        public Color ReplaceHighlight { get; set; }
         public Color IncomingHighlight { get; set; }
         public Color OutgoingHighlight { get; set; }
 
@@ -35,7 +34,6 @@ namespace Tanji.Applications
         public bool ViewIncoming { get; private set; }
 
         public bool DisplayVisualSplit { get; private set; }
-        #endregion
 
         #region Constructor(s)
         public Packetlogger()
@@ -44,13 +42,13 @@ namespace Tanji.Applications
 
             _queuePushLock = new object();
             _dataQueue = new Queue<DataToEventArgs>();
-            _defaultHightlight = Color.FromArgb(225, 225, 225);
 
+            BlockHighlight = Color.DimGray;
+            ReplaceHighlight = Color.DarkCyan;
             IncomingHighlight = Color.Firebrick;
             OutgoingHighlight = SystemColors.HotTrack;
-            ViewOutgoing = ViewIncoming = DisplayVisualSplit = true;
 
-            LoggerTxt.ForeColor = _defaultHightlight;
+            ViewOutgoing = ViewIncoming = DisplayVisualSplit = true;
         }
         #endregion
 
@@ -105,7 +103,6 @@ namespace Tanji.Applications
             if (_wasClosed)
             {
                 _wasClosed = false;
-                Text = TitlePrefix;
 
                 ToggleItem(ToggleIncomingBtn, true);
                 ToggleItem(ToggleOutgoingBtn, true);
@@ -119,7 +116,6 @@ namespace Tanji.Applications
             WindowState = FormWindowState.Minimized;
 
             Halt();
-            Text = TitlePrefix + " [Paused]";
         }
         #endregion
 
@@ -141,10 +137,6 @@ namespace Tanji.Applications
             _dataQueue.Enqueue(e);
             if (!_queueRunning) Task.Factory.StartNew(RunQueue);
         }
-        public void DisplayMessage(string message)
-        {
-            Invoke(new MethodInvoker(() => Display(message, _defaultHightlight)));
-        }
         #endregion
 
         #region Private Methods
@@ -152,7 +144,6 @@ namespace Tanji.Applications
         {
             if (_queueRunning) return;
             _queueRunning = true;
-
             try
             {
                 while (_dataQueue.Count > 0)
@@ -160,38 +151,48 @@ namespace Tanji.Applications
                     if (_dataQueue.Count == 0) break;
                     DataToEventArgs data = _dataQueue.Dequeue();
                     if (data == null) continue;
+                    HMessage packet = data.Replacement;
 
-                    bool toServer = (data.Replacement.Destination == HDestination.Server);
+                    bool toServer = (packet.Destination == HDestination.Server);
                     if (!ViewOutgoing && toServer || !ViewIncoming && !toServer) continue;
 
-                    object[] arguments = data.Replacement.IsCorrupted ? new object[] { data.Replacement.Length } : new object[] { data.Replacement.Header, data.Replacement.Length };
-                    string infoChunk = string.Format(data.Replacement.IsCorrupted ? CorruptedChunkFormat : InfoChunkFormat, arguments);
-                    string message = string.Format(toServer ? OutgoingFormat : IncomingFormat, infoChunk, data.Replacement);
+                    var arguments = new object[] { packet.IsCorrupted
+                        ? "Corrupted" : packet.Header.ToString(), packet.Length };
 
-                    if (data.Blocked)
-                        message = string.Format("Blocked | {0}", message);
+                    string info = string.Format(InfoChunkFormat, arguments);
+                    string log = string.Format(toServer ? OutgoingFormat : IncomingFormat, info, packet);
 
                     while (!_loaded) Thread.Sleep(100);
-                    Invoke(new MethodInvoker(() => Display(message, !data.Blocked ? (toServer ? OutgoingHighlight : IncomingHighlight) : Color.FromArgb(225, 225, 225))));
+                    Invoke(new MethodInvoker(() => Display(log, data)));
                 }
             }
-            catch (Exception ex) { DisplayMessage(ex.ToString()); }
             finally { _queueRunning = false; }
         }
-        private void Display(string message, Color highlight)
+        private void Display(string message, DataToEventArgs e)
         {
-            LoggerTxt.SelectionStart = LoggerTxt.TextLength;
-            LoggerTxt.SelectionLength = 0;
-            LoggerTxt.SelectionColor = highlight;
-            LoggerTxt.AppendText(message + (DisplayVisualSplit ? "\n--------------------\n" : "\n"));
+            Color highlight = (e.Packet.Destination == HDestination.Client
+                ? IncomingHighlight : OutgoingHighlight);
+
+            if (e.Blocked) WriteHighlight("Blocked | ", BlockHighlight);
+            else if (e.Replaced) WriteHighlight("Replaced | ", ReplaceHighlight);
+
+            WriteHighlight(message + (DisplayVisualSplit ? "\n--------------------\n" : "\n"), highlight);
             LoggerTxt.SelectionStart = LoggerTxt.TextLength;
             LoggerTxt.ScrollToCaret();
+
             Application.DoEvents();
         }
         private void ToggleItem(ToolStripMenuItem item, bool check)
         {
             item.Checked = !check;
             ItemClicked(item, EventArgs.Empty);
+        }
+        private void WriteHighlight(string message, Color highlight)
+        {
+            LoggerTxt.SelectionStart = LoggerTxt.TextLength;
+            LoggerTxt.SelectionLength = 0;
+            LoggerTxt.SelectionColor = highlight;
+            LoggerTxt.AppendText(message);
         }
         #endregion
     }
