@@ -137,74 +137,74 @@ namespace Tanji
             int count = (int)ICCountTxt.Value;
             int.TryParse(ICValueTxt.Text, out value);
 
-            ICTanjiConstructer.BeginUpdate();
+            ICConstructerLstVw.BeginUpdate();
             for (int i = 0; i < count; i++)
-                ICTanjiConstructer.Append(value);
-            ICTanjiConstructer.EndUpdate();
+                ICConstructerLstVw.Append(value);
+            ICConstructerLstVw.EndUpdate();
         }
         private void ICAppendStringBtn_Click(object sender, EventArgs e)
         {
             string value = ICValueTxt.Text;
             int count = (int)ICCountTxt.Value;
 
-            ICTanjiConstructer.BeginUpdate();
+            ICConstructerLstVw.BeginUpdate();
             for (int i = 0; i < count; i++)
-                ICTanjiConstructer.Append(value);
-            ICTanjiConstructer.EndUpdate();
+                ICConstructerLstVw.Append(value);
+            ICConstructerLstVw.EndUpdate();
         }
         private void ICAppendBooleanBtn_Click(object sender, EventArgs e)
         {
             int count = (int)ICCountTxt.Value;
             bool value = (!string.IsNullOrEmpty(ICValueTxt.Text) && (ICValueTxt.Text[0] == 't' || ICValueTxt.Text[0] == '1'));
 
-            ICTanjiConstructer.BeginUpdate();
+            ICConstructerLstVw.BeginUpdate();
             for (int i = 0; i < count; i++)
-                ICTanjiConstructer.Append(value);
-            ICTanjiConstructer.EndUpdate();
+                ICConstructerLstVw.Append(value);
+            ICConstructerLstVw.EndUpdate();
         }
 
         private void ICMoveUpBtn_Click(object sender, EventArgs e)
         {
-            ICTanjiConstructer.MoveSelectedItemUp();
+            ICConstructerLstVw.MoveSelectedItemUp();
         }
         private void ICMoveDownBtn_Click(object sender, EventArgs e)
         {
-            ICTanjiConstructer.MoveSelectedItemDown();
+            ICConstructerLstVw.MoveSelectedItemDown();
         }
 
         private void ICClearBtn_Click(object sender, EventArgs e)
         {
-            ICTanjiConstructer.ClearItems();
+            ICConstructerLstVw.ClearItems();
             ICRemoveBtn.Enabled = ICMoveDownBtn.Enabled = ICMoveUpBtn.Enabled = false;
         }
         private void ICRemoveBtn_Click(object sender, EventArgs e)
         {
-            ICTanjiConstructer.RemoveSelectedItem();
+            ICConstructerLstVw.RemoveSelectedItem();
         }
         private void ICSchedulerBtn_Click(object sender, EventArgs e)
         {
             IInjectionTabs.SelectTab(ISchedulerTab);
-            ISPacketTxt.Text = ICTanjiConstructer.GetString();
+            ISPacketTxt.Text = ICConstructerLstVw.GetString();
         }
         private void ICInjectionBtn_Click(object sender, EventArgs e)
         {
-            IPacketTxt.Text = ICTanjiConstructer.GetString();
+            IPacketTxt.Text = ICConstructerLstVw.GetString();
         }
         private void ICPrimitiveBtn_Click(object sender, EventArgs e)
         {
-            IPacketTxt.Text = ICTanjiConstructer.GetString();
+            IPacketTxt.Text = ICConstructerLstVw.GetString();
             IInjectionTabs.SelectTab(IPrimitiveTab);
         }
 
         private void ICCopyPacketBtn_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText(ICTanjiConstructer.GetString());
+            Clipboard.SetText(ICConstructerLstVw.GetString());
         }
 
         private void ICValueTxt_TextChanged(object sender, EventArgs e)
         {
-            if (ICTanjiConstructer.SelectedItems.Count < 1) return;
-            string typeName = ICTanjiConstructer.SelectedItems[0].SubItems[0].Text;
+            if (ICConstructerLstVw.SelectedItems.Count < 1) return;
+            string typeName = ICConstructerLstVw.SelectedItems[0].SubItems[0].Text;
 
             object chunk = null;
             switch (typeName)
@@ -219,20 +219,20 @@ namespace Tanji
                 case "Boolean": chunk = (!string.IsNullOrEmpty(ICValueTxt.Text) && (ICValueTxt.Text[0] == 't' || ICValueTxt.Text[0] == '1')); break;
                 default: return;
             }
-            ICTanjiConstructer.ReplaceItem(chunk);
+            ICConstructerLstVw.ReplaceItem(chunk);
         }
         private void ICHeaderTxt_TextChanged(object sender, EventArgs e)
         {
             ushort header = 0;
             if (ushort.TryParse(ICHeaderTxt.Text, out header))
-                ICTanjiConstructer.Header = header;
+                ICConstructerLstVw.Header = header;
         }
-        private void ICTanjiConstructer_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void ICConstructerLstVw_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            if (ICTanjiConstructer.SelectedItems.Count < 1) return;
+            if (ICConstructerLstVw.SelectedItems.Count < 1) return;
 
             object chunk = null;
-            ListViewItem item = ICTanjiConstructer.SelectedItems[0];
+            ListViewItem item = ICConstructerLstVw.SelectedItems[0];
             switch (item.SubItems[0].Text)
             {
                 case "Integer": chunk = ""; break;
@@ -244,63 +244,78 @@ namespace Tanji
             ICValueTxt.Text = chunk.ToString();
             ICValueTxt.TextChanged += ICValueTxt_TextChanged;
 
-            ICTanjiConstructer.ReplaceItem(chunk);
+            ICConstructerLstVw.ReplaceItem(chunk);
             ICValueTxt.Focus();
         }
-        private void ICTanjiConstructer_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        private void ICConstructerLstVw_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
             ICRemoveBtn.Enabled = e.IsSelected;
             ICMoveUpBtn.Enabled = e.IsSelected && e.ItemIndex != 0;
-            ICMoveDownBtn.Enabled = e.IsSelected && e.ItemIndex != ICTanjiConstructer.Items.Count - 1;
+            ICMoveDownBtn.Enabled = e.IsSelected && e.ItemIndex != ICConstructerLstVw.Items.Count - 1;
             ICValueTxt.Text = e.IsSelected ? e.Item.SubItems[1].Text : string.Empty;
 
             const string ChunkCountFormat = "Chunk Count: {0}";
-            ICChunkCountLbl.Text = string.Format(ChunkCountFormat, ICTanjiConstructer.ChunksWritten.Count);
+            ICChunkCountLbl.Text = string.Format(ChunkCountFormat, ICConstructerLstVw.ChunksWritten.Count);
         }
         #endregion
 
         #region Scheduler Related Methods
+        private void UpdateSchedulerUI(bool itemSelected)
+        {
+            int itemCount = ISSchedulesLstVw.Items.Count;
+            bool containsItems = itemCount > 0;
+
+            SchedulesTxt.Text = string.Format(ScheduleFormat,
+                ISSchedulesLstVw.Running, itemCount);
+
+            ISRemoveBtn.Enabled = itemSelected;
+            ISClearBtn.Enabled = containsItems;
+            ISStopAllBtn.Enabled = containsItems;
+            ISStartAllBtn.Enabled = containsItems;
+
+        }
+
         private void ISStopAllBtn_Click(object sender, EventArgs e)
         {
-            ISTanjiScheduler.StopAllSchedules();
-            SchedulesTxt.Text = string.Format(ScheduleFormat, ISTanjiScheduler.Running, ISTanjiScheduler.Items.Count);
+            ISSchedulesLstVw.StopAllSchedules();
+            UpdateSchedulerUI(ISSchedulesLstVw.SelectedItems.Count > 0);
         }
         private void ISStartAllBtn_Click(object sender, EventArgs e)
         {
-            ISTanjiScheduler.StartAllSchedules();
-            SchedulesTxt.Text = string.Format(ScheduleFormat, ISTanjiScheduler.Running, ISTanjiScheduler.Items.Count);
+            ISSchedulesLstVw.StartAllSchedules();
+            UpdateSchedulerUI(ISSchedulesLstVw.SelectedItems.Count > 0);
+        }
+
+        private void ISClearBtn_Click(object sender, EventArgs e)
+        {
+            ISSchedulesLstVw.ClearItems();
+            UpdateSchedulerUI(false);
         }
         private void ISRemoveBtn_Click(object sender, EventArgs e)
         {
-            ISTanjiScheduler.RemoveSelectedItem();
-            ISStopAllBtn.Enabled = (ISTanjiScheduler.Items.Count > 0);
-            SchedulesTxt.Text = string.Format(ScheduleFormat, ISTanjiScheduler.Running, ISTanjiScheduler.Items.Count);
+            ISSchedulesLstVw.RemoveSelectedItem();
+            UpdateSchedulerUI(ISSchedulesLstVw.SelectedItems.Count > 0);
         }
         private void ISCreateBtn_Click(object sender, EventArgs e)
         {
-            var packet = GetSchedulerPacket();
-            if (packet == null) return;
-
-            ISTanjiScheduler.AutoStart = ISAutoStartChckbx.Checked;
-            ISStopAllBtn.Enabled = true;
-            ISTanjiScheduler.AddSchedule(packet, (int)ISBurstTxt.Value, (int)ISIntervalTxt.Value, ISDescriptionTxt.Text);
-
-            SchedulesTxt.Text = string.Format(ScheduleFormat, ISTanjiScheduler.Running, ISTanjiScheduler.Items.Count);
+            var packet = new HMessage(ISPacketTxt.Text, (HDestination)ISDestinationTxt.SelectedIndex + 1);
+            ISSchedulesLstVw.AddSchedule(packet, (int)ISBurstTxt.Value, (int)ISIntervalTxt.Value, ISDescriptionTxt.Text);
+            UpdateSchedulerUI(true);
         }
 
-        private void ISTanjiScheduler_ScheduleTriggered(object sender, HScheduleTriggeredEventArgs e)
+        private void ISSchedulesLstVw_ScheduleTriggered(object sender, HScheduleTriggeredEventArgs e)
         {
-            if (e.Packet.IsCorrupted) return;
-
-            if (e.Packet.Destination == HDestination.Client)
-                AttemptSendToClient(e.Packet);
-            else if (e.Packet.Destination == HDestination.Server)
-                AttemptSendToServer(e.Packet);
+            if (!e.Packet.IsCorrupted) SendTo(e.Packet);
+            else e.Cancel = true;
         }
-        private void ISTanjiScheduler_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        private void ISSchedulesLstVw_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
-            if (ISRemoveBtn.Enabled != e.IsSelected)
-                ISRemoveBtn.Enabled = ISStartAllBtn.Enabled = e.IsSelected;
+            UpdateSchedulerUI(e.IsSelected);
+        }
+
+        private void ISAutoStartChckbx_CheckedChanged(object sender, EventArgs e)
+        {
+            ISSchedulesLstVw.AutoStart = ISAutoStartChckbx.Checked;
         }
         #endregion
 
@@ -344,13 +359,11 @@ namespace Tanji
 
         private void SendToServerBtn_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(IPacketTxt.Text)) return;
-            AttemptSendToServer(new HMessage(IPacketTxt.Text));
+            SendTo(new HMessage(IPacketTxt.Text, HDestination.Server));
         }
         private void SendToClientBtn_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(IPacketTxt.Text)) return;
-            AttemptSendToClient(new HMessage(IPacketTxt.Text));
+            SendTo(new HMessage(IPacketTxt.Text, HDestination.Client));
         }
         #endregion
 
@@ -412,10 +425,10 @@ namespace Tanji
                         ICHeaderTxt.Text = e.Args[0].ToString();
                         if (e.Args.Length < 2) return;
 
-                        ICTanjiConstructer.BeginUpdate();
+                        ICConstructerLstVw.BeginUpdate();
                         for (int i = 1; i < e.Args.Length; i++)
-                            ICTanjiConstructer.Append(e.Args[i]);
-                        ICTanjiConstructer.EndUpdate();
+                            ICConstructerLstVw.Append(e.Args[i]);
+                        ICConstructerLstVw.EndUpdate();
                         break;
                     }
                 }
@@ -722,24 +735,18 @@ namespace Tanji
             ExtensionsActiveTxt.Text = string.Format(ExtensionFormat, 0, _contractor.Extensions.Count);
         }
 
-        private void AttemptSendToServer(HMessage packet)
+        private void SendTo(HMessage packet)
         {
-            if (!packet.IsCorrupted) Game.SendToServer(packet.ToBytes());
-            else MessageBox.Show(InjServerCanc, TanjiError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-        private void AttemptSendToClient(HMessage packet)
-        {
-            if (!packet.IsCorrupted) Game.SendToClient(packet.ToBytes());
+            Func<byte[], int> sendToX = null;
+            switch (packet.Destination)
+            {
+                case HDestination.Client: sendToX = Game.SendToClient; break;
+                case HDestination.Server: sendToX = Game.SendToServer; break;
+                case HDestination.Unknown: throw new Exception("Unsupported HDestination type provided: HDestination.Unknown");
+            }
+
+            if (!packet.IsCorrupted) sendToX(packet.ToBytes());
             else MessageBox.Show(InjClientCanc, TanjiError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-
-        private HMessage GetSchedulerPacket()
-        {
-            var packet = new HMessage(ISPacketTxt.Text, (HDestination)(ISDestinationTxt.SelectedIndex + 1));
-            if (!packet.IsCorrupted) return packet;
-
-            MessageBox.Show(CorrPack, TanjiError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            return null;
         }
         #endregion
 

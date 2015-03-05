@@ -44,12 +44,12 @@
             this.ISBurstTxt = new System.Windows.Forms.NumericUpDown();
             this.ISIntervalTxt = new System.Windows.Forms.NumericUpDown();
             this.ISDescriptionTxt = new System.Windows.Forms.TextBox();
-            this.ISTanjiScheduler = new Sulakore.Components.SKoreScheduler();
-            this.PacketCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.DestinationCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.BurstCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.IntervalCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.StatusCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ISSchedulesLstVw = new Sulakore.Components.SKoreScheduler();
+            this.ISPacketCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ISDestinationCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ISBurstCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ISIntervalCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ISStatusCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ICConstructMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ICCopyPacketBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.ICTransferToBtn = new System.Windows.Forms.ToolStripMenuItem();
@@ -80,10 +80,10 @@
             this.ICHeaderTxt = new System.Windows.Forms.TextBox();
             this.ICValueLbl = new System.Windows.Forms.Label();
             this.ICValueTxt = new System.Windows.Forms.TextBox();
-            this.ICTanjiConstructer = new Sulakore.Components.SKoreConstructer();
-            this.TypeCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.ValueCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.EncodedCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ICConstructerLstVw = new Sulakore.Components.SKoreConstructer();
+            this.ICTypeCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ICValueCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ICEncodedCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ISchedulerTab = new System.Windows.Forms.TabPage();
             this.ISClearBtn = new Sulakore.Components.SKoreButton();
             this.ISAutoStartChckbx = new System.Windows.Forms.CheckBox();
@@ -105,9 +105,8 @@
             this.ITriggersTab = new System.Windows.Forms.TabPage();
             this.IFiltersTab = new System.Windows.Forms.TabPage();
             this.IFFilterTabs = new Sulakore.Components.SKoreTabControl();
+            this.IFReplaceTab = new System.Windows.Forms.TabPage();
             this.IFBlockTab = new System.Windows.Forms.TabPage();
-            this.IFSwitchTab = new System.Windows.Forms.TabPage();
-            this.IFModifyTab = new System.Windows.Forms.TabPage();
             this.EncoderDecoderTab = new System.Windows.Forms.TabPage();
             this.ModernEncodingGrpbx = new System.Windows.Forms.GroupBox();
             this.ModernShortOutputTxt = new System.Windows.Forms.TextBox();
@@ -126,7 +125,7 @@
             this.ETanjiExtensionViewer = new Sulakore.Components.SKoreExtensionView();
             this.NameCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.AuthorCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.VersionCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.EVersionCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.OptionsTab = new System.Windows.Forms.TabPage();
             this.OOptionsTab = new Sulakore.Components.SKoreTabControl();
             this.OSettingsTab = new System.Windows.Forms.TabPage();
@@ -298,55 +297,55 @@
             this.TanjiTip.SetToolTip(this.ISDescriptionTxt, "The desciption of the schedule, this will be shown when hovering over the item in" +
         " the list.");
             // 
-            // ISTanjiScheduler
+            // ISSchedulesLstVw
             // 
-            this.ISTanjiScheduler.CheckBoxes = true;
-            this.ISTanjiScheduler.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.PacketCol,
-            this.DestinationCol,
-            this.BurstCol,
-            this.IntervalCol,
-            this.StatusCol});
-            this.ISTanjiScheduler.FullRowSelect = true;
-            this.ISTanjiScheduler.GridLines = true;
-            this.ISTanjiScheduler.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.ISTanjiScheduler.HideSelection = false;
-            this.ISTanjiScheduler.Location = new System.Drawing.Point(6, 6);
-            this.ISTanjiScheduler.MultiSelect = false;
-            this.ISTanjiScheduler.Name = "ISTanjiScheduler";
-            this.ISTanjiScheduler.ShowItemToolTips = true;
-            this.ISTanjiScheduler.Size = new System.Drawing.Size(380, 150);
-            this.ISTanjiScheduler.TabIndex = 41;
-            this.TanjiTip.SetToolTip(this.ISTanjiScheduler, "To toggle, double click the selected schedule.");
-            this.ISTanjiScheduler.UseCompatibleStateImageBehavior = false;
-            this.ISTanjiScheduler.View = System.Windows.Forms.View.Details;
-            this.ISTanjiScheduler.ScheduleTriggered += new System.EventHandler<Sulakore.Protocol.HScheduleTriggeredEventArgs>(this.ISTanjiScheduler_ScheduleTriggered);
-            this.ISTanjiScheduler.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ISTanjiScheduler_ItemSelectionChanged);
+            this.ISSchedulesLstVw.CheckBoxes = true;
+            this.ISSchedulesLstVw.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.ISPacketCol,
+            this.ISDestinationCol,
+            this.ISBurstCol,
+            this.ISIntervalCol,
+            this.ISStatusCol});
+            this.ISSchedulesLstVw.FullRowSelect = true;
+            this.ISSchedulesLstVw.GridLines = true;
+            this.ISSchedulesLstVw.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.ISSchedulesLstVw.HideSelection = false;
+            this.ISSchedulesLstVw.Location = new System.Drawing.Point(6, 6);
+            this.ISSchedulesLstVw.MultiSelect = false;
+            this.ISSchedulesLstVw.Name = "ISSchedulesLstVw";
+            this.ISSchedulesLstVw.ShowItemToolTips = true;
+            this.ISSchedulesLstVw.Size = new System.Drawing.Size(380, 150);
+            this.ISSchedulesLstVw.TabIndex = 41;
+            this.TanjiTip.SetToolTip(this.ISSchedulesLstVw, "To toggle, double click the selected schedule.");
+            this.ISSchedulesLstVw.UseCompatibleStateImageBehavior = false;
+            this.ISSchedulesLstVw.View = System.Windows.Forms.View.Details;
+            this.ISSchedulesLstVw.ScheduleTriggered += new System.EventHandler<Sulakore.Protocol.HScheduleTriggeredEventArgs>(this.ISSchedulesLstVw_ScheduleTriggered);
+            this.ISSchedulesLstVw.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ISSchedulesLstVw_ItemSelectionChanged);
             // 
-            // PacketCol
+            // ISPacketCol
             // 
-            this.PacketCol.Text = "Packet";
-            this.PacketCol.Width = 145;
+            this.ISPacketCol.Text = "Packet";
+            this.ISPacketCol.Width = 145;
             // 
-            // DestinationCol
+            // ISDestinationCol
             // 
-            this.DestinationCol.Text = "Destination";
-            this.DestinationCol.Width = 65;
+            this.ISDestinationCol.Text = "Destination";
+            this.ISDestinationCol.Width = 65;
             // 
-            // BurstCol
+            // ISBurstCol
             // 
-            this.BurstCol.Text = "Burst";
-            this.BurstCol.Width = 48;
+            this.ISBurstCol.Text = "Burst";
+            this.ISBurstCol.Width = 48;
             // 
-            // IntervalCol
+            // ISIntervalCol
             // 
-            this.IntervalCol.Text = "Interval";
-            this.IntervalCol.Width = 48;
+            this.ISIntervalCol.Text = "Interval";
+            this.ISIntervalCol.Width = 48;
             // 
-            // StatusCol
+            // ISStatusCol
             // 
-            this.StatusCol.Text = "Status";
-            this.StatusCol.Width = 52;
+            this.ISStatusCol.Text = "Status";
+            this.ISStatusCol.Width = 52;
             // 
             // ICConstructMenu
             // 
@@ -509,7 +508,7 @@
             this.IConstructerTab.Controls.Add(this.ICHeaderTxt);
             this.IConstructerTab.Controls.Add(this.ICValueLbl);
             this.IConstructerTab.Controls.Add(this.ICValueTxt);
-            this.IConstructerTab.Controls.Add(this.ICTanjiConstructer);
+            this.IConstructerTab.Controls.Add(this.ICConstructerLstVw);
             this.IConstructerTab.Location = new System.Drawing.Point(4, 4);
             this.IConstructerTab.Name = "IConstructerTab";
             this.IConstructerTab.Padding = new System.Windows.Forms.Padding(3);
@@ -705,45 +704,45 @@
             this.ICValueTxt.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.ICValueTxt.TextChanged += new System.EventHandler(this.ICValueTxt_TextChanged);
             // 
-            // ICTanjiConstructer
+            // ICConstructerLstVw
             // 
-            this.ICTanjiConstructer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.ICConstructerLstVw.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.ICTanjiConstructer.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.TypeCol,
-            this.ValueCol,
-            this.EncodedCol});
-            this.ICTanjiConstructer.ContextMenuStrip = this.ICConstructMenu;
-            this.ICTanjiConstructer.FullRowSelect = true;
-            this.ICTanjiConstructer.GridLines = true;
-            this.ICTanjiConstructer.Header = ((ushort)(0));
-            this.ICTanjiConstructer.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.ICTanjiConstructer.HideSelection = false;
-            this.ICTanjiConstructer.Location = new System.Drawing.Point(6, 73);
-            this.ICTanjiConstructer.MultiSelect = false;
-            this.ICTanjiConstructer.Name = "ICTanjiConstructer";
-            this.ICTanjiConstructer.ShowItemToolTips = true;
-            this.ICTanjiConstructer.Size = new System.Drawing.Size(380, 161);
-            this.ICTanjiConstructer.TabIndex = 0;
-            this.ICTanjiConstructer.UseCompatibleStateImageBehavior = false;
-            this.ICTanjiConstructer.View = System.Windows.Forms.View.Details;
-            this.ICTanjiConstructer.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ICTanjiConstructer_ItemSelectionChanged);
-            this.ICTanjiConstructer.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ICTanjiConstructer_MouseDoubleClick);
+            this.ICConstructerLstVw.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.ICTypeCol,
+            this.ICValueCol,
+            this.ICEncodedCol});
+            this.ICConstructerLstVw.ContextMenuStrip = this.ICConstructMenu;
+            this.ICConstructerLstVw.FullRowSelect = true;
+            this.ICConstructerLstVw.GridLines = true;
+            this.ICConstructerLstVw.Header = ((ushort)(0));
+            this.ICConstructerLstVw.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.ICConstructerLstVw.HideSelection = false;
+            this.ICConstructerLstVw.Location = new System.Drawing.Point(6, 73);
+            this.ICConstructerLstVw.MultiSelect = false;
+            this.ICConstructerLstVw.Name = "ICConstructerLstVw";
+            this.ICConstructerLstVw.ShowItemToolTips = true;
+            this.ICConstructerLstVw.Size = new System.Drawing.Size(380, 161);
+            this.ICConstructerLstVw.TabIndex = 0;
+            this.ICConstructerLstVw.UseCompatibleStateImageBehavior = false;
+            this.ICConstructerLstVw.View = System.Windows.Forms.View.Details;
+            this.ICConstructerLstVw.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ICConstructerLstVw_ItemSelectionChanged);
+            this.ICConstructerLstVw.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ICConstructerLstVw_MouseDoubleClick);
             // 
-            // TypeCol
+            // ICTypeCol
             // 
-            this.TypeCol.Text = "Type";
-            this.TypeCol.Width = 72;
+            this.ICTypeCol.Text = "Type";
+            this.ICTypeCol.Width = 72;
             // 
-            // ValueCol
+            // ICValueCol
             // 
-            this.ValueCol.Text = "Value";
-            this.ValueCol.Width = 137;
+            this.ICValueCol.Text = "Value";
+            this.ICValueCol.Width = 137;
             // 
-            // EncodedCol
+            // ICEncodedCol
             // 
-            this.EncodedCol.Text = "Encoded";
-            this.EncodedCol.Width = 150;
+            this.ICEncodedCol.Text = "Encoded";
+            this.ICEncodedCol.Width = 150;
             // 
             // ISchedulerTab
             // 
@@ -764,7 +763,7 @@
             this.ISchedulerTab.Controls.Add(this.ISStartAllBtn);
             this.ISchedulerTab.Controls.Add(this.ISRemoveBtn);
             this.ISchedulerTab.Controls.Add(this.ISCreateBtn);
-            this.ISchedulerTab.Controls.Add(this.ISTanjiScheduler);
+            this.ISchedulerTab.Controls.Add(this.ISSchedulesLstVw);
             this.ISchedulerTab.Location = new System.Drawing.Point(4, 4);
             this.ISchedulerTab.Name = "ISchedulerTab";
             this.ISchedulerTab.Padding = new System.Windows.Forms.Padding(3);
@@ -783,6 +782,7 @@
             this.ISClearBtn.Skin = System.Drawing.Color.SlateGray;
             this.ISClearBtn.TabIndex = 43;
             this.ISClearBtn.Text = "Clear";
+            this.ISClearBtn.Click += new System.EventHandler(this.ISClearBtn_Click);
             // 
             // ISAutoStartChckbx
             // 
@@ -795,6 +795,7 @@
             this.ISAutoStartChckbx.TabIndex = 42;
             this.ISAutoStartChckbx.Text = "Auto Start";
             this.ISAutoStartChckbx.UseVisualStyleBackColor = true;
+            this.ISAutoStartChckbx.CheckedChanged += new System.EventHandler(this.ISAutoStartChckbx_CheckedChanged);
             // 
             // ISBurstLbl
             // 
@@ -977,12 +978,12 @@
             // 
             // IFFilterTabs
             // 
-            this.IFFilterTabs.Alignment = System.Windows.Forms.TabAlignment.Bottom;
+            this.IFFilterTabs.Alignment = System.Windows.Forms.TabAlignment.Left;
+            this.IFFilterTabs.Controls.Add(this.IFReplaceTab);
             this.IFFilterTabs.Controls.Add(this.IFBlockTab);
-            this.IFFilterTabs.Controls.Add(this.IFSwitchTab);
-            this.IFFilterTabs.Controls.Add(this.IFModifyTab);
             this.IFFilterTabs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.IFFilterTabs.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
+            this.IFFilterTabs.ItemSize = new System.Drawing.Size(48, 24);
             this.IFFilterTabs.Location = new System.Drawing.Point(3, 3);
             this.IFFilterTabs.Multiline = true;
             this.IFFilterTabs.Name = "IFFilterTabs";
@@ -992,32 +993,25 @@
             this.IFFilterTabs.Skin = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
             this.IFFilterTabs.TabIndex = 0;
             // 
+            // IFReplaceTab
+            // 
+            this.IFReplaceTab.BackColor = System.Drawing.Color.White;
+            this.IFReplaceTab.Location = new System.Drawing.Point(52, 4);
+            this.IFReplaceTab.Name = "IFReplaceTab";
+            this.IFReplaceTab.Padding = new System.Windows.Forms.Padding(3);
+            this.IFReplaceTab.Size = new System.Drawing.Size(330, 254);
+            this.IFReplaceTab.TabIndex = 0;
+            this.IFReplaceTab.Text = "Replace";
+            // 
             // IFBlockTab
             // 
             this.IFBlockTab.BackColor = System.Drawing.Color.White;
-            this.IFBlockTab.Location = new System.Drawing.Point(4, 4);
+            this.IFBlockTab.Location = new System.Drawing.Point(52, 4);
             this.IFBlockTab.Name = "IFBlockTab";
-            this.IFBlockTab.Size = new System.Drawing.Size(378, 230);
-            this.IFBlockTab.TabIndex = 0;
+            this.IFBlockTab.Padding = new System.Windows.Forms.Padding(3);
+            this.IFBlockTab.Size = new System.Drawing.Size(330, 254);
+            this.IFBlockTab.TabIndex = 1;
             this.IFBlockTab.Text = "Block";
-            // 
-            // IFSwitchTab
-            // 
-            this.IFSwitchTab.BackColor = System.Drawing.Color.White;
-            this.IFSwitchTab.Location = new System.Drawing.Point(4, 4);
-            this.IFSwitchTab.Name = "IFSwitchTab";
-            this.IFSwitchTab.Size = new System.Drawing.Size(378, 230);
-            this.IFSwitchTab.TabIndex = 1;
-            this.IFSwitchTab.Text = "Replace";
-            // 
-            // IFModifyTab
-            // 
-            this.IFModifyTab.BackColor = System.Drawing.Color.White;
-            this.IFModifyTab.Location = new System.Drawing.Point(4, 4);
-            this.IFModifyTab.Name = "IFModifyTab";
-            this.IFModifyTab.Size = new System.Drawing.Size(378, 230);
-            this.IFModifyTab.TabIndex = 2;
-            this.IFModifyTab.Text = "Modify";
             // 
             // EncoderDecoderTab
             // 
@@ -1185,7 +1179,7 @@
             this.ETanjiExtensionViewer.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.NameCol,
             this.AuthorCol,
-            this.VersionCol});
+            this.EVersionCol});
             this.ETanjiExtensionViewer.ContextMenuStrip = this.EExtensionMenu;
             this.ETanjiExtensionViewer.Dock = System.Windows.Forms.DockStyle.Top;
             this.ETanjiExtensionViewer.FullRowSelect = true;
@@ -1215,10 +1209,10 @@
             this.AuthorCol.Text = "Author";
             this.AuthorCol.Width = 110;
             // 
-            // VersionCol
+            // EVersionCol
             // 
-            this.VersionCol.Text = "Version";
-            this.VersionCol.Width = 101;
+            this.EVersionCol.Text = "Version";
+            this.EVersionCol.Width = 101;
             // 
             // OptionsTab
             // 
@@ -1438,7 +1432,7 @@
         private Sulakore.Components.SKoreButton ModernDecypherIntegerBtn;
         private System.Windows.Forms.TextBox ModernIntegerInputTxt;
         private System.Windows.Forms.TabPage ExtensionsTab;
-        private Sulakore.Components.SKoreConstructer ICTanjiConstructer;
+        private Sulakore.Components.SKoreConstructer ICConstructerLstVw;
         private System.Windows.Forms.Label ICHeaderLbl;
         private System.Windows.Forms.TextBox ICHeaderTxt;
         private System.Windows.Forms.Label ICValueLbl;
@@ -1469,7 +1463,7 @@
         private Sulakore.Components.SKoreButton ISStopAllBtn;
         private Sulakore.Components.SKoreButton ISRemoveBtn;
         private Sulakore.Components.SKoreButton ISCreateBtn;
-        private Sulakore.Components.SKoreScheduler ISTanjiScheduler;
+        private Sulakore.Components.SKoreScheduler ISSchedulesLstVw;
         private System.Windows.Forms.OpenFileDialog ChooseExtensionDlg;
         private System.Windows.Forms.Label ICCountLbl;
         private System.Windows.Forms.NumericUpDown ICCountTxt;
@@ -1491,15 +1485,12 @@
         private System.Windows.Forms.CheckBox OSAlwaysOnTopChckbx;
         private System.Windows.Forms.CheckBox OSDeactivatedChckbx;
         private Sulakore.Components.SKoreTabControl IFFilterTabs;
-        private System.Windows.Forms.TabPage IFBlockTab;
-        private System.Windows.Forms.TabPage IFSwitchTab;
-        private System.Windows.Forms.TabPage IFModifyTab;
         private System.Windows.Forms.Panel ETopGlowPnl;
         private System.Windows.Forms.PictureBox EExtensionLogoPctbx;
         private System.Windows.Forms.Panel EMiddleGlowPnl;
-        private System.Windows.Forms.ColumnHeader TypeCol;
-        private System.Windows.Forms.ColumnHeader ValueCol;
-        private System.Windows.Forms.ColumnHeader EncodedCol;
+        private System.Windows.Forms.ColumnHeader ICTypeCol;
+        private System.Windows.Forms.ColumnHeader ICValueCol;
+        private System.Windows.Forms.ColumnHeader ICEncodedCol;
         private System.Windows.Forms.Label ICChunkCountLbl;
         private System.Windows.Forms.Panel ICChunksLeftGlowPnl;
         private System.Windows.Forms.Panel ICChunksRightGlowPnl;
@@ -1508,17 +1499,19 @@
         private System.Windows.Forms.ToolStripMenuItem ICTransferToBtn;
         private System.Windows.Forms.ToolStripMenuItem ICSchedulerBtn;
         private System.Windows.Forms.ToolStripMenuItem ICPrimitiveBtn;
-        private System.Windows.Forms.ColumnHeader PacketCol;
-        private System.Windows.Forms.ColumnHeader DestinationCol;
-        private System.Windows.Forms.ColumnHeader BurstCol;
-        private System.Windows.Forms.ColumnHeader IntervalCol;
-        private System.Windows.Forms.ColumnHeader StatusCol;
+        private System.Windows.Forms.ColumnHeader ISPacketCol;
+        private System.Windows.Forms.ColumnHeader ISDestinationCol;
+        private System.Windows.Forms.ColumnHeader ISBurstCol;
+        private System.Windows.Forms.ColumnHeader ISIntervalCol;
+        private System.Windows.Forms.ColumnHeader ISStatusCol;
         private Sulakore.Components.SKoreButton ISClearBtn;
         private System.Windows.Forms.ToolStripSeparator ICTransferSeparator;
         private System.Windows.Forms.ToolStripMenuItem ICInjectionBtn;
         private System.Windows.Forms.ColumnHeader NameCol;
         private System.Windows.Forms.ColumnHeader AuthorCol;
-        private System.Windows.Forms.ColumnHeader VersionCol;
+        private System.Windows.Forms.ColumnHeader EVersionCol;
+        private System.Windows.Forms.TabPage IFReplaceTab;
+        private System.Windows.Forms.TabPage IFBlockTab;
 
     }
 }
