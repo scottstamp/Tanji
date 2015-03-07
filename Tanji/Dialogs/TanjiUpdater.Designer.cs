@@ -30,9 +30,10 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TanjiUpdater));
             this.InfoLbl = new System.Windows.Forms.Label();
-            this.DetailsBtn = new Sulakore.Components.SKoreButton();
             this.YesBtn = new Sulakore.Components.SKoreButton();
             this.NoBtn = new Sulakore.Components.SKoreButton();
+            this.VersionTxt = new System.Windows.Forms.Label();
+            this.MiddleGlowPnl = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
             // InfoLbl
@@ -40,29 +41,17 @@
             this.InfoLbl.Dock = System.Windows.Forms.DockStyle.Top;
             this.InfoLbl.Location = new System.Drawing.Point(0, 0);
             this.InfoLbl.Name = "InfoLbl";
-            this.InfoLbl.Size = new System.Drawing.Size(329, 51);
+            this.InfoLbl.Size = new System.Drawing.Size(329, 49);
             this.InfoLbl.TabIndex = 2;
-            this.InfoLbl.Text = "An update for Tanji has been found!; Would you like to download this newer spiffy" +
-    " version to your desktop?";
+            this.InfoLbl.Text = "An update for Tanji has been found!; Would you like to view the release notes for" +
+    " the newest version?";
             this.InfoLbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // DetailsBtn
-            // 
-            this.DetailsBtn.BackColor = System.Drawing.Color.Transparent;
-            this.DetailsBtn.DialogResult = System.Windows.Forms.DialogResult.None;
-            this.DetailsBtn.Location = new System.Drawing.Point(12, 54);
-            this.DetailsBtn.Name = "DetailsBtn";
-            this.DetailsBtn.Size = new System.Drawing.Size(80, 23);
-            this.DetailsBtn.Skin = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
-            this.DetailsBtn.TabIndex = 3;
-            this.DetailsBtn.Text = "Details";
-            this.DetailsBtn.Click += new System.EventHandler(this.DetailsBtn_Click);
             // 
             // YesBtn
             // 
             this.YesBtn.BackColor = System.Drawing.Color.Transparent;
             this.YesBtn.DialogResult = System.Windows.Forms.DialogResult.Yes;
-            this.YesBtn.Location = new System.Drawing.Point(181, 54);
+            this.YesBtn.Location = new System.Drawing.Point(181, 52);
             this.YesBtn.Name = "YesBtn";
             this.YesBtn.Size = new System.Drawing.Size(65, 23);
             this.YesBtn.Skin = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
@@ -74,13 +63,30 @@
             // 
             this.NoBtn.BackColor = System.Drawing.Color.Transparent;
             this.NoBtn.DialogResult = System.Windows.Forms.DialogResult.No;
-            this.NoBtn.Location = new System.Drawing.Point(252, 54);
+            this.NoBtn.Location = new System.Drawing.Point(252, 52);
             this.NoBtn.Name = "NoBtn";
             this.NoBtn.Size = new System.Drawing.Size(65, 23);
             this.NoBtn.Skin = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
             this.NoBtn.TabIndex = 5;
             this.NoBtn.Text = "No";
             this.NoBtn.Click += new System.EventHandler(this.NoBtn_Click);
+            // 
+            // VersionTxt
+            // 
+            this.VersionTxt.Location = new System.Drawing.Point(12, 52);
+            this.VersionTxt.Name = "VersionTxt";
+            this.VersionTxt.Size = new System.Drawing.Size(155, 23);
+            this.VersionTxt.TabIndex = 6;
+            this.VersionTxt.Text = "Version: 0.0.0.0";
+            this.VersionTxt.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // MiddleGlowPnl
+            // 
+            this.MiddleGlowPnl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
+            this.MiddleGlowPnl.Location = new System.Drawing.Point(173, 52);
+            this.MiddleGlowPnl.Name = "MiddleGlowPnl";
+            this.MiddleGlowPnl.Size = new System.Drawing.Size(2, 23);
+            this.MiddleGlowPnl.TabIndex = 7;
             // 
             // TanjiUpdater
             // 
@@ -89,9 +95,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(329, 87);
+            this.Controls.Add(this.MiddleGlowPnl);
+            this.Controls.Add(this.VersionTxt);
             this.Controls.Add(this.NoBtn);
             this.Controls.Add(this.YesBtn);
-            this.Controls.Add(this.DetailsBtn);
             this.Controls.Add(this.InfoLbl);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -107,8 +114,9 @@
         #endregion
 
         private System.Windows.Forms.Label InfoLbl;
-        private Sulakore.Components.SKoreButton DetailsBtn;
         private Sulakore.Components.SKoreButton YesBtn;
         private Sulakore.Components.SKoreButton NoBtn;
+        private System.Windows.Forms.Label VersionTxt;
+        private System.Windows.Forms.Panel MiddleGlowPnl;
     }
 }

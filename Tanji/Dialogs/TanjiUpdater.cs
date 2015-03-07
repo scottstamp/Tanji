@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Net;
 using System.Diagnostics;
 using System.Windows.Forms;
@@ -10,18 +9,20 @@ namespace Tanji.Dialogs
 {
     public partial class TanjiUpdater : Form
     {
-        private Version _remoteVers;
-        private string _downloadPath;
+        public static Version LocalVersion { get; private set; }
+        public static Version RemoteVersion { get; private set; }
+        public static string ReleaseNotesUrl { get; private set; }
 
-        private readonly Version _localVers;
+        private const string TANJI_INFO_PATH = "http://pastebin.com/raw.php?i=JyFQ2msW";
+        private const string RELEASE_PREFIX = "https://github.com/ArachisH/Tanji/releases/tag/v";
 
-        private const string AppInfoPath = "http://pastebin.com/raw.php?i=JyFQ2msW";
-
+        static TanjiUpdater()
+        {
+            LocalVersion = new Version(Application.ProductVersion);
+        }
         public TanjiUpdater()
         {
             InitializeComponent();
-
-            _localVers = new Version(Application.ProductVersion);
         }
 
         private void NoBtn_Click(object sender, EventArgs e)
@@ -30,32 +31,8 @@ namespace Tanji.Dialogs
         }
         private void YesBtn_Click(object sender, EventArgs e)
         {
-            Cursor = Cursors.WaitCursor;
-            try
-            {
-                using (var webClient = new WebClient())
-                {
-
-                    string fileName = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\" + Path.GetFileName(Uri.UnescapeDataString(_downloadPath.Replace('+', ' ')));
-                    webClient.DownloadFile(_downloadPath, fileName);
-                }
-            }
-            catch (WebException)
-            {
-                const string DownloadFailed = "Unable to download the newest version of Tanji; Would you like to open up the webpage containing the download?";
-                if (MessageBox.Show(DownloadFailed, Main.TanjiError, MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
-                    DetailsBtn_Click(sender, e);
-            }
-            finally
-            {
-                Cursor = Cursors.Default;
-                Close();
-            }
-        }
-        private void DetailsBtn_Click(object sender, EventArgs e)
-        {
-            const string DBTanjiThread = "http://arachish.github.io/Tanji/";
-            Process.Start(DBTanjiThread);
+            Process.Start(ReleaseNotesUrl);
+            NoBtn_Click(sender, e);
         }
 
         public bool UpdateFound()
@@ -66,11 +43,14 @@ namespace Tanji.Dialogs
                 {
                     webClient.Proxy = null;
                     webClient.Headers["User-Agent"] = SKore.ChromeAgent;
-                    string[] info = webClient.DownloadString(AppInfoPath).Split('_');
-                    _remoteVers = new Version(info[0]);
-                    _downloadPath = info[1];
 
-                    return _remoteVers > _localVers;
+                    string version = webClient.DownloadString(TANJI_INFO_PATH);
+                    RemoteVersion = new Version(version.Split('_')[0]);
+
+                    ReleaseNotesUrl = RELEASE_PREFIX + RemoteVersion.ToString();
+                    VersionTxt.Text = "Version: " + RemoteVersion.ToString();
+
+                    return RemoteVersion > LocalVersion;
                 }
             }
             catch (WebException) { return false; }
