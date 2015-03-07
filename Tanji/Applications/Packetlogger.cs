@@ -173,7 +173,7 @@ namespace Tanji.Applications
             Color highlight = (e.Packet.Destination == HDestination.Client
                 ? IncomingHighlight : OutgoingHighlight);
 
-            if (e.Blocked) WriteHighlight("Blocked | ", BlockHighlight);
+            if (e.IsBlocked) WriteHighlight("Blocked | ", BlockHighlight);
             else if (e.Replaced) WriteHighlight("Replaced | ", ReplaceHighlight);
 
             WriteHighlight(message + (DisplayVisualSplit ? "\n--------------------\n" : "\n"), highlight);
