@@ -137,6 +137,7 @@
             this.OSScreenEdgeSnappingChckbx = new System.Windows.Forms.CheckBox();
             this.OSCloseOnDisconnectChckbx = new System.Windows.Forms.CheckBox();
             this.OAboutTab = new System.Windows.Forms.TabPage();
+            this.TanjiInfoTxt = new System.Windows.Forms.ToolStripStatusLabel();
             this.TanjiStrip.SuspendLayout();
             this.EExtensionMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ISBurstTxt)).BeginInit();
@@ -168,7 +169,8 @@
             this.TanjiStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.VersionTxt,
             this.SchedulesTxt,
-            this.ExtensionsActiveTxt});
+            this.ExtensionsActiveTxt,
+            this.TanjiInfoTxt});
             this.TanjiStrip.Location = new System.Drawing.Point(0, 345);
             this.TanjiStrip.Name = "TanjiStrip";
             this.TanjiStrip.Size = new System.Drawing.Size(479, 24);
@@ -1349,6 +1351,17 @@
             this.OAboutTab.TabIndex = 0;
             this.OAboutTab.Text = "About";
             // 
+            // TanjiInfoTxt
+            // 
+            this.TanjiInfoTxt.IsLink = true;
+            this.TanjiInfoTxt.LinkColor = System.Drawing.SystemColors.HotTrack;
+            this.TanjiInfoTxt.Name = "TanjiInfoTxt";
+            this.TanjiInfoTxt.Size = new System.Drawing.Size(135, 19);
+            this.TanjiInfoTxt.Spring = true;
+            this.TanjiInfoTxt.Text = "ArachisH.GitHub.io/Tanji/";
+            this.TanjiInfoTxt.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
+            this.TanjiInfoTxt.Click += new System.EventHandler(this.TanjiInfoTxt_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1512,6 +1525,7 @@
         private System.Windows.Forms.ColumnHeader EVersionCol;
         private System.Windows.Forms.TabPage IFReplaceTab;
         private System.Windows.Forms.TabPage IFBlockTab;
+        private System.Windows.Forms.ToolStripStatusLabel TanjiInfoTxt;
 
     }
 }

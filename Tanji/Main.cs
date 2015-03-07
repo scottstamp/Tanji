@@ -60,6 +60,16 @@ namespace Tanji
         {
             InitializeComponent();
 
+            using (var updater = new TanjiUpdater())
+            {
+                VersionTxt.Text = "v" + TanjiUpdater.LocalVersion.ToString();
+                if (updater.UpdateFound())
+                {
+                    updater.ShowDialog();
+                    VersionTxt.IsLink = true;
+                }
+            }
+
             _fakeServer = new HKeyExchange(FEXPONENT, FMODULUS, FPRIVATEEXPONENT);
 
             RExponent = 10001;
@@ -71,17 +81,6 @@ namespace Tanji
             OSTransparencyChckbx.Checked = Settings.Default.OpacEnabled;
             OSDeactivatedChckbx.Checked = Settings.Default.OnlyOnDeac;
             OSTransparencyTbar.Value = Settings.Default.OpacValue;
-
-            using (var updater = new TanjiUpdater())
-            {
-                if (updater.UpdateFound())
-                {
-                    updater.ShowDialog();
-                    VersionTxt.Text = "Update Found!";
-                    VersionTxt.IsLink = true;
-                }
-                else VersionTxt.Text = "v" + Application.ProductVersion;
-            }
 
             _packetloggerF = new Packetlogger();
             _tanjiConnect = new TanjiConnect(this);
@@ -111,14 +110,21 @@ namespace Tanji
             if (OSTransparencyChckbx.Checked && OSDeactivatedChckbx.Checked)
                 Opacity = (OSTransparencyTbar.Value * 0.01);
         }
+
         private void VersionTxt_Click(object sender, EventArgs e)
         {
             if (!VersionTxt.IsLink) return;
 
             VersionTxt.LinkVisited = true;
-            const string TanjiThread = "http://arachish.github.io/Tanji/";
-            Process.Start(TanjiThread);
+            Process.Start(TanjiUpdater.ReleaseNotesUrl);
         }
+        private void TanjiInfoTxt_Click(object sender, EventArgs e)
+        {
+            TanjiInfoTxt.LinkVisited = true;
+            const string TanjiProjectSite = "http://arachish.github.io/Tanji/";
+            Process.Start(TanjiProjectSite);
+        }
+
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
             SaveSettings();
