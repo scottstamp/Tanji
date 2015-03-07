@@ -623,7 +623,7 @@
             this.ICClearBtn.Location = new System.Drawing.Point(7, 45);
             this.ICClearBtn.Name = "ICClearBtn";
             this.ICClearBtn.Size = new System.Drawing.Size(67, 22);
-            this.ICClearBtn.Skin = System.Drawing.Color.SlateGray;
+            this.ICClearBtn.Skin = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
             this.ICClearBtn.TabIndex = 17;
             this.ICClearBtn.Text = "Clear";
             this.ICClearBtn.Click += new System.EventHandler(this.ICClearBtn_Click);
@@ -779,7 +779,7 @@
             this.ISClearBtn.Location = new System.Drawing.Point(158, 240);
             this.ISClearBtn.Name = "ISClearBtn";
             this.ISClearBtn.Size = new System.Drawing.Size(76, 22);
-            this.ISClearBtn.Skin = System.Drawing.Color.SlateGray;
+            this.ISClearBtn.Skin = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
             this.ISClearBtn.TabIndex = 43;
             this.ISClearBtn.Text = "Clear";
             this.ISClearBtn.Click += new System.EventHandler(this.ISClearBtn_Click);
