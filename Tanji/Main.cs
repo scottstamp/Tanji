@@ -15,11 +15,19 @@ using Sulakore.Protocol;
 using Sulakore.Extensions;
 using Sulakore.Communication;
 using Sulakore.Protocol.Encryption;
+using Tanji.Utilities;
 
 namespace Tanji
 {
     public partial class Main : Form
     {
+        public const int FAKE_EXPONENT = 3;
+        public const string FAKE_MODULUS = "86851dd364d5c5cece3c883171cc6ddc5760779b992482bd1e20dd296888df91b33b936a7b93f06d29e8870f703a216257dec7c81de0058fea4cc5116f75e6efc4e9113513e45357dc3fd43d4efab5963ef178b78bd61e81a14c603b24c8bcce0a12230b320045498edc29282ff0603bc7b7dae8fc1b05b52b2f301a9dc783b7";
+        public const string FAKE_PRIVATE_EXPONENT = "59ae13e243392e89ded305764bdd9e92e4eafa67bb6dac7e1415e8c645b0950bccd26246fd0d4af37145af5fa026c0ec3a94853013eaae5ff1888360f4f9449ee023762ec195dff3f30ca0b08b8c947e3859877b5d7dced5c8715c58b53740b84e11fbc71349a27c31745fcefeeea57cff291099205e230e0c7c27e8e1c0512b";
+
+        public const int REAL_EXPONENT = 10001;
+        public const string REAL_MODULUS = "e052808c1abef69a1a62c396396b85955e2ff522f5157639fa6a19a98b54e0e4d6e44f44c4c0390fee8ccf642a22b6d46d7228b10e34ae6fffb61a35c11333780af6dd1aaafa7388fa6c65b51e8225c6b57cf5fbac30856e896229512e1f9af034895937b2cb6637eb6edf768c10189df30c10d8a3ec20488a198063599ca6ad";
+
         private int _clientStepShift;
         private Contractor _contractor;
         private bool _debugging, _extensionsLoaded;
@@ -40,50 +48,41 @@ namespace Tanji
         private const string InjClientCanc = "The specified data is corrupted, injection to client cancelled!";
         private const string InjServerCanc = "The specified data is corrupted, injection to server cancelled!";
 
-        public static int RExponent { get; set; }
-        public static string RModulus { get; set; }
+        private int _exponent = REAL_EXPONENT;
+        public int Exponent
+        {
+            get { return _exponent; }
+            set { _exponent = value; }
+        }
 
-        public const int FEXPONENT = 3;
-        public const string FMODULUS = "86851dd364d5c5cece3c883171cc6ddc5760779b992482bd1e20dd296888df91b33b936a7b93f06d29e8870f703a216257dec7c81de0058fea4cc5116f75e6efc4e9113513e45357dc3fd43d4efab5963ef178b78bd61e81a14c603b24c8bcce0a12230b320045498edc29282ff0603bc7b7dae8fc1b05b52b2f301a9dc783b7";
-        public static string FPRIVATEEXPONENT = "59ae13e243392e89ded305764bdd9e92e4eafa67bb6dac7e1415e8c645b0950bccd26246fd0d4af37145af5fa026c0ec3a94853013eaae5ff1888360f4f9449ee023762ec195dff3f30ca0b08b8c947e3859877b5d7dced5c8715c58b53740b84e11fbc71349a27c31745fcefeeea57cff291099205e230e0c7c27e8e1c0512b";
-
-        public bool CloseOnDisconnect { get; set; }
+        private string _modulus = REAL_MODULUS;
+        public string Modulus
+        {
+            get { return _modulus; }
+            set { _modulus = value; }
+        }
 
         public const string TanjiAlert = "Tanji ~ Alert!";
         public const string TanjiError = "Tanji ~ Error!";
         public const string TanjiWarning = "Tanji ~ Warning!";
 
-        public static HConnection Game { get; set; }
+        public HConnection Game { get; set; }
 
         #region Constructor(s)
         public Main(bool debugging)
         {
             InitializeComponent();
 
-            using (var updater = new TanjiUpdater())
-            {
-                VersionTxt.Text = "v" + TanjiUpdater.LocalVersion.ToString();
-                if (updater.UpdateFound())
-                {
-                    updater.ShowDialog();
-                    VersionTxt.IsLink = true;
-                }
-            }
-
-            _fakeServer = new HKeyExchange(FEXPONENT, FMODULUS, FPRIVATEEXPONENT);
-
-            RExponent = 10001;
-            RModulus = "e052808c1abef69a1a62c396396b85955e2ff522f5157639fa6a19a98b54e0e4d6e44f44c4c0390fee8ccf642a22b6d46d7228b10e34ae6fffb61a35c11333780af6dd1aaafa7388fa6c65b51e8225c6b57cf5fbac30856e896229512e1f9af034895937b2cb6637eb6edf768c10189df30c10d8a3ec20488a198063599ca6ad";
-
-            OSAlwaysOnTopChckbx.Checked = Settings.Default.IsOnTop;
-            OSScreenEdgeSnappingChckbx.Checked = Settings.Default.EdgeSnap;
-            OSCloseOnDisconnectChckbx.Checked = Settings.Default.CloseOnDC;
-            OSTransparencyChckbx.Checked = Settings.Default.OpacEnabled;
-            OSDeactivatedChckbx.Checked = Settings.Default.OnlyOnDeac;
-            OSTransparencyTbar.Value = Settings.Default.OpacValue;
+            CheckForUpdates();
+            TanjiSettings.Load();
 
             _packetloggerF = new Packetlogger();
             _tanjiConnect = new TanjiConnect(this);
+            _fakeServer = new HKeyExchange(FAKE_EXPONENT, FAKE_MODULUS, FAKE_PRIVATE_EXPONENT);
+
+            OSAlwaysOnTopChckbx.Checked = TanjiSettings.Global.IsAlwaysOnTop;
+            OSScreenEdgeSnappingChckbx.Checked = TanjiSettings.Global.IsEdgeSnappingEnabled;
+            OSCloseOnDisconnectChckbx.Checked = TanjiSettings.Global.ShouldCloseOnDisconnect;
 
             _initiate = Initiate;
             _reinitiate = Reinitiate;
@@ -99,16 +98,6 @@ namespace Tanji
             if (!_debugging)
                 Initiate();
             else InitializeContractor();
-        }
-        private void Main_Activated(object sender, EventArgs e)
-        {
-            if (OSTransparencyChckbx.Checked)
-                Opacity = ((!OSDeactivatedChckbx.Checked ? OSTransparencyTbar.Value : 100) * 0.01);
-        }
-        private void Main_Deactivate(object sender, EventArgs e)
-        {
-            if (OSTransparencyChckbx.Checked && OSDeactivatedChckbx.Checked)
-                Opacity = (OSTransparencyTbar.Value * 0.01);
         }
 
         private void VersionTxt_Click(object sender, EventArgs e)
@@ -127,7 +116,7 @@ namespace Tanji
 
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
-            SaveSettings();
+            TanjiSettings.Save();
             if (!_debugging)
             {
                 e.Cancel = true;
@@ -494,31 +483,13 @@ namespace Tanji
         #endregion
 
         #region Option Related Methods
-        private void OSTransparencyTbar_ValueChanged(object sender, EventArgs e)
-        {
-            if (!OSDeactivatedChckbx.Checked)
-                Opacity = (OSTransparencyTbar.Value * 0.01);
-        }
         private void OSAlwaysOnTopChckbx_CheckedChanged(object sender, EventArgs e)
         {
             TopMost = OSAlwaysOnTopChckbx.Checked;
         }
-        private void OSDeactivatedChckbx_CheckedChanged(object sender, EventArgs e)
-        {
-            if (OSDeactivatedChckbx.Checked) Opacity = 1;
-            else Opacity = (OSTransparencyTbar.Value * 0.01);
-        }
-        private void OSTransparencyChckbx_CheckedChanged(object sender, EventArgs e)
-        {
-            bool isEnabled = OSTransparencyChckbx.Checked;
-            OSTransparencyTbar.Enabled = OSDeactivatedChckbx.Enabled = isEnabled;
-
-            Opacity = ((!isEnabled || OSDeactivatedChckbx.Checked ? 100 : OSTransparencyTbar.Value) * 0.01);
-        }
         private void OSCloseOnDisconnectChckbx_CheckedChanged(object sender, EventArgs e)
         {
-            Settings.Default.CloseOnDC = OSCloseOnDisconnectChckbx.Checked;
-            Settings.Default.Save();
+            TanjiSettings.Global.ShouldCloseOnDisconnect = OSCloseOnDisconnectChckbx.Checked;
         }
         private void OSScreenEdgeSnappingChckbx_CheckedChanged(object sender, EventArgs e)
         {
@@ -615,9 +586,9 @@ namespace Tanji
 
         private void Game_Disconnected(object sender, DisconnectedEventArgs e)
         {
-            if (Settings.Default.CloseOnDC)
+            if (TanjiSettings.Global.ShouldCloseOnDisconnect)
             {
-                SaveSettings();
+                TanjiSettings.Save();
                 Environment.Exit(0);
             }
 
@@ -643,6 +614,19 @@ namespace Tanji
         #endregion
 
         #region Private Methods
+        private void CheckForUpdates()
+        {
+            using (var updater = new TanjiUpdater())
+            {
+                VersionTxt.Text = "v" + TanjiUpdater.LocalVersion.ToString();
+                if (updater.UpdateFound())
+                {
+                    updater.ShowDialog();
+                    VersionTxt.IsLink = true;
+                }
+            }
+        }
+
         private void Initiate()
         {
             if (InvokeRequired) { Invoke(_initiate); return; }
@@ -686,16 +670,6 @@ namespace Tanji
 
             Task.Factory.StartNew(Initiate);
         }
-        private void SaveSettings()
-        {
-            Settings.Default.IsOnTop = OSAlwaysOnTopChckbx.Checked;
-            Settings.Default.EdgeSnap = OSScreenEdgeSnappingChckbx.Checked;
-            Settings.Default.CloseOnDC = OSCloseOnDisconnectChckbx.Checked;
-            Settings.Default.OpacEnabled = OSTransparencyChckbx.Checked;
-            Settings.Default.OnlyOnDeac = OSDeactivatedChckbx.Checked;
-            Settings.Default.OpacValue = OSTransparencyTbar.Value;
-            Settings.Default.Save();
-        }
         private void HandshakeFinished()
         {
             Game.DataToClient -= Handshake_ToClient;
@@ -724,7 +698,7 @@ namespace Tanji
         }
         private void InitializeContractor()
         {
-            _contractor = new Contractor(Game, _tanjiConnect.PlayerName, _tanjiConnect.GameData);
+            _contractor = new Contractor(Game, _tanjiConnect.GameData);
             _contractor.Invoked += Contractor_CommandReceived;
 
             if (!_extensionsLoaded)
@@ -761,13 +735,7 @@ namespace Tanji
         {
             InitializeContractor();
 
-            if (_tanjiConnect.CustomExponent != 0)
-                RExponent = _tanjiConnect.CustomExponent;
-
-            if (!string.IsNullOrWhiteSpace(_tanjiConnect.CustomModulus))
-                RModulus = _tanjiConnect.CustomModulus;
-
-            _fakeClient = new HKeyExchange(RExponent, RModulus);
+            _fakeClient = new HKeyExchange(Exponent, Modulus);
 
             Game.DataToClient += Handshake_ToClient;
             Game.DataToServer += Handshake_ToServer;

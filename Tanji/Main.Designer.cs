@@ -34,6 +34,7 @@
             this.VersionTxt = new System.Windows.Forms.ToolStripStatusLabel();
             this.SchedulesTxt = new System.Windows.Forms.ToolStripStatusLabel();
             this.ExtensionsActiveTxt = new System.Windows.Forms.ToolStripStatusLabel();
+            this.TanjiInfoTxt = new System.Windows.Forms.ToolStripStatusLabel();
             this.EExtensionMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.EOpenBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.EUninstallBtn = new System.Windows.Forms.ToolStripMenuItem();
@@ -130,14 +131,9 @@
             this.OOptionsTab = new Sulakore.Components.SKoreTabControl();
             this.OSettingsTab = new System.Windows.Forms.TabPage();
             this.OSAlwaysOnTopChckbx = new System.Windows.Forms.CheckBox();
-            this.OSTOLFGrpbx = new System.Windows.Forms.GroupBox();
-            this.OSTransparencyChckbx = new System.Windows.Forms.CheckBox();
-            this.OSDeactivatedChckbx = new System.Windows.Forms.CheckBox();
-            this.OSTransparencyTbar = new System.Windows.Forms.TrackBar();
             this.OSScreenEdgeSnappingChckbx = new System.Windows.Forms.CheckBox();
             this.OSCloseOnDisconnectChckbx = new System.Windows.Forms.CheckBox();
             this.OAboutTab = new System.Windows.Forms.TabPage();
-            this.TanjiInfoTxt = new System.Windows.Forms.ToolStripStatusLabel();
             this.TanjiStrip.SuspendLayout();
             this.EExtensionMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ISBurstTxt)).BeginInit();
@@ -159,8 +155,6 @@
             this.OptionsTab.SuspendLayout();
             this.OOptionsTab.SuspendLayout();
             this.OSettingsTab.SuspendLayout();
-            this.OSTOLFGrpbx.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.OSTransparencyTbar)).BeginInit();
             this.SuspendLayout();
             // 
             // TanjiStrip
@@ -202,6 +196,17 @@
             this.ExtensionsActiveTxt.Name = "ExtensionsActiveTxt";
             this.ExtensionsActiveTxt.Size = new System.Drawing.Size(125, 19);
             this.ExtensionsActiveTxt.Text = "Extensions Active: 0/0";
+            // 
+            // TanjiInfoTxt
+            // 
+            this.TanjiInfoTxt.IsLink = true;
+            this.TanjiInfoTxt.LinkColor = System.Drawing.SystemColors.HotTrack;
+            this.TanjiInfoTxt.Name = "TanjiInfoTxt";
+            this.TanjiInfoTxt.Size = new System.Drawing.Size(166, 19);
+            this.TanjiInfoTxt.Spring = true;
+            this.TanjiInfoTxt.Text = "ArachisH.GitHub.io/Tanji/";
+            this.TanjiInfoTxt.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
+            this.TanjiInfoTxt.Click += new System.EventHandler(this.TanjiInfoTxt_Click);
             // 
             // EExtensionMenu
             // 
@@ -1248,7 +1253,6 @@
             // 
             this.OSettingsTab.BackColor = System.Drawing.Color.White;
             this.OSettingsTab.Controls.Add(this.OSAlwaysOnTopChckbx);
-            this.OSettingsTab.Controls.Add(this.OSTOLFGrpbx);
             this.OSettingsTab.Controls.Add(this.OSScreenEdgeSnappingChckbx);
             this.OSettingsTab.Controls.Add(this.OSCloseOnDisconnectChckbx);
             this.OSettingsTab.Location = new System.Drawing.Point(4, 4);
@@ -1268,54 +1272,6 @@
             this.OSAlwaysOnTopChckbx.Text = "Always On Top";
             this.OSAlwaysOnTopChckbx.UseVisualStyleBackColor = true;
             this.OSAlwaysOnTopChckbx.CheckedChanged += new System.EventHandler(this.OSAlwaysOnTopChckbx_CheckedChanged);
-            // 
-            // OSTOLFGrpbx
-            // 
-            this.OSTOLFGrpbx.Controls.Add(this.OSTransparencyChckbx);
-            this.OSTOLFGrpbx.Controls.Add(this.OSDeactivatedChckbx);
-            this.OSTOLFGrpbx.Controls.Add(this.OSTransparencyTbar);
-            this.OSTOLFGrpbx.Location = new System.Drawing.Point(6, 223);
-            this.OSTOLFGrpbx.Name = "OSTOLFGrpbx";
-            this.OSTOLFGrpbx.Size = new System.Drawing.Size(387, 70);
-            this.OSTOLFGrpbx.TabIndex = 3;
-            this.OSTOLFGrpbx.TabStop = false;
-            this.OSTOLFGrpbx.Text = "Transparency";
-            // 
-            // OSTransparencyChckbx
-            // 
-            this.OSTransparencyChckbx.AutoSize = true;
-            this.OSTransparencyChckbx.Location = new System.Drawing.Point(316, 0);
-            this.OSTransparencyChckbx.Name = "OSTransparencyChckbx";
-            this.OSTransparencyChckbx.Size = new System.Drawing.Size(65, 17);
-            this.OSTransparencyChckbx.TabIndex = 4;
-            this.OSTransparencyChckbx.Text = "Enabled";
-            this.OSTransparencyChckbx.UseVisualStyleBackColor = true;
-            this.OSTransparencyChckbx.CheckedChanged += new System.EventHandler(this.OSTransparencyChckbx_CheckedChanged);
-            // 
-            // OSDeactivatedChckbx
-            // 
-            this.OSDeactivatedChckbx.AutoSize = true;
-            this.OSDeactivatedChckbx.Enabled = false;
-            this.OSDeactivatedChckbx.Location = new System.Drawing.Point(191, 0);
-            this.OSDeactivatedChckbx.Name = "OSDeactivatedChckbx";
-            this.OSDeactivatedChckbx.Size = new System.Drawing.Size(125, 17);
-            this.OSDeactivatedChckbx.TabIndex = 5;
-            this.OSDeactivatedChckbx.Text = "Only On Deactivated";
-            this.OSDeactivatedChckbx.UseVisualStyleBackColor = true;
-            this.OSDeactivatedChckbx.CheckedChanged += new System.EventHandler(this.OSDeactivatedChckbx_CheckedChanged);
-            // 
-            // OSTransparencyTbar
-            // 
-            this.OSTransparencyTbar.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.OSTransparencyTbar.Enabled = false;
-            this.OSTransparencyTbar.Location = new System.Drawing.Point(3, 16);
-            this.OSTransparencyTbar.Maximum = 100;
-            this.OSTransparencyTbar.Minimum = 10;
-            this.OSTransparencyTbar.Name = "OSTransparencyTbar";
-            this.OSTransparencyTbar.Size = new System.Drawing.Size(381, 51);
-            this.OSTransparencyTbar.TabIndex = 4;
-            this.OSTransparencyTbar.Value = 100;
-            this.OSTransparencyTbar.ValueChanged += new System.EventHandler(this.OSTransparencyTbar_ValueChanged);
             // 
             // OSScreenEdgeSnappingChckbx
             // 
@@ -1351,17 +1307,6 @@
             this.OAboutTab.TabIndex = 0;
             this.OAboutTab.Text = "About";
             // 
-            // TanjiInfoTxt
-            // 
-            this.TanjiInfoTxt.IsLink = true;
-            this.TanjiInfoTxt.LinkColor = System.Drawing.SystemColors.HotTrack;
-            this.TanjiInfoTxt.Name = "TanjiInfoTxt";
-            this.TanjiInfoTxt.Size = new System.Drawing.Size(135, 19);
-            this.TanjiInfoTxt.Spring = true;
-            this.TanjiInfoTxt.Text = "ArachisH.GitHub.io/Tanji/";
-            this.TanjiInfoTxt.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
-            this.TanjiInfoTxt.Click += new System.EventHandler(this.TanjiInfoTxt_Click);
-            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1376,8 +1321,6 @@
             this.Name = "Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Tanji  ~ Connected[Host:Port]";
-            this.Activated += new System.EventHandler(this.Main_Activated);
-            this.Deactivate += new System.EventHandler(this.Main_Deactivate);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
             this.Load += new System.EventHandler(this.Main_Load);
             this.TanjiStrip.ResumeLayout(false);
@@ -1408,9 +1351,6 @@
             this.OOptionsTab.ResumeLayout(false);
             this.OSettingsTab.ResumeLayout(false);
             this.OSettingsTab.PerformLayout();
-            this.OSTOLFGrpbx.ResumeLayout(false);
-            this.OSTOLFGrpbx.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.OSTransparencyTbar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1491,12 +1431,8 @@
         private System.Windows.Forms.TabPage OSettingsTab;
         private System.Windows.Forms.CheckBox OSScreenEdgeSnappingChckbx;
         private System.Windows.Forms.CheckBox OSCloseOnDisconnectChckbx;
-        private System.Windows.Forms.GroupBox OSTOLFGrpbx;
-        private System.Windows.Forms.CheckBox OSTransparencyChckbx;
-        private System.Windows.Forms.TrackBar OSTransparencyTbar;
         private System.Windows.Forms.ToolStripStatusLabel VersionTxt;
         private System.Windows.Forms.CheckBox OSAlwaysOnTopChckbx;
-        private System.Windows.Forms.CheckBox OSDeactivatedChckbx;
         private Sulakore.Components.SKoreTabControl IFFilterTabs;
         private System.Windows.Forms.Panel ETopGlowPnl;
         private System.Windows.Forms.PictureBox EExtensionLogoPctbx;
