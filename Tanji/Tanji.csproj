@@ -68,6 +68,9 @@
     <Compile Include="Applications\Packetlogger.Designer.cs">
       <DependentUpon>Packetlogger.cs</DependentUpon>
     </Compile>
+    <Compile Include="Components\TanjiModePanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Dialogs\TanjiConnect.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -88,6 +91,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\TanjiSettings.cs" />
     <EmbeddedResource Include="Applications\Packetlogger.resx">
       <DependentUpon>Packetlogger.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -110,15 +114,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
-    </Compile>
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
   </ItemGroup>
   <ItemGroup>
