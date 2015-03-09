@@ -28,19 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TanjiConnect));
             this.MiddleGlowPnl = new System.Windows.Forms.Panel();
-            this.ATimer = new System.Windows.Forms.Timer(this.components);
             this.ChooseClientDlg = new System.Windows.Forms.OpenFileDialog();
-            this.StatusTxt = new System.Windows.Forms.Label();
-            this.StatusLeftGlowPnl = new System.Windows.Forms.Panel();
-            this.StatusRightGlowPnl = new System.Windows.Forms.Panel();
-            this.ManualH = new System.Windows.Forms.Panel();
-            this.AutomaticLbl = new System.Windows.Forms.Label();
             this.GameHostLbl = new System.Windows.Forms.Label();
             this.GamePortLbl = new System.Windows.Forms.Label();
-            this.AutomaticH = new System.Windows.Forms.Panel();
             this.TopGlowPnl = new System.Windows.Forms.Panel();
             this.ExponentTxt = new System.Windows.Forms.TextBox();
             this.ExponentGrpbx = new System.Windows.Forms.GroupBox();
@@ -51,12 +43,17 @@
             this.ModulusTxt = new System.Windows.Forms.TextBox();
             this.ModulusGrpbx = new System.Windows.Forms.GroupBox();
             this.GameHostTxt = new System.Windows.Forms.ComboBox();
-            this.ManualLbl = new System.Windows.Forms.Label();
             this.GamePortTxt = new System.Windows.Forms.ComboBox();
             this.ProcessBtn = new Sulakore.Components.SKoreButton();
+            this.StatusTxt = new Sulakore.Components.SKoreLabel();
+            this.TanjiStrip = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.TanjiMode = new Tanji.Components.TanjiModePanel();
             this.ExponentGrpbx.SuspendLayout();
             this.FiddlerCoreGrpbx.SuspendLayout();
             this.ModulusGrpbx.SuspendLayout();
+            this.TanjiStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // MiddleGlowPnl
@@ -67,91 +64,29 @@
             this.MiddleGlowPnl.Size = new System.Drawing.Size(330, 1);
             this.MiddleGlowPnl.TabIndex = 41;
             // 
-            // ATimer
-            // 
-            this.ATimer.Interval = 200;
-            this.ATimer.Tick += new System.EventHandler(this.ATimer_Tick);
-            // 
             // ChooseClientDlg
             // 
             this.ChooseClientDlg.DefaultExt = "swf";
             this.ChooseClientDlg.Filter = "Macromedia Flash file (*.swf)|*.swf";
             this.ChooseClientDlg.Title = "Tanji ~ Choose Custom Client";
             // 
-            // StatusTxt
-            // 
-            this.StatusTxt.Location = new System.Drawing.Point(20, 199);
-            this.StatusTxt.Name = "StatusTxt";
-            this.StatusTxt.Size = new System.Drawing.Size(191, 23);
-            this.StatusTxt.TabIndex = 46;
-            this.StatusTxt.Text = "Standing By...";
-            this.StatusTxt.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // StatusLeftGlowPnl
-            // 
-            this.StatusLeftGlowPnl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
-            this.StatusLeftGlowPnl.Location = new System.Drawing.Point(12, 199);
-            this.StatusLeftGlowPnl.Name = "StatusLeftGlowPnl";
-            this.StatusLeftGlowPnl.Size = new System.Drawing.Size(2, 23);
-            this.StatusLeftGlowPnl.TabIndex = 58;
-            // 
-            // StatusRightGlowPnl
-            // 
-            this.StatusRightGlowPnl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
-            this.StatusRightGlowPnl.Location = new System.Drawing.Point(217, 199);
-            this.StatusRightGlowPnl.Name = "StatusRightGlowPnl";
-            this.StatusRightGlowPnl.Size = new System.Drawing.Size(2, 23);
-            this.StatusRightGlowPnl.TabIndex = 59;
-            // 
-            // ManualH
-            // 
-            this.ManualH.BackColor = System.Drawing.Color.Silver;
-            this.ManualH.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ManualH.Location = new System.Drawing.Point(168, 31);
-            this.ManualH.Name = "ManualH";
-            this.ManualH.Size = new System.Drawing.Size(150, 2);
-            this.ManualH.TabIndex = 45;
-            this.ManualH.Click += new System.EventHandler(this.Manual_Click);
-            // 
-            // AutomaticLbl
-            // 
-            this.AutomaticLbl.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.AutomaticLbl.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AutomaticLbl.Location = new System.Drawing.Point(12, 2);
-            this.AutomaticLbl.Name = "AutomaticLbl";
-            this.AutomaticLbl.Size = new System.Drawing.Size(150, 31);
-            this.AutomaticLbl.TabIndex = 42;
-            this.AutomaticLbl.Text = "Automatic";
-            this.AutomaticLbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.AutomaticLbl.Click += new System.EventHandler(this.Automatic_Click);
-            // 
             // GameHostLbl
             // 
             this.GameHostLbl.AutoSize = true;
             this.GameHostLbl.Location = new System.Drawing.Point(9, 41);
             this.GameHostLbl.Name = "GameHostLbl";
-            this.GameHostLbl.Size = new System.Drawing.Size(101, 13);
+            this.GameHostLbl.Size = new System.Drawing.Size(60, 13);
             this.GameHostLbl.TabIndex = 49;
-            this.GameHostLbl.Text = "Game Host ( Mask )";
+            this.GameHostLbl.Text = "Game Host";
             // 
             // GamePortLbl
             // 
             this.GamePortLbl.AutoSize = true;
             this.GamePortLbl.Location = new System.Drawing.Point(165, 41);
             this.GamePortLbl.Name = "GamePortLbl";
-            this.GamePortLbl.Size = new System.Drawing.Size(98, 13);
+            this.GamePortLbl.Size = new System.Drawing.Size(57, 13);
             this.GamePortLbl.TabIndex = 51;
-            this.GamePortLbl.Text = "Game Port ( Mask )";
-            // 
-            // AutomaticH
-            // 
-            this.AutomaticH.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
-            this.AutomaticH.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.AutomaticH.Location = new System.Drawing.Point(12, 31);
-            this.AutomaticH.Name = "AutomaticH";
-            this.AutomaticH.Size = new System.Drawing.Size(150, 2);
-            this.AutomaticH.TabIndex = 44;
-            this.AutomaticH.Click += new System.EventHandler(this.Automatic_Click);
+            this.GamePortLbl.Text = "Game Port";
             // 
             // TopGlowPnl
             // 
@@ -270,19 +205,6 @@
             this.GameHostTxt.Name = "GameHostTxt";
             this.GameHostTxt.Size = new System.Drawing.Size(150, 21);
             this.GameHostTxt.TabIndex = 60;
-            this.GameHostTxt.SelectedIndexChanged += new System.EventHandler(this.GameHostTxt_SelectedIndexChanged);
-            // 
-            // ManualLbl
-            // 
-            this.ManualLbl.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ManualLbl.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ManualLbl.Location = new System.Drawing.Point(168, 2);
-            this.ManualLbl.Name = "ManualLbl";
-            this.ManualLbl.Size = new System.Drawing.Size(150, 31);
-            this.ManualLbl.TabIndex = 43;
-            this.ManualLbl.Text = "Manual";
-            this.ManualLbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.ManualLbl.Click += new System.EventHandler(this.Manual_Click);
             // 
             // GamePortTxt
             // 
@@ -310,29 +232,78 @@
             this.ProcessBtn.Text = "Connect";
             this.ProcessBtn.Click += new System.EventHandler(this.Connect_Click);
             // 
+            // StatusTxt
+            // 
+            this.StatusTxt.BorderWidth = 2;
+            this.StatusTxt.Location = new System.Drawing.Point(12, 199);
+            this.StatusTxt.Name = "StatusTxt";
+            this.StatusTxt.Size = new System.Drawing.Size(207, 23);
+            this.StatusTxt.Skin = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
+            this.StatusTxt.TabIndex = 62;
+            this.StatusTxt.Text = "Standing By...";
+            this.StatusTxt.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // TanjiStrip
+            // 
+            this.TanjiStrip.BackColor = System.Drawing.Color.White;
+            this.TanjiStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1});
+            this.TanjiStrip.Location = new System.Drawing.Point(0, 229);
+            this.TanjiStrip.Name = "TanjiStrip";
+            this.TanjiStrip.Size = new System.Drawing.Size(330, 24);
+            this.TanjiStrip.SizingGrip = false;
+            this.TanjiStrip.TabIndex = 63;
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.ActiveLinkColor = System.Drawing.Color.Firebrick;
+            this.toolStripStatusLabel1.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
+            this.toolStripStatusLabel1.IsLink = true;
+            this.toolStripStatusLabel1.LinkColor = System.Drawing.SystemColors.HotTrack;
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(50, 19);
+            this.toolStripStatusLabel1.Text = "v0.0.0.0";
+            this.toolStripStatusLabel1.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel1.Location = new System.Drawing.Point(0, 228);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(330, 1);
+            this.panel1.TabIndex = 42;
+            // 
+            // TanjiMode
+            // 
+            this.TanjiMode.Dock = System.Windows.Forms.DockStyle.Top;
+            this.TanjiMode.Font = new System.Drawing.Font("Segoe UI", 15F);
+            this.TanjiMode.Location = new System.Drawing.Point(0, 0);
+            this.TanjiMode.Name = "TanjiMode";
+            this.TanjiMode.Size = new System.Drawing.Size(330, 33);
+            this.TanjiMode.TabIndex = 64;
+            this.TanjiMode.ModeChanged += new System.EventHandler(this.TanjiMode_ModeChanged);
+            // 
             // TanjiConnect
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(330, 234);
+            this.ClientSize = new System.Drawing.Size(330, 253);
+            this.Controls.Add(this.TanjiMode);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.TanjiStrip);
+            this.Controls.Add(this.StatusTxt);
             this.Controls.Add(this.GamePortTxt);
             this.Controls.Add(this.GameHostTxt);
-            this.Controls.Add(this.StatusRightGlowPnl);
-            this.Controls.Add(this.StatusLeftGlowPnl);
             this.Controls.Add(this.ProcessBtn);
             this.Controls.Add(this.MiddleGlowPnl);
-            this.Controls.Add(this.StatusTxt);
             this.Controls.Add(this.ModulusGrpbx);
             this.Controls.Add(this.GamePortLbl);
             this.Controls.Add(this.ExponentGrpbx);
             this.Controls.Add(this.GameHostLbl);
             this.Controls.Add(this.TopGlowPnl);
-            this.Controls.Add(this.ManualH);
-            this.Controls.Add(this.AutomaticH);
-            this.Controls.Add(this.ManualLbl);
-            this.Controls.Add(this.AutomaticLbl);
             this.Controls.Add(this.FiddlerCoreGrpbx);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -343,7 +314,6 @@
             this.Text = "Tanji ~ Connection Setup [Automatic]";
             this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TanjiConnect_FormClosing);
-            this.Load += new System.EventHandler(this.TanjiConnect_Load);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.TanjiConnect_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.TanjiConnect_DragEnter);
             this.ExponentGrpbx.ResumeLayout(false);
@@ -352,6 +322,8 @@
             this.FiddlerCoreGrpbx.PerformLayout();
             this.ModulusGrpbx.ResumeLayout(false);
             this.ModulusGrpbx.PerformLayout();
+            this.TanjiStrip.ResumeLayout(false);
+            this.TanjiStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -360,17 +332,10 @@
         #endregion
 
         private System.Windows.Forms.Panel MiddleGlowPnl;
-        private System.Windows.Forms.Timer ATimer;
         private System.Windows.Forms.OpenFileDialog ChooseClientDlg;
-        private System.Windows.Forms.Label StatusTxt;
         private Sulakore.Components.SKoreButton ProcessBtn;
-        private System.Windows.Forms.Panel StatusLeftGlowPnl;
-        private System.Windows.Forms.Panel StatusRightGlowPnl;
-        private System.Windows.Forms.Panel ManualH;
-        private System.Windows.Forms.Label AutomaticLbl;
         private System.Windows.Forms.Label GameHostLbl;
         private System.Windows.Forms.Label GamePortLbl;
-        private System.Windows.Forms.Panel AutomaticH;
         private System.Windows.Forms.Panel TopGlowPnl;
         private System.Windows.Forms.GroupBox ExponentGrpbx;
         private System.Windows.Forms.TextBox CustomClientTxt;
@@ -379,9 +344,13 @@
         private System.Windows.Forms.GroupBox FiddlerCoreGrpbx;
         private System.Windows.Forms.GroupBox ModulusGrpbx;
         private System.Windows.Forms.ComboBox GameHostTxt;
-        private System.Windows.Forms.Label ManualLbl;
         private System.Windows.Forms.ComboBox GamePortTxt;
         public System.Windows.Forms.TextBox ExponentTxt;
         public System.Windows.Forms.TextBox ModulusTxt;
+        private Sulakore.Components.SKoreLabel StatusTxt;
+        private System.Windows.Forms.StatusStrip TanjiStrip;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.Panel panel1;
+        private Components.TanjiModePanel TanjiMode;
     }
 }
