@@ -131,7 +131,6 @@
             this.OOptionsTab = new Sulakore.Components.SKoreTabControl();
             this.OSettingsTab = new System.Windows.Forms.TabPage();
             this.OSAlwaysOnTopChckbx = new System.Windows.Forms.CheckBox();
-            this.OSScreenEdgeSnappingChckbx = new System.Windows.Forms.CheckBox();
             this.OSCloseOnDisconnectChckbx = new System.Windows.Forms.CheckBox();
             this.OAboutTab = new System.Windows.Forms.TabPage();
             this.TanjiStrip.SuspendLayout();
@@ -1253,7 +1252,6 @@
             // 
             this.OSettingsTab.BackColor = System.Drawing.Color.White;
             this.OSettingsTab.Controls.Add(this.OSAlwaysOnTopChckbx);
-            this.OSettingsTab.Controls.Add(this.OSScreenEdgeSnappingChckbx);
             this.OSettingsTab.Controls.Add(this.OSCloseOnDisconnectChckbx);
             this.OSettingsTab.Location = new System.Drawing.Point(4, 4);
             this.OSettingsTab.Name = "OSettingsTab";
@@ -1273,23 +1271,10 @@
             this.OSAlwaysOnTopChckbx.UseVisualStyleBackColor = true;
             this.OSAlwaysOnTopChckbx.CheckedChanged += new System.EventHandler(this.OSAlwaysOnTopChckbx_CheckedChanged);
             // 
-            // OSScreenEdgeSnappingChckbx
-            // 
-            this.OSScreenEdgeSnappingChckbx.AutoSize = true;
-            this.OSScreenEdgeSnappingChckbx.Checked = true;
-            this.OSScreenEdgeSnappingChckbx.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.OSScreenEdgeSnappingChckbx.Location = new System.Drawing.Point(6, 29);
-            this.OSScreenEdgeSnappingChckbx.Name = "OSScreenEdgeSnappingChckbx";
-            this.OSScreenEdgeSnappingChckbx.Size = new System.Drawing.Size(136, 17);
-            this.OSScreenEdgeSnappingChckbx.TabIndex = 2;
-            this.OSScreenEdgeSnappingChckbx.Text = "Screen Edge Snapping";
-            this.OSScreenEdgeSnappingChckbx.UseVisualStyleBackColor = true;
-            this.OSScreenEdgeSnappingChckbx.CheckedChanged += new System.EventHandler(this.OSScreenEdgeSnappingChckbx_CheckedChanged);
-            // 
             // OSCloseOnDisconnectChckbx
             // 
             this.OSCloseOnDisconnectChckbx.AutoSize = true;
-            this.OSCloseOnDisconnectChckbx.Location = new System.Drawing.Point(6, 52);
+            this.OSCloseOnDisconnectChckbx.Location = new System.Drawing.Point(6, 29);
             this.OSCloseOnDisconnectChckbx.Name = "OSCloseOnDisconnectChckbx";
             this.OSCloseOnDisconnectChckbx.Size = new System.Drawing.Size(146, 17);
             this.OSCloseOnDisconnectChckbx.TabIndex = 1;
@@ -1429,7 +1414,6 @@
         private System.Windows.Forms.TabPage OAboutTab;
         private System.Windows.Forms.ToolTip TanjiTip;
         private System.Windows.Forms.TabPage OSettingsTab;
-        private System.Windows.Forms.CheckBox OSScreenEdgeSnappingChckbx;
         private System.Windows.Forms.CheckBox OSCloseOnDisconnectChckbx;
         private System.Windows.Forms.ToolStripStatusLabel VersionTxt;
         private System.Windows.Forms.CheckBox OSAlwaysOnTopChckbx;

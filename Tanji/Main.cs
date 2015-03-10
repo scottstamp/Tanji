@@ -81,7 +81,6 @@ namespace Tanji
             _fakeServer = new HKeyExchange(FAKE_EXPONENT, FAKE_MODULUS, FAKE_PRIVATE_EXPONENT);
 
             OSAlwaysOnTopChckbx.Checked = TanjiSettings.Global.IsAlwaysOnTop;
-            OSScreenEdgeSnappingChckbx.Checked = TanjiSettings.Global.IsEdgeSnappingEnabled;
             OSCloseOnDisconnectChckbx.Checked = TanjiSettings.Global.ShouldCloseOnDisconnect;
 
             _initiate = Initiate;
@@ -447,9 +446,9 @@ namespace Tanji
         {
             ETanjiExtensionViewer.RemoveSelectedItem();
 
-            // TODO: Get the amount of extensions running.
             const string ExtensionFormat = "Extensions Active: {0}/{1}";
-            ExtensionsActiveTxt.Text = string.Format(ExtensionFormat, 0, _contractor.Extensions.Count);
+            ExtensionsActiveTxt.Text = string.Format(ExtensionFormat,
+                _contractor.ExtensionsRunning, _contractor.Extensions.Count);
 
             if (_contractor.Extensions.Count < 1)
                 EOpenBtn.Enabled = EUninstallBtn.Enabled = false;
@@ -490,11 +489,6 @@ namespace Tanji
         private void OSCloseOnDisconnectChckbx_CheckedChanged(object sender, EventArgs e)
         {
             TanjiSettings.Global.ShouldCloseOnDisconnect = OSCloseOnDisconnectChckbx.Checked;
-        }
-        private void OSScreenEdgeSnappingChckbx_CheckedChanged(object sender, EventArgs e)
-        {
-            if (OSScreenEdgeSnappingChckbx.Checked)
-                OnResizeEnd(EventArgs.Empty);
         }
         #endregion
         #endregion
@@ -596,20 +590,6 @@ namespace Tanji
             e.UnsubscribeFromEvents = true;
 
             Task.Factory.StartNew(Reinitiate);
-        }
-        #endregion
-
-        #region Overrided Methods
-        protected override void OnResizeEnd(EventArgs e)
-        {
-            base.OnResize(e);
-            if (!OSScreenEdgeSnappingChckbx.Checked) return;
-
-            var screen = Screen.FromPoint(Location);
-            if (DoSnap(Left, screen.WorkingArea.Left)) Left = screen.WorkingArea.Left;
-            if (DoSnap(Top, screen.WorkingArea.Top)) Top = screen.WorkingArea.Top;
-            if (DoSnap(screen.WorkingArea.Right, Right)) Left = screen.WorkingArea.Right - Width;
-            if (DoSnap(screen.WorkingArea.Bottom, Bottom)) Top = screen.WorkingArea.Bottom - Height;
         }
         #endregion
 
@@ -741,12 +721,6 @@ namespace Tanji
             Game.DataToServer += Handshake_ToServer;
 
             Game.Disconnected += Game_Disconnected;
-        }
-
-        public static bool DoSnap(int position, int edge)
-        {
-            int delta = position - edge;
-            return delta < 0 || delta > 0 && delta <= 20;
         }
         #endregion
     }
