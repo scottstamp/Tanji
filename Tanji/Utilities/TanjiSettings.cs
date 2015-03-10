@@ -17,7 +17,6 @@ namespace Tanji.Utilities
         }
 
         public bool IsAlwaysOnTop { get; set; }
-        public bool IsEdgeSnappingEnabled { get; set; }
         public bool ShouldCloseOnDisconnect { get; set; }
 
         static TanjiSettings()
