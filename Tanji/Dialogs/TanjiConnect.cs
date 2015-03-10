@@ -11,22 +11,18 @@ using Sulakore.Communication;
 
 using Tanji.Utilities;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Tanji.Dialogs
 {
     public partial class TanjiConnect : Form
     {
-        #region Private Fields
         private Main _main;
         private ShockwaveFlash _flash;
-
-        private int _maskPort;
-        private string _maskHost;
-        private bool _setupFinished, _wasSetInManual, _replaceKeys;
+        private bool _setupFinished, _replaceKeys;
 
         private readonly EventHandler _onConnected;
-        private readonly Action<string> _processSwf;
-        #endregion
+        private readonly Action<string> _loadGameClient;
 
         public HGameData GameData { get; private set; }
         public bool UseCustomClient { get; private set; }
@@ -42,97 +38,8 @@ namespace Tanji.Dialogs
             Eavesdropper.EavesdropperResponse += Eavesdropper_EavesdropperResponse;
 
             _main = main;
-            _processSwf = ProcessSwf;
+            _loadGameClient = LoadGameClient;
             _onConnected = Game_Connected;
-        }
-
-        private void Connect_Click(object sender, EventArgs e)
-        {
-            int gamePort = 0;
-            string gameHost = GameHostTxt.Text.ToLower();
-            bool portConvertSuccess = int.TryParse(GamePortTxt.Text, out gamePort);
-
-            ProcessBtn.Click -= Connect_Click;
-            ProcessBtn.Click += Cancel_Click;
-            ProcessBtn.Text = "Cancel";
-            ToggleSetupControls(false);
-
-            if (TanjiMode.IsManual)
-            {
-                if (UseCustomClient)
-                    Eavesdropper.Initiate();
-
-                _main.Game = new HConnection(gameHost, gamePort);
-                _main.Game.Connected += Game_Connected;
-                _main.Game.Connect(true);
-
-                StatusTxt.BeginAnimation("Connecting{0} | Port: " + GamePortTxt.Text, "...");
-            }
-            else
-            {
-                _maskHost = gameHost;
-                _maskPort = gamePort;
-                Eavesdropper.Initiate();
-
-                StatusTxt.BeginAnimation("Extracting Host/Port{0}", "...");
-            }
-        }
-        private void Cancel_Click(object sender, EventArgs e)
-        {
-            ProcessBtn.Click -= Cancel_Click;
-            ProcessBtn.Click += Connect_Click;
-            ProcessBtn.Text = "Connect";
-
-            ResetSetup();
-            if (_main.Game != null)
-            {
-                _main.Game.Dispose();
-                _main.Game = null;
-            }
-        }
-
-        private void BrowseBtn_Click(object sender, EventArgs e)
-        {
-            ChooseClientDlg.FileName = ChooseClientDlg.SafeFileName;
-            if (ChooseClientDlg.ShowDialog() != DialogResult.OK) return;
-
-            ProcessSwf(ChooseClientDlg.FileName);
-        }
-        private void CustomChckbx_CheckedChanged(object sender, EventArgs e)
-        {
-            _wasSetInManual = TanjiMode.IsManual;
-
-            CustomChckbx.Checked = CustomClientTxt.Enabled = BrowseBtn.Enabled = true;
-
-            UseCustomClient = (_flash != null && !_flash.IsCompressed);
-        }
-
-        private void TanjiConnect_DragDrop(object sender, DragEventArgs e)
-        {
-            if (e.Effect != DragDropEffects.Copy) return;
-
-            CustomChckbx.Checked = true;
-            ProcessSwf(((string[])(e.Data.GetData(DataFormats.FileDrop)))[0]);
-        }
-        private void TanjiConnect_DragEnter(object sender, DragEventArgs e)
-        {
-            if (((string[])(e.Data.GetData(DataFormats.FileDrop)))[0].EndsWith(".swf"))
-                e.Effect = DragDropEffects.Copy;
-        }
-
-        private void TanjiConnect_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            TanjiSettings.Save();
-            if (!_setupFinished)
-            {
-                Eavesdropper.Terminate();
-
-                if (_main.Game != null)
-                    _main.Game.Dispose();
-
-                Environment.Exit(0);
-            }
-            ResetSetup();
         }
 
         private void Game_Connected(object sender, EventArgs e)
@@ -153,7 +60,6 @@ namespace Tanji.Dialogs
             _setupFinished = true;
             Close();
         }
-
         private void Eavesdropper_EavesdropperResponse(EavesdropperResponseEventArgs e)
         {
             if (UseCustomClient && e.Response.ContentType == "application/x-shockwave-flash"
@@ -164,14 +70,14 @@ namespace Tanji.Dialogs
                 {
                     _flash = new ShockwaveFlash(e.Payload);
 
-                    ReplaceKeys(_flash);
+                    ReplaceRsaKeys(_flash);
                     e.Payload = _flash.ToBytes();
 
                     string clientPath = Path.Combine("Patched Clients", GameData.FlashClientBuild + ".swf");
                     Task.Factory.StartNew(() => _flash.Save(clientPath, true));
                 }
-                e.ShouldTerminate = true;
-                StatusTxt.BeginAnimation("Connecting{0} | Port: " + _maskPort, "...");
+                Eavesdropper.Terminate();
+                StatusTxt.BeginAnimation("Connecting{0} | Port: " + GameData.Port, "...");
                 return;
             }
             else if (TanjiMode.IsManual) return;
@@ -185,13 +91,13 @@ namespace Tanji.Dialogs
                     string patchedClientPath = Path.Combine("Patched Clients", GameData.FlashClientBuild + ".swf");
 
                     if (!File.Exists(patchedClientPath)) UseCustomClient = _replaceKeys = true;
-                    else Invoke(new MethodInvoker(() => ProcessSwf(patchedClientPath)));
+                    else LoadGameClient(patchedClientPath);
                 }
 
                 if (!UseCustomClient)
                 {
                     Eavesdropper.Terminate();
-                    StatusTxt.BeginAnimation("Connecting{0} | Port: " + _maskPort, "...");
+                    StatusTxt.BeginAnimation("Connecting{0} | Port: " + GameData.Port, "...");
                 }
                 else if (_replaceKeys) StatusTxt.BeginAnimation("Modifying Client{0}", "...");
                 else StatusTxt.BeginAnimation("Replacing Client{0}", "...");
@@ -199,72 +105,129 @@ namespace Tanji.Dialogs
                 _main.Game = new HConnection(GameData.Host, GameData.Port);
                 _main.Game.Connected += Game_Connected;
                 _main.Game.Connect(true);
+
+                response = response.Replace(GameData.FlashClientBuild + "/Habbo.swf", GameData.FlashClientBuild + "/Habbo.swf?" + GameData.UserHash);
+                e.Payload = Encoding.UTF8.GetBytes(response);
             }
+        }
+
+        private void Connect_Click(object sender, EventArgs e)
+        {
+            bool isCancelling = ProcessBtn.Text == "Cancel";
+            ProcessBtn.Text = isCancelling ? "Connect" : "Cancel";
+
+            if (isCancelling)
+            {
+                ResetSetup();
+                if (_main.Game != null)
+                {
+                    _main.Game.Dispose();
+                    _main.Game = null;
+                }
+                return;
+            }
+
+            int gamePort = 0;
+            string gameHost = GameHostTxt.Text.ToLower();
+            bool portConvertSuccess = int.TryParse(GamePortTxt.Text, out gamePort);
+
+            if (TanjiMode.IsManual)
+            {
+                if (UseCustomClient)
+                    Eavesdropper.Initiate();
+
+                _main.Game = new HConnection(gameHost, gamePort);
+                _main.Game.Connected += Game_Connected;
+                _main.Game.Connect(true);
+
+                StatusTxt.BeginAnimation("Connecting{0} | Port: " + GamePortTxt.Text, "...");
+            }
+            else
+            {
+                Eavesdropper.Initiate();
+                StatusTxt.BeginAnimation("Extracting Host/Port{0}", "...");
+            }
+        }
+        private void BrowseBtn_Click(object sender, EventArgs e)
+        {
+            ChooseClientDlg.FileName = ChooseClientDlg.SafeFileName;
+
+            if (ChooseClientDlg.ShowDialog() == DialogResult.OK)
+                LoadGameClient(ChooseClientDlg.FileName);
+        }
+
+        private void TanjiConnect_DragDrop(object sender, DragEventArgs e)
+        {
+            if (e.Effect == DragDropEffects.Copy)
+                LoadGameClient(((string[])(e.Data.GetData(DataFormats.FileDrop)))[0]);
+        }
+        private void TanjiConnect_DragEnter(object sender, DragEventArgs e)
+        {
+            if (((string[])(e.Data.GetData(DataFormats.FileDrop)))[0].EndsWith(".swf"))
+                e.Effect = DragDropEffects.Copy;
+        }
+        private void TanjiConnect_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            TanjiSettings.Save();
+            if (!_setupFinished)
+            {
+                Eavesdropper.Terminate();
+
+                if (_main.Game != null)
+                    _main.Game.Dispose();
+
+                Environment.Exit(0);
+            }
+            ResetSetup();
         }
 
         private void ResetSetup()
         {
             Eavesdropper.Terminate();
 
-            _replaceKeys = false;
-            _setupFinished = false;
-
-            _maskPort = 0;
-            _maskHost = string.Empty;
-
-            ToggleSetupControls(true);
-
-            if (!CustomChckbx.Checked)
-                CustomClientTxt.Text = string.Empty;
+            CustomClientTxt.Text = string.Empty;
+            _replaceKeys = _setupFinished = false;
 
             StatusTxt.EndAnimation("Standing By...");
         }
-        private void ProcessSwf(string path)
+        private void LoadGameClient(string path)
         {
-            if (InvokeRequired) { Invoke(_processSwf, path); return; }
+            if (InvokeRequired) { Invoke(_loadGameClient, path); return; }
 
             try { _flash = new ShockwaveFlash(path); }
-            catch
-            {
-                CustomChckbx.Checked = false;
-                CustomClientTxt.Text = string.Empty;
-            }
+            catch { path = string.Empty; }
             finally
             {
                 UseCustomClient = (_flash != null && !_flash.IsCompressed);
-
-                if (UseCustomClient)
-                    CustomClientTxt.Text = path;
+                CustomClientTxt.Text = path;
             }
         }
 
-        private void ReplaceKeys(ShockwaveFlash flash)
+        private void ReplaceRsaKeys(ShockwaveFlash flash)
         {
             foreach (IFlashTag flashTag in _flash.Tags)
             {
                 if (flashTag.Header.Tag != FlashTagType.DefineBinaryData) continue;
 
-                var binTag = (DefineBinaryDataTag)flashTag;
-                string binDat = Encoding.UTF8.GetString(binTag.Data);
-
-                if (binDat.Contains("habbo_login_dialog"))
+                var binaryDataTag = (DefineBinaryDataTag)flashTag;
+                string binaryData = Encoding.UTF8.GetString(binaryDataTag.Data);
+                if (binaryData.Contains("habbo_login_dialog"))
                 {
-                    const string dummyFieldPrefix = "name=\"dummy_field\" caption=\"";
-                    string encodedKeys = binDat.GetChild(dummyFieldPrefix, '"');
-                    ExtractRSAKeys(encodedKeys);
+                    string extractedRsaKeys = binaryData.GetChild("name=\"dummy_field\" caption=\"", '"');
+                    DecodeRsaKeys(extractedRsaKeys);
 
-                    string encodedFakeKeys = EncodeRSAKeys(Main.FAKE_EXPONENT.ToString(), Main.FAKE_MODULUS);
-                    binDat = binDat.Replace(encodedKeys, encodedFakeKeys);
+                    string generatedRsaKeys = EncodeRsaKeys(Main.FAKE_EXPONENT, Main.FAKE_MODULUS);
+                    binaryData = binaryData.Replace(extractedRsaKeys, generatedRsaKeys);
+                    binaryDataTag.Data = Encoding.UTF8.GetBytes(binaryData);
 
-                    binTag.Data = Encoding.UTF8.GetBytes(binDat);
                     flash.Compile();
                     break;
                 }
             }
         }
-        private void ExtractRSAKeys(string base64MergedKeys)
+        private void DecodeRsaKeys(string base64RsaKeys)
         {
-            byte[] data = Convert.FromBase64String(base64MergedKeys);
+            byte[] data = Convert.FromBase64String(base64RsaKeys);
             string mergedKeys = Encoding.UTF8.GetString(data);
 
             int modLength = mergedKeys[0];
@@ -273,23 +236,13 @@ namespace Tanji.Dialogs
             mergedKeys = mergedKeys.Substring(modLength);
             _main.Exponent = int.Parse(mergedKeys.Substring(2));
         }
-        private string EncodeRSAKeys(string exponent, string modulus)
+        private string EncodeRsaKeys(int exponent, string modulus)
         {
             string mergedKeys = string.Format("{0}{1} {2}",
                 (char)modulus.Length, modulus, exponent);
 
             byte[] data = Encoding.UTF8.GetBytes(mergedKeys);
             return Convert.ToBase64String(data);
-        }
-
-        private void ToggleSetupControls(bool enable)
-        {
-            TanjiMode.Enabled = enable;
-            GameHostTxt.Enabled = GamePortTxt.Enabled = enable;
-            ExponentTxt.ReadOnly = ModulusTxt.ReadOnly = !enable;
-
-            CustomChckbx.Enabled = enable;
-            CustomClientTxt.ReadOnly = !enable;
         }
 
         private void TanjiMode_ModeChanged(object sender, EventArgs e)

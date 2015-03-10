@@ -37,7 +37,6 @@
             this.ExponentTxt = new System.Windows.Forms.TextBox();
             this.ExponentGrpbx = new System.Windows.Forms.GroupBox();
             this.CustomClientTxt = new System.Windows.Forms.TextBox();
-            this.CustomChckbx = new System.Windows.Forms.CheckBox();
             this.FiddlerCoreGrpbx = new System.Windows.Forms.GroupBox();
             this.BrowseBtn = new Sulakore.Components.SKoreButton();
             this.ModulusTxt = new System.Windows.Forms.TextBox();
@@ -121,24 +120,12 @@
             this.CustomClientTxt.Enabled = false;
             this.CustomClientTxt.Location = new System.Drawing.Point(6, 19);
             this.CustomClientTxt.Name = "CustomClientTxt";
-            this.CustomClientTxt.Size = new System.Drawing.Size(229, 20);
+            this.CustomClientTxt.Size = new System.Drawing.Size(220, 20);
             this.CustomClientTxt.TabIndex = 0;
             this.CustomClientTxt.TabStop = false;
             // 
-            // CustomChckbx
-            // 
-            this.CustomChckbx.AutoSize = true;
-            this.CustomChckbx.Location = new System.Drawing.Point(235, -1);
-            this.CustomChckbx.Name = "CustomChckbx";
-            this.CustomChckbx.Size = new System.Drawing.Size(65, 17);
-            this.CustomChckbx.TabIndex = 3;
-            this.CustomChckbx.Text = "Enabled";
-            this.CustomChckbx.UseVisualStyleBackColor = true;
-            this.CustomChckbx.CheckedChanged += new System.EventHandler(this.CustomChckbx_CheckedChanged);
-            // 
             // FiddlerCoreGrpbx
             // 
-            this.FiddlerCoreGrpbx.Controls.Add(this.CustomChckbx);
             this.FiddlerCoreGrpbx.Controls.Add(this.BrowseBtn);
             this.FiddlerCoreGrpbx.Controls.Add(this.CustomClientTxt);
             this.FiddlerCoreGrpbx.Location = new System.Drawing.Point(12, 141);
@@ -154,9 +141,9 @@
             this.BrowseBtn.BackColor = System.Drawing.Color.Transparent;
             this.BrowseBtn.DialogResult = System.Windows.Forms.DialogResult.None;
             this.BrowseBtn.Enabled = false;
-            this.BrowseBtn.Location = new System.Drawing.Point(241, 19);
+            this.BrowseBtn.Location = new System.Drawing.Point(232, 19);
             this.BrowseBtn.Name = "BrowseBtn";
-            this.BrowseBtn.Size = new System.Drawing.Size(59, 20);
+            this.BrowseBtn.Size = new System.Drawing.Size(68, 20);
             this.BrowseBtn.Skin = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
             this.BrowseBtn.TabIndex = 2;
             this.BrowseBtn.TabStop = false;
@@ -340,7 +327,6 @@
         private System.Windows.Forms.GroupBox ExponentGrpbx;
         private System.Windows.Forms.TextBox CustomClientTxt;
         private Sulakore.Components.SKoreButton BrowseBtn;
-        private System.Windows.Forms.CheckBox CustomChckbx;
         private System.Windows.Forms.GroupBox FiddlerCoreGrpbx;
         private System.Windows.Forms.GroupBox ModulusGrpbx;
         private System.Windows.Forms.ComboBox GameHostTxt;
