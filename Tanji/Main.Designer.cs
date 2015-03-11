@@ -175,6 +175,7 @@
             // 
             this.VersionTxt.ActiveLinkColor = System.Drawing.Color.Firebrick;
             this.VersionTxt.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
+            this.VersionTxt.IsLink = true;
             this.VersionTxt.LinkColor = System.Drawing.SystemColors.HotTrack;
             this.VersionTxt.Name = "VersionTxt";
             this.VersionTxt.Size = new System.Drawing.Size(50, 19);
@@ -201,7 +202,7 @@
             this.TanjiInfoTxt.IsLink = true;
             this.TanjiInfoTxt.LinkColor = System.Drawing.SystemColors.HotTrack;
             this.TanjiInfoTxt.Name = "TanjiInfoTxt";
-            this.TanjiInfoTxt.Size = new System.Drawing.Size(166, 19);
+            this.TanjiInfoTxt.Size = new System.Drawing.Size(135, 19);
             this.TanjiInfoTxt.Spring = true;
             this.TanjiInfoTxt.Text = "ArachisH.GitHub.io/Tanji/";
             this.TanjiInfoTxt.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));

@@ -4,18 +4,16 @@ using System.Drawing;
 using System.Diagnostics;
 using System.Windows.Forms;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 
 using Tanji.Dialogs;
+using Tanji.Utilities;
 using Tanji.Properties;
 using Tanji.Applications;
 
-using Sulakore;
 using Sulakore.Protocol;
 using Sulakore.Extensions;
 using Sulakore.Communication;
 using Sulakore.Protocol.Encryption;
-using Tanji.Utilities;
 
 namespace Tanji
 {
@@ -28,19 +26,19 @@ namespace Tanji
         public const int REAL_EXPONENT = 10001;
         public const string REAL_MODULUS = "e052808c1abef69a1a62c396396b85955e2ff522f5157639fa6a19a98b54e0e4d6e44f44c4c0390fee8ccf642a22b6d46d7228b10e34ae6fffb61a35c11333780af6dd1aaafa7388fa6c65b51e8225c6b57cf5fbac30856e896229512e1f9af034895937b2cb6637eb6edf768c10189df30c10d8a3ec20488a198063599ca6ad";
 
-        private int _clientStepShift;
         private Contractor _contractor;
         private bool _debugging, _extensionsLoaded;
         private byte[] _fakeClientKey, _fakeServerKey;
-        private HKeyExchange _fakeClient;
+        private HKeyExchange _fakeClient, _fakeServer;
 
-        private readonly HKeyExchange _fakeServer;
         private readonly TanjiConnect _tanjiConnect;
         private readonly Packetlogger _packetloggerF;
         private readonly Action _initiate, _reinitiate;
 
-        private const string ScheduleFormat = "Schedules Active: {0}/{1}";
-        private const string TanjiTitleFormat = "Tanji ~ Connected[{0}:{1}]";
+        private const string TITLE_FORMAT = "Tanji ~ Connected[{0}:{1}]";
+        private const string SCHEDULES_FORMAT = "Schedules Active: {0}/{1}";
+        private const string EXTENSIONS_FORMAT = "Extensions Active: {0}/{1}";
+
         private const string CorrPack = "The given packet seems to be corrupted.";
         private const string BadHeader = "The header you've specified does not qualify as an UInt16 type.";
         private const string NotInt32 = "The given value does not qualify as an Int32 type.";
@@ -52,23 +50,30 @@ namespace Tanji
         public int Exponent
         {
             get { return _exponent; }
-            set { _exponent = value; }
+            set
+            {
+                if (value != 0)
+                    _exponent = value;
+            }
         }
 
         private string _modulus = REAL_MODULUS;
         public string Modulus
         {
             get { return _modulus; }
-            set { _modulus = value; }
+            set
+            {
+                if (!string.IsNullOrWhiteSpace(value))
+                    _modulus = value;
+            }
         }
 
-        public const string TanjiAlert = "Tanji ~ Alert!";
-        public const string TanjiError = "Tanji ~ Error!";
-        public const string TanjiWarning = "Tanji ~ Warning!";
+        private readonly HConnection _game;
+        public HConnection Game
+        {
+            get { return _game; }
+        }
 
-        public HConnection Game { get; set; }
-
-        #region Constructor(s)
         public Main(bool debugging)
         {
             InitializeComponent();
@@ -76,9 +81,13 @@ namespace Tanji
             CheckForUpdates();
             TanjiSettings.Load();
 
+            _game = new HConnection();
+            _game.Connected += Game_Connected;
+            _game.DataToClient += Game_DataToClient;
+            _game.DataToServer += Game_DataToServer;
+
             _packetloggerF = new Packetlogger();
             _tanjiConnect = new TanjiConnect(this);
-            _fakeServer = new HKeyExchange(FAKE_EXPONENT, FAKE_MODULUS, FAKE_PRIVATE_EXPONENT);
 
             OSAlwaysOnTopChckbx.Checked = TanjiSettings.Global.IsAlwaysOnTop;
             OSCloseOnDisconnectChckbx.Checked = TanjiSettings.Global.ShouldCloseOnDisconnect;
@@ -89,30 +98,110 @@ namespace Tanji
 
             ISDestinationTxt.SelectedIndex = 1;
         }
-        #endregion
 
-        #region User Interface Event Listeners
+        private void Game_Connected(object sender, EventArgs e)
+        {
+            BeginInvoke(new MethodInvoker(() => _tanjiConnect.Close()));
+            InitializeContractor();
+
+            _fakeClient = new HKeyExchange(Exponent, Modulus);
+            _fakeServer = new HKeyExchange(FAKE_EXPONENT, FAKE_MODULUS, FAKE_PRIVATE_EXPONENT);
+
+            _game.Disconnected += Game_Disconnected;
+        }
+        private void Game_Disconnected(object sender, EventArgs e)
+        {
+            _game.Disconnected -= Game_Disconnected;
+            if (TanjiSettings.Global.ShouldCloseOnDisconnect)
+            {
+                TanjiSettings.Save();
+                Environment.Exit(0);
+            }
+            Task.Factory.StartNew(Reinitiate);
+        }
+        private void Game_DataToServer(object sender, DataToEventArgs e)
+        {
+            try
+            {
+                switch (e.Step)
+                {
+                    case 3:
+                    {
+                        _fakeServerKey = _fakeServer.GetSharedKey(e.Packet.ReadString());
+                        e.Replacement.Replace<string>(_fakeClient.PublicKey);
+                        break;
+                    }
+                    case 4:
+                    {
+                        if (e.Packet.IsCorrupted)
+                        {
+                            Game.ClientEncrypt = new Rc4(_fakeClientKey);
+                            Game.ClientDecrypt = new Rc4(_fakeServerKey);
+
+                            byte[] decrypted = Game.ClientDecrypt.SafeParse(e.Packet.ToBytes());
+                            e.Replacement = new HMessage(decrypted, HDestination.Server);
+                        }
+                        break;
+                    }
+                }
+            }
+            catch { }
+            finally
+            {
+                if (_packetloggerF.ViewOutgoing)
+                    _packetloggerF.PushToQueue(e);
+
+                _contractor.ProcessOutgoing(e.Replacement.ToBytes());
+            }
+        }
+        private void Game_DataToClient(object sender, DataToEventArgs e)
+        {
+            try
+            {
+                switch (e.Step)
+                {
+                    case 1:
+                    {
+                        _fakeClient.DoHandshake(e.Packet.ReadString(), e.Packet.ReadString(e.Packet.Position));
+                        e.Replacement.ReplaceAt<string>(0, _fakeServer.SignedPrime);
+                        e.Replacement.ReplaceAt<string>(e.Packet.Position, _fakeServer.SignedGenerator);
+                        break;
+                    }
+                    case 2:
+                    {
+                        _fakeClientKey = _fakeClient.GetSharedKey(e.Packet.ReadString());
+                        e.Replacement.Replace<string>(_fakeServer.PublicKey);
+                        break;
+                    }
+                    case 3:
+                    {
+                        if (e.Packet.IsCorrupted)
+                        {
+                            Game.ServerDecrypt = new Rc4(_fakeClientKey);
+                            Game.ServerEncrypt = new Rc4(_fakeServerKey);
+
+                            byte[] decrypted = Game.ServerDecrypt.SafeParse(e.Packet.ToBytes());
+                            e.Replacement = new HMessage(decrypted, HDestination.Client);
+                        }
+                        break;
+                    }
+                }
+            }
+            catch { }
+            finally
+            {
+                if (_packetloggerF.ViewIncoming)
+                    _packetloggerF.PushToQueue(e);
+
+                _contractor.ProcessIncoming(e.Replacement.ToBytes());
+            }
+        }
+
         private void Main_Load(object sender, EventArgs e)
         {
-            if (!_debugging)
-                Initiate();
+            if (!_debugging) Initiate();
             else InitializeContractor();
         }
-
-        private void VersionTxt_Click(object sender, EventArgs e)
-        {
-            if (!VersionTxt.IsLink) return;
-
-            VersionTxt.LinkVisited = true;
-            Process.Start(TanjiUpdater.ReleaseNotesUrl);
-        }
-        private void TanjiInfoTxt_Click(object sender, EventArgs e)
-        {
-            TanjiInfoTxt.LinkVisited = true;
-            const string TanjiProjectSite = "http://arachish.github.io/Tanji/";
-            Process.Start(TanjiProjectSite);
-        }
-
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
             TanjiSettings.Save();
@@ -121,6 +210,17 @@ namespace Tanji
                 e.Cancel = true;
                 Task.Factory.StartNew(Game.Disconnect);
             }
+        }
+
+        private void VersionTxt_Click(object sender, EventArgs e)
+        {
+            VersionTxt.LinkVisited = true;
+            Process.Start(TanjiUpdater.RELEASE_PAGE);
+        }
+        private void TanjiInfoTxt_Click(object sender, EventArgs e)
+        {
+            TanjiInfoTxt.LinkVisited = true;
+            Process.Start(TanjiUpdater.TANJI_PAGE);
         }
 
         #region Injection Related Methods
@@ -259,14 +359,13 @@ namespace Tanji
             int itemCount = ISSchedulesLstVw.Items.Count;
             bool containsItems = itemCount > 0;
 
-            SchedulesTxt.Text = string.Format(ScheduleFormat,
+            SchedulesTxt.Text = string.Format(SCHEDULES_FORMAT,
                 ISSchedulesLstVw.Running, itemCount);
 
             ISRemoveBtn.Enabled = itemSelected;
             ISClearBtn.Enabled = containsItems;
             ISStopAllBtn.Enabled = containsItems;
             ISStartAllBtn.Enabled = containsItems;
-
         }
 
         private void ISStopAllBtn_Click(object sender, EventArgs e)
@@ -367,7 +466,7 @@ namespace Tanji
             int value;
             if (int.TryParse(ModernIntegerInputTxt.Text, out value))
                 ModernIntegerOutputTxt.Text = HMessage.ToString(BigEndian.CypherInt(value));
-            else MessageBox.Show(NotInt32, TanjiError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            else MessageBox.Show(NotInt32, "Tanji ~ Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
         private void ModernDecypherIntegerBtn_Click(object sender, EventArgs e)
         {
@@ -380,7 +479,7 @@ namespace Tanji
             ushort value;
             if (ushort.TryParse(ModernShortInputTxt.Text, out value))
                 ModernShortOutputTxt.Text = HMessage.ToString(BigEndian.CypherShort(value));
-            else MessageBox.Show(NotUInt16, TanjiError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            else MessageBox.Show(NotUInt16, "Tanji ~ Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
         private void ModernDecypherShortBtn_Click(object sender, EventArgs e)
         {
@@ -431,9 +530,14 @@ namespace Tanji
             catch { e.Result = false; }
         }
 
+        // TODO: Update the extension info.. properly, next time.
         private void EOpenExtensionBtn_Click(object sender, EventArgs e)
         {
             ETanjiExtensionViewer.InitializeItemExtension();
+
+            const string ExtensionFormat = "Extensions Active: {0}/{1}";
+            ExtensionsActiveTxt.Text = string.Format(ExtensionFormat,
+                _contractor.ExtensionsRunning.Count, _contractor.Extensions.Count);
         }
         private void EInstallExtensionBtn_Click(object sender, EventArgs e)
         {
@@ -441,6 +545,10 @@ namespace Tanji
             if (ChooseExtensionDlg.ShowDialog() != DialogResult.OK) return;
 
             LoadSingleExtension(ChooseExtensionDlg.FileName);
+
+            const string ExtensionFormat = "Extensions Active: {0}/{1}";
+            ExtensionsActiveTxt.Text = string.Format(ExtensionFormat,
+                _contractor.ExtensionsRunning.Count, _contractor.Extensions.Count);
         }
         private void EUninstallExtensionBtn_Click(object sender, EventArgs e)
         {
@@ -448,7 +556,7 @@ namespace Tanji
 
             const string ExtensionFormat = "Extensions Active: {0}/{1}";
             ExtensionsActiveTxt.Text = string.Format(ExtensionFormat,
-                _contractor.ExtensionsRunning, _contractor.Extensions.Count);
+                _contractor.ExtensionsRunning.Count, _contractor.Extensions.Count);
 
             if (_contractor.Extensions.Count < 1)
                 EOpenBtn.Enabled = EUninstallBtn.Enabled = false;
@@ -491,121 +599,6 @@ namespace Tanji
             TanjiSettings.Global.ShouldCloseOnDisconnect = OSCloseOnDisconnectChckbx.Checked;
         }
         #endregion
-        #endregion
-
-        #region Game Connection Event Listeners
-        private void Game_DataToServer(object sender, DataToEventArgs e)
-        {
-            if (_packetloggerF.ViewOutgoing)
-                _packetloggerF.PushToQueue(e);
-
-            _contractor.ProcessOutgoing(e.Replacement.ToBytes());
-        }
-        private void Game_DataToClient(object sender, DataToEventArgs e)
-        {
-            if (_packetloggerF.ViewIncoming)
-                _packetloggerF.PushToQueue(e);
-
-            _contractor.ProcessIncoming(e.Replacement.ToBytes());
-        }
-
-        private void Handshake_ToServer(object sender, DataToEventArgs e)
-        {
-            try
-            {
-                switch (e.Step)
-                {
-                    case 3:
-                    {
-                        _fakeServerKey = _fakeServer.GetSharedKey(e.Packet.ReadString());
-                        e.Replacement.Replace<string>(_fakeClient.PublicKey);
-                        break;
-                    }
-                    case 4:
-                    {
-                        if (e.Packet.IsCorrupted)
-                        {
-                            Game.ClientEncrypt = new Rc4(_fakeClientKey);
-                            Game.ClientDecrypt = new Rc4(_fakeServerKey);
-
-                            byte[] decrypted = Game.ClientDecrypt.SafeParse(e.Packet.ToBytes());
-                            e.Replacement = new HMessage(decrypted, HDestination.Server);
-                        }
-                        break;
-                    }
-                }
-            }
-            catch { HandshakeFinished(); }
-            Game_DataToServer(sender, e);
-        }
-        private void Handshake_ToClient(object sender, DataToEventArgs e)
-        {
-            try
-            {
-                switch (e.Step - _clientStepShift)
-                {
-                    case 1:
-                    {
-                        _fakeClient.DoHandshake(e.Packet.ReadString(), e.Packet.ReadString(e.Packet.Position));
-                        e.Replacement.ReplaceAt<string>(0, _fakeServer.SignedPrime);
-                        e.Replacement.ReplaceAt<string>(e.Packet.Position, _fakeServer.SignedGenerator);
-                        break;
-                    }
-                    case 2:
-                    {
-                        if (e.Packet.Length == 2) { _clientStepShift++; break; }
-
-                        _fakeClientKey = _fakeClient.GetSharedKey(e.Packet.ReadString());
-                        e.Replacement.Replace<string>(_fakeServer.PublicKey);
-                        break;
-                    }
-                    case 3:
-                    {
-                        if (e.Packet.IsCorrupted)
-                        {
-                            Game.ServerDecrypt = new Rc4(_fakeClientKey);
-                            Game.ServerEncrypt = new Rc4(_fakeServerKey);
-
-                            byte[] decrypted = Game.ServerDecrypt.SafeParse(e.Packet.ToBytes());
-                            e.Replacement = new HMessage(decrypted, HDestination.Client);
-                        }
-                        break;
-                    }
-                    default: HandshakeFinished(); break;
-                }
-            }
-            catch { HandshakeFinished(); }
-            Game_DataToClient(sender, e);
-        }
-
-        private void Game_Disconnected(object sender, DisconnectedEventArgs e)
-        {
-            if (TanjiSettings.Global.ShouldCloseOnDisconnect)
-            {
-                TanjiSettings.Save();
-                Environment.Exit(0);
-            }
-
-            Game.LockEvents = Game.CaptureEvents = false;
-            e.UnsubscribeFromEvents = true;
-
-            Task.Factory.StartNew(Reinitiate);
-        }
-        #endregion
-
-        #region Private Methods
-        private void CheckForUpdates()
-        {
-            using (var updater = new TanjiUpdater())
-            {
-                VersionTxt.Text = "v" + TanjiUpdater.LocalVersion.ToString();
-                if (updater.UpdateFound())
-                {
-                    updater.ShowDialog();
-                    VersionTxt.IsLink = true;
-                }
-            }
-        }
 
         private void Initiate()
         {
@@ -613,67 +606,47 @@ namespace Tanji
 
             _tanjiConnect.ShowDialog();
 
-            BringToFront();
             Show();
+            BringToFront();
 
             _packetloggerF.Show();
             _packetloggerF.BringToFront();
 
-            Text = string.Format(TanjiTitleFormat, Game.Host, Game.Port);
+            Text = string.Format(TITLE_FORMAT, Game.Host, Game.Port);
         }
-
         private void Reinitiate()
         {
             if (InvokeRequired) { Invoke(_reinitiate); return; }
 
             if (_contractor.Extensions.Count > 0)
             {
-                var extensions = new ExtensionBase[_contractor.Extensions.Count];
+                var extensions = new IExtension[_contractor.Extensions.Count];
                 _contractor.Extensions.CopyTo(extensions, 0);
 
                 foreach (ExtensionBase extension in extensions)
                     _contractor.Dispose(extension);
             }
 
-            _clientStepShift = 0;
-
             if (_fakeClient != null)
-                _fakeClient.Flush();
+                _fakeClient.Dispose();
 
             if (_fakeServer != null)
-                _fakeServer.Flush();
-
-            _packetloggerF.Halt();
+                _fakeServer.Dispose();
 
             Hide();
+            _packetloggerF.Halt();
             _packetloggerF.Hide();
 
             Task.Factory.StartNew(Initiate);
         }
-        private void HandshakeFinished()
+        private void CheckForUpdates()
         {
-            Game.DataToClient -= Handshake_ToClient;
-            Game.DataToClient += Game_DataToClient;
-
-            Game.DataToServer -= Handshake_ToServer;
-            Game.DataToServer += Game_DataToServer;
-        }
-        private void LoadTanjiExtensions()
-        {
-            if (!Directory.Exists("Extensions")) return;
-
-            var extDirInfo = new DirectoryInfo("Extensions");
-            FileInfo[] extDirFiles = extDirInfo.GetFiles();
-
-            foreach (FileInfo extensionFile in extDirFiles)
+            using (var updater = new TanjiUpdater())
             {
-                if (extensionFile.Extension != ".dll") continue;
+                VersionTxt.Text = "v" + TanjiUpdater.LocalVersion.ToString();
 
-                try
-                {
-                    LoadSingleExtension(extensionFile.FullName);
-                }
-                catch { extensionFile.Delete(); }
+                if (updater.UpdateFound())
+                    updater.ShowDialog();
             }
         }
         private void InitializeContractor()
@@ -681,20 +654,19 @@ namespace Tanji
             _contractor = new Contractor(Game, _tanjiConnect.GameData);
             _contractor.Invoked += Contractor_CommandReceived;
 
-            if (!_extensionsLoaded)
+            if (!_extensionsLoaded && Directory.Exists("Extensions"))
             {
                 _extensionsLoaded = true;
-                LoadTanjiExtensions();
+                var extensionDirectory = new DirectoryInfo("Extensions");
+                FileInfo[] extensionFiles = extensionDirectory.GetFiles();
+                foreach (FileInfo extensionFile in extensionFiles)
+                {
+                    if (extensionFile.Extension != ".dll") continue;
+                    try { LoadSingleExtension(extensionFile.FullName); }
+                    catch { extensionFile.Delete(); }
+                }
             }
         }
-        private void LoadSingleExtension(string path)
-        {
-            ETanjiExtensionViewer.Install(_contractor.Install(path));
-
-            const string ExtensionFormat = "Extensions Active: {0}/{1}";
-            ExtensionsActiveTxt.Text = string.Format(ExtensionFormat, 0, _contractor.Extensions.Count);
-        }
-
         private void SendTo(HMessage packet)
         {
             Func<byte[], int> sendToX = null;
@@ -706,22 +678,15 @@ namespace Tanji
             }
 
             if (!packet.IsCorrupted) sendToX(packet.ToBytes());
-            else MessageBox.Show(InjClientCanc, TanjiError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            else MessageBox.Show(InjClientCanc, "Tanji ~ Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
-        #endregion
-
-        #region Public Methods
-        public void HookGameEvents()
+        private void LoadSingleExtension(string path)
         {
-            InitializeContractor();
+            ETanjiExtensionViewer.Install(_contractor.Install(path));
 
-            _fakeClient = new HKeyExchange(Exponent, Modulus);
-
-            Game.DataToClient += Handshake_ToClient;
-            Game.DataToServer += Handshake_ToServer;
-
-            Game.Disconnected += Game_Disconnected;
+            const string ExtensionFormat = "Extensions Active: {0}/{1}";
+            ExtensionsActiveTxt.Text = string.Format(ExtensionFormat,
+                _contractor.ExtensionsRunning.Count, _contractor.Extensions.Count);
         }
-        #endregion
     }
 }
