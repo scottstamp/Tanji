@@ -13,8 +13,10 @@ namespace Tanji.Dialogs
         public static Version RemoteVersion { get; private set; }
         public static string ReleaseNotesUrl { get; private set; }
 
+        public const string TANJI_PAGE = "http://arachish.github.io/Tanji/";
+        public const string RELEASE_PAGE = "https://github.com/ArachisH/Tanji/releases/";
+
         private const string TANJI_INFO_PATH = "http://pastebin.com/raw.php?i=JyFQ2msW";
-        private const string RELEASE_PREFIX = "https://github.com/ArachisH/Tanji/releases/tag/v";
 
         static TanjiUpdater()
         {
@@ -47,7 +49,7 @@ namespace Tanji.Dialogs
                     string version = webClient.DownloadString(TANJI_INFO_PATH);
                     RemoteVersion = new Version(version.Split('_')[0]);
 
-                    ReleaseNotesUrl = RELEASE_PREFIX + RemoteVersion.ToString();
+                    ReleaseNotesUrl = RELEASE_PAGE + "tag/v" + RemoteVersion.ToString();
                     VersionTxt.Text = "Version: " + RemoteVersion.ToString();
 
                     return RemoteVersion > LocalVersion;
