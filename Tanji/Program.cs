@@ -13,7 +13,6 @@ namespace Tanji
         {
             Eavesdropper.Terminate();
 
-            #region Run As Administrator Check
             var windowsPrincipal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
             if (!windowsPrincipal.IsInRole(WindowsBuiltInRole.Administrator))
             {
@@ -21,7 +20,6 @@ namespace Tanji
                 MessageBox.Show(MustRunAsAdmin, Tanji.Main.TanjiError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            #endregion
 
             bool debugging = false;
             foreach (string command in args)
