@@ -117,9 +117,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Tanji.png" />
     <Content Include="Tanji.ico" />
   </ItemGroup>
