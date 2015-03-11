@@ -17,7 +17,7 @@ namespace Tanji
             if (!windowsPrincipal.IsInRole(WindowsBuiltInRole.Administrator))
             {
                 const string MustRunAsAdmin = "Tanji must be ran with administrative privileges; If you are not being prompted to run as admin, make sure your UAC settings are properly adjusted.";
-                MessageBox.Show(MustRunAsAdmin, Tanji.Main.TanjiError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(MustRunAsAdmin, "Tanji ~ Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
