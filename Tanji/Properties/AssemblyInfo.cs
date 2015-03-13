@@ -10,8 +10,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Arachis")]
 [assembly: AssemblyProduct("Habbo Packetlogger")]
-[assembly: AssemblyCopyright("Copyright © The Old Nut Man 2014")]
-[assembly: AssemblyTrademark("Kendax")]
+[assembly: AssemblyCopyright("Copyright © Arachis 2014")]
+[assembly: AssemblyTrademark("The Old Nut Man")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
@@ -33,4 +33,4 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("0.8.0.0")]
-[assembly: AssemblyFileVersion("0.8.0.0")]
+[assembly: AssemblyFileVersion("0.8.1.0")]
