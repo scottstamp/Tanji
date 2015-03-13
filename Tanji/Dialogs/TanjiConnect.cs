@@ -12,6 +12,9 @@ using Sulakore.Communication;
 
 using Tanji.Utilities;
 
+using Fiddler;
+using Tanji.Properties;
+
 namespace Tanji.Dialogs
 {
     public partial class TanjiConnect : Form
@@ -37,8 +40,28 @@ namespace Tanji.Dialogs
             if (!Directory.Exists("Patched Clients"))
                 Directory.CreateDirectory("Patched Clients");
 
-            Eavesdropper.IsCacheDisabled = true;
-            Eavesdropper.EavesdropperResponse += Eavesdropper_EavesdropperResponse;
+            Task.Factory.StartNew(InstallFiddlerCertificate)
+                .ContinueWith((t) => ConnectBtn.Enabled = true, TaskScheduler.FromCurrentSynchronizationContext());
+
+            FiddlerApplication.BeforeRequest += FiddlerApplication_BeforeRequest;
+            FiddlerApplication.BeforeResponse += FiddlerApplication_BeforeResponse;
+        }
+
+        private void FiddlerApplication_BeforeRequest(Session oSession)
+        {
+            oSession.bBufferResponse = true;
+        }
+        private void FiddlerApplication_BeforeResponse(Session oSession)
+        {
+            oSession.utilDecodeResponse();
+
+            bool isFlash = oSession.oResponse["Content-Type"] == "application/x-shockwave-flash";
+            oSession.ResponseBody = ProcessResponse(oSession.responseBodyBytes, isFlash);
+        }
+        private void Eavesdropper_EavesdropperResponse(EavesdropperResponseEventArgs e)
+        {
+            bool isFlash = e.Response.ContentType == "application/x-shockwave-flash";
+            e.Payload = ProcessResponse(e.Payload, isFlash);
         }
 
         private void BrowseBtn_Click(object sender, EventArgs e)
@@ -78,7 +101,7 @@ namespace Tanji.Dialogs
             }
             else
             {
-                Eavesdropper.Initiate();
+                FiddlerApplication.Startup(8081, FiddlerCoreStartupFlags.Default);
                 StatusTxt.BeginAnimation("Extracting Host/Port{0}", "...");
             }
         }
@@ -110,71 +133,30 @@ namespace Tanji.Dialogs
             TanjiSettings.Save();
             if (!_main.Game.IsConnected)
             {
-                Eavesdropper.Terminate();
+                FiddlerApplication.Shutdown();
                 _main.Game.Dispose();
                 Environment.Exit(0);
             }
             ResetSetup();
         }
 
-        private void Eavesdropper_EavesdropperResponse(EavesdropperResponseEventArgs e)
-        {
-            if (UseCustomClient && e.Response.ContentType == "application/x-shockwave-flash"
-                && e.Payload.Length > 3000000)
-            {
-                if (!_replaceKeys) e.Payload = _flash.ToBytes();
-                else
-                {
-                    _flash = new ShockwaveFlash(e.Payload);
-
-                    ReplaceRsaKeys(_flash);
-                    e.Payload = _flash.ToBytes();
-
-                    string clientPath = Path.Combine("Patched Clients", GameData.FlashClientBuild + ".swf");
-                    Task.Factory.StartNew(() => _flash.Save(clientPath, true));
-                }
-                Eavesdropper.Terminate();
-                StatusTxt.BeginAnimation("Connecting{0} | Port: " + GameData.Port, "...");
-                return;
-            }
-            else if (TanjiMode.IsManual) return;
-
-            string response = Encoding.UTF8.GetString(e.Payload);
-            if (response.Contains("connection.info.host") && response.Contains("connection.info.port"))
-            {
-                GameData = new HGameData(response);
-                if (!UseCustomClient)
-                {
-                    string patchedClientPath = Path.Combine("Patched Clients", GameData.FlashClientBuild + ".swf");
-
-                    if (!File.Exists(patchedClientPath)) UseCustomClient = _replaceKeys = true;
-                    else LoadGameClient(patchedClientPath);
-                }
-
-                if (!UseCustomClient)
-                {
-                    Eavesdropper.Terminate();
-                    StatusTxt.BeginAnimation("Connecting{0} | Port: " + GameData.Port, "...");
-                }
-                else if (_replaceKeys) StatusTxt.BeginAnimation("Modifying Client{0}", "...");
-                else StatusTxt.BeginAnimation("Replacing Client{0}", "...");
-
-                _main.Game.Connect(true, GameData.Host, GameData.Port);
-
-                response = response.Replace(GameData.FlashClientBuild + "/Habbo.swf", GameData.FlashClientBuild + "/Habbo.swf?" + _numberGenerator.Next());
-                e.Payload = Encoding.UTF8.GetBytes(response);
-            }
-        }
-
         private void ResetSetup()
         {
-            Eavesdropper.Terminate();
+            FiddlerApplication.Shutdown();
 
             ConnectBtn.Text = "Connect";
             CustomClientTxt.Text = string.Empty;
             UseCustomClient = _replaceKeys = false;
 
             StatusTxt.EndAnimation("Standing By...");
+        }
+        private void InstallFiddlerCertificate()
+        {
+            if (!CertMaker.rootCertExists())
+                CertMaker.createRootCert();
+
+            if (!CertMaker.rootCertIsTrusted())
+                CertMaker.trustRootCert();
         }
         private void LoadGameClient(string path)
         {
@@ -187,6 +169,55 @@ namespace Tanji.Dialogs
                 UseCustomClient = (_flash != null && !_flash.IsCompressed);
                 CustomClientTxt.Text = path;
             }
+        }
+        private byte[] ProcessResponse(byte[] payload, bool isFlash)
+        {
+            if (UseCustomClient && isFlash && payload.Length > 3000000)
+            {
+                if (!_replaceKeys) payload = _flash.ToBytes();
+                else
+                {
+                    _flash = new ShockwaveFlash(payload);
+
+                    ReplaceRsaKeys(_flash);
+                    payload = _flash.ToBytes();
+
+                    string clientPath = Path.Combine("Patched Clients", GameData.FlashClientBuild + ".swf");
+                    Task.Factory.StartNew(() => _flash.Save(clientPath, true));
+                }
+
+                FiddlerApplication.Shutdown();
+                StatusTxt.BeginAnimation("Connecting{0} | Port: " + GameData.Port, "...");
+                return payload;
+            }
+            else if (TanjiMode.IsManual) return payload;
+
+            string response = Encoding.UTF8.GetString(payload);
+            if (response.Contains("connection.info.host") && response.Contains("connection.info.port"))
+            {
+                GameData = HGameData.Parse(response);
+                if (!UseCustomClient)
+                {
+                    string patchedClientPath = Path.Combine("Patched Clients", GameData.FlashClientBuild + ".swf");
+
+                    if (!File.Exists(patchedClientPath)) UseCustomClient = _replaceKeys = true;
+                    else LoadGameClient(patchedClientPath);
+                }
+
+                if (!UseCustomClient)
+                {
+                    FiddlerApplication.Shutdown();
+                    StatusTxt.BeginAnimation("Connecting{0} | Port: " + GameData.Port, "...");
+                }
+                else if (_replaceKeys) StatusTxt.BeginAnimation("Modifying Client{0}", "...");
+                else StatusTxt.BeginAnimation("Replacing Client{0}", "...");
+
+                _main.Game.Connect(true, GameData.Host, GameData.Port);
+
+                response = response.Replace("/Habbo.swf", "/Habbo.swf?" + _numberGenerator.Next());
+                payload = Encoding.UTF8.GetBytes(response);
+            }
+            return payload;
         }
 
         private void DecodeRsaKeys(string base64RsaKeys)
