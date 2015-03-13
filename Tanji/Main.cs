@@ -135,10 +135,10 @@ namespace Tanji
                     {
                         if (e.Packet.IsCorrupted)
                         {
-                            Game.ClientEncrypt = new Rc4(_fakeClientKey);
-                            Game.ClientDecrypt = new Rc4(_fakeServerKey);
+                            Game.OutgoingEncrypt = new Rc4(_fakeClientKey);
+                            Game.OutgoingDecrypt = new Rc4(_fakeServerKey);
 
-                            byte[] decrypted = Game.ClientDecrypt.SafeParse(e.Packet.ToBytes());
+                            byte[] decrypted = Game.OutgoingDecrypt.SafeParse(e.Packet.ToBytes());
                             e.Replacement = new HMessage(decrypted, HDestination.Server);
                         }
                         break;
@@ -177,10 +177,10 @@ namespace Tanji
                     {
                         if (e.Packet.IsCorrupted)
                         {
-                            Game.ServerDecrypt = new Rc4(_fakeClientKey);
-                            Game.ServerEncrypt = new Rc4(_fakeServerKey);
+                            Game.IncomingDecrypt = new Rc4(_fakeClientKey);
+                            Game.IncomingEncrypt = new Rc4(_fakeServerKey);
 
-                            byte[] decrypted = Game.ServerDecrypt.SafeParse(e.Packet.ToBytes());
+                            byte[] decrypted = Game.IncomingDecrypt.SafeParse(e.Packet.ToBytes());
                             e.Replacement = new HMessage(decrypted, HDestination.Client);
                         }
                         break;
