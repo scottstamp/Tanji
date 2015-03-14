@@ -109,15 +109,22 @@
             this.IFReplaceTab = new System.Windows.Forms.TabPage();
             this.IFBlockTab = new System.Windows.Forms.TabPage();
             this.EncoderDecoderTab = new System.Windows.Forms.TabPage();
-            this.ModernEncodingGrpbx = new System.Windows.Forms.GroupBox();
-            this.ModernShortOutputTxt = new System.Windows.Forms.TextBox();
-            this.ModernIntegerOutputTxt = new System.Windows.Forms.TextBox();
-            this.ModernShortInputTxt = new System.Windows.Forms.TextBox();
-            this.ModernCypherShortBtn = new Sulakore.Components.SKoreButton();
-            this.ModernCypherIntegerBtn = new Sulakore.Components.SKoreButton();
-            this.ModernDecypherShortBtn = new Sulakore.Components.SKoreButton();
-            this.ModernDecypherIntegerBtn = new Sulakore.Components.SKoreButton();
-            this.ModernIntegerInputTxt = new System.Windows.Forms.TextBox();
+            this.EDExtracterLstvw = new Sulakore.Components.SKoreListView();
+            this.ValueCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.EncodedCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.PositionCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.EDExtractValuesBtn = new Sulakore.Components.SKoreButton();
+            this.EDEncodedBlocksLbl = new System.Windows.Forms.Label();
+            this.EDEncodedBlocksTxt = new System.Windows.Forms.TextBox();
+            this.EDMiddleGlowPnl = new System.Windows.Forms.Panel();
+            this.EDShortOutputTxt = new System.Windows.Forms.TextBox();
+            this.EDIntegerOutputTxt = new System.Windows.Forms.TextBox();
+            this.EDShortInputTxt = new System.Windows.Forms.TextBox();
+            this.EDEncodeShortBtn = new Sulakore.Components.SKoreButton();
+            this.EDEncodeIntegerBtn = new Sulakore.Components.SKoreButton();
+            this.EDDecodeShortBtn = new Sulakore.Components.SKoreButton();
+            this.EDDecodeIntegerBtn = new Sulakore.Components.SKoreButton();
+            this.EDIntegerInputTxt = new System.Windows.Forms.TextBox();
             this.ToolboxTab = new System.Windows.Forms.TabPage();
             this.ExtensionsTab = new System.Windows.Forms.TabPage();
             this.EMiddleGlowPnl = new System.Windows.Forms.Panel();
@@ -148,7 +155,6 @@
             this.IFiltersTab.SuspendLayout();
             this.IFFilterTabs.SuspendLayout();
             this.EncoderDecoderTab.SuspendLayout();
-            this.ModernEncodingGrpbx.SuspendLayout();
             this.ExtensionsTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.EExtensionLogoPctbx)).BeginInit();
             this.OptionsTab.SuspendLayout();
@@ -202,7 +208,7 @@
             this.TanjiInfoTxt.IsLink = true;
             this.TanjiInfoTxt.LinkColor = System.Drawing.SystemColors.HotTrack;
             this.TanjiInfoTxt.Name = "TanjiInfoTxt";
-            this.TanjiInfoTxt.Size = new System.Drawing.Size(135, 19);
+            this.TanjiInfoTxt.Size = new System.Drawing.Size(166, 19);
             this.TanjiInfoTxt.Spring = true;
             this.TanjiInfoTxt.Text = "ArachisH.GitHub.io/Tanji/";
             this.TanjiInfoTxt.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
@@ -1023,7 +1029,19 @@
             // EncoderDecoderTab
             // 
             this.EncoderDecoderTab.BackColor = System.Drawing.Color.White;
-            this.EncoderDecoderTab.Controls.Add(this.ModernEncodingGrpbx);
+            this.EncoderDecoderTab.Controls.Add(this.EDExtracterLstvw);
+            this.EncoderDecoderTab.Controls.Add(this.EDExtractValuesBtn);
+            this.EncoderDecoderTab.Controls.Add(this.EDEncodedBlocksLbl);
+            this.EncoderDecoderTab.Controls.Add(this.EDEncodedBlocksTxt);
+            this.EncoderDecoderTab.Controls.Add(this.EDMiddleGlowPnl);
+            this.EncoderDecoderTab.Controls.Add(this.EDShortOutputTxt);
+            this.EncoderDecoderTab.Controls.Add(this.EDIntegerOutputTxt);
+            this.EncoderDecoderTab.Controls.Add(this.EDShortInputTxt);
+            this.EncoderDecoderTab.Controls.Add(this.EDEncodeShortBtn);
+            this.EncoderDecoderTab.Controls.Add(this.EDEncodeIntegerBtn);
+            this.EncoderDecoderTab.Controls.Add(this.EDDecodeShortBtn);
+            this.EncoderDecoderTab.Controls.Add(this.EDDecodeIntegerBtn);
+            this.EncoderDecoderTab.Controls.Add(this.EDIntegerInputTxt);
             this.EncoderDecoderTab.Location = new System.Drawing.Point(4, 28);
             this.EncoderDecoderTab.Name = "EncoderDecoderTab";
             this.EncoderDecoderTab.Padding = new System.Windows.Forms.Padding(3);
@@ -1031,102 +1049,157 @@
             this.EncoderDecoderTab.TabIndex = 1;
             this.EncoderDecoderTab.Text = "Encoder/Decoder";
             // 
-            // ModernEncodingGrpbx
+            // EDExtracterLstvw
             // 
-            this.ModernEncodingGrpbx.Controls.Add(this.ModernShortOutputTxt);
-            this.ModernEncodingGrpbx.Controls.Add(this.ModernIntegerOutputTxt);
-            this.ModernEncodingGrpbx.Controls.Add(this.ModernShortInputTxt);
-            this.ModernEncodingGrpbx.Controls.Add(this.ModernCypherShortBtn);
-            this.ModernEncodingGrpbx.Controls.Add(this.ModernCypherIntegerBtn);
-            this.ModernEncodingGrpbx.Controls.Add(this.ModernDecypherShortBtn);
-            this.ModernEncodingGrpbx.Controls.Add(this.ModernDecypherIntegerBtn);
-            this.ModernEncodingGrpbx.Controls.Add(this.ModernIntegerInputTxt);
-            this.ModernEncodingGrpbx.Location = new System.Drawing.Point(6, 6);
-            this.ModernEncodingGrpbx.Name = "ModernEncodingGrpbx";
-            this.ModernEncodingGrpbx.Size = new System.Drawing.Size(459, 79);
-            this.ModernEncodingGrpbx.TabIndex = 21;
-            this.ModernEncodingGrpbx.TabStop = false;
-            this.ModernEncodingGrpbx.Text = "Modern Encoding ( BigEndian )";
+            this.EDExtracterLstvw.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.ValueCol,
+            this.EncodedCol,
+            this.PositionCol});
+            this.EDExtracterLstvw.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.EDExtracterLstvw.FullRowSelect = true;
+            this.EDExtracterLstvw.GridLines = true;
+            this.EDExtracterLstvw.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.EDExtracterLstvw.HideSelection = false;
+            this.EDExtracterLstvw.Location = new System.Drawing.Point(3, 99);
+            this.EDExtracterLstvw.MultiSelect = false;
+            this.EDExtracterLstvw.Name = "EDExtracterLstvw";
+            this.EDExtracterLstvw.ShowItemToolTips = true;
+            this.EDExtracterLstvw.Size = new System.Drawing.Size(465, 211);
+            this.EDExtracterLstvw.TabIndex = 30;
+            this.EDExtracterLstvw.UseCompatibleStateImageBehavior = false;
+            this.EDExtracterLstvw.View = System.Windows.Forms.View.Details;
             // 
-            // ModernShortOutputTxt
+            // ValueCol
             // 
-            this.ModernShortOutputTxt.Location = new System.Drawing.Point(233, 50);
-            this.ModernShortOutputTxt.Name = "ModernShortOutputTxt";
-            this.ModernShortOutputTxt.Size = new System.Drawing.Size(117, 20);
-            this.ModernShortOutputTxt.TabIndex = 17;
-            this.ModernShortOutputTxt.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.ValueCol.Text = "Value";
+            this.ValueCol.Width = 84;
             // 
-            // ModernIntegerOutputTxt
+            // EncodedCol
             // 
-            this.ModernIntegerOutputTxt.Location = new System.Drawing.Point(233, 21);
-            this.ModernIntegerOutputTxt.Name = "ModernIntegerOutputTxt";
-            this.ModernIntegerOutputTxt.Size = new System.Drawing.Size(117, 20);
-            this.ModernIntegerOutputTxt.TabIndex = 16;
-            this.ModernIntegerOutputTxt.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.EncodedCol.Text = "Encoded";
+            this.EncodedCol.Width = 109;
             // 
-            // ModernShortInputTxt
+            // PositionCol
             // 
-            this.ModernShortInputTxt.Location = new System.Drawing.Point(110, 50);
-            this.ModernShortInputTxt.Name = "ModernShortInputTxt";
-            this.ModernShortInputTxt.Size = new System.Drawing.Size(117, 20);
-            this.ModernShortInputTxt.TabIndex = 15;
-            this.ModernShortInputTxt.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.PositionCol.Text = "Position";
+            this.PositionCol.Width = 71;
             // 
-            // ModernCypherShortBtn
+            // EDExtractValuesBtn
             // 
-            this.ModernCypherShortBtn.BackColor = System.Drawing.Color.Transparent;
-            this.ModernCypherShortBtn.DialogResult = System.Windows.Forms.DialogResult.None;
-            this.ModernCypherShortBtn.Location = new System.Drawing.Point(6, 48);
-            this.ModernCypherShortBtn.Name = "ModernCypherShortBtn";
-            this.ModernCypherShortBtn.Size = new System.Drawing.Size(98, 23);
-            this.ModernCypherShortBtn.Skin = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
-            this.ModernCypherShortBtn.TabIndex = 12;
-            this.ModernCypherShortBtn.Text = "Cypher Short";
-            this.ModernCypherShortBtn.Click += new System.EventHandler(this.ModernCypherShortBtn_Click);
+            this.EDExtractValuesBtn.BackColor = System.Drawing.Color.Transparent;
+            this.EDExtractValuesBtn.DialogResult = System.Windows.Forms.DialogResult.None;
+            this.EDExtractValuesBtn.Location = new System.Drawing.Point(365, 71);
+            this.EDExtractValuesBtn.Name = "EDExtractValuesBtn";
+            this.EDExtractValuesBtn.Size = new System.Drawing.Size(100, 22);
+            this.EDExtractValuesBtn.Skin = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
+            this.EDExtractValuesBtn.TabIndex = 29;
+            this.EDExtractValuesBtn.Text = "Extract Values";
+            this.EDExtractValuesBtn.Click += new System.EventHandler(this.EDExtractValuesBtn_Click);
             // 
-            // ModernCypherIntegerBtn
+            // EDEncodedBlocksLbl
             // 
-            this.ModernCypherIntegerBtn.BackColor = System.Drawing.Color.Transparent;
-            this.ModernCypherIntegerBtn.DialogResult = System.Windows.Forms.DialogResult.None;
-            this.ModernCypherIntegerBtn.Location = new System.Drawing.Point(6, 19);
-            this.ModernCypherIntegerBtn.Name = "ModernCypherIntegerBtn";
-            this.ModernCypherIntegerBtn.Size = new System.Drawing.Size(98, 23);
-            this.ModernCypherIntegerBtn.Skin = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
-            this.ModernCypherIntegerBtn.TabIndex = 11;
-            this.ModernCypherIntegerBtn.Text = "Cypher Integer";
-            this.ModernCypherIntegerBtn.Click += new System.EventHandler(this.ModernCypherIntegerBtn_Click);
+            this.EDEncodedBlocksLbl.AutoSize = true;
+            this.EDEncodedBlocksLbl.Location = new System.Drawing.Point(4, 75);
+            this.EDEncodedBlocksLbl.Name = "EDEncodedBlocksLbl";
+            this.EDEncodedBlocksLbl.Size = new System.Drawing.Size(94, 13);
+            this.EDEncodedBlocksLbl.TabIndex = 27;
+            this.EDEncodedBlocksLbl.Text = "Encoded Block(s):";
             // 
-            // ModernDecypherShortBtn
+            // EDEncodedBlocksTxt
             // 
-            this.ModernDecypherShortBtn.BackColor = System.Drawing.Color.Transparent;
-            this.ModernDecypherShortBtn.DialogResult = System.Windows.Forms.DialogResult.None;
-            this.ModernDecypherShortBtn.Location = new System.Drawing.Point(356, 48);
-            this.ModernDecypherShortBtn.Name = "ModernDecypherShortBtn";
-            this.ModernDecypherShortBtn.Size = new System.Drawing.Size(98, 23);
-            this.ModernDecypherShortBtn.Skin = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
-            this.ModernDecypherShortBtn.TabIndex = 14;
-            this.ModernDecypherShortBtn.Text = "Decypher Short";
-            this.ModernDecypherShortBtn.Click += new System.EventHandler(this.ModernDecypherShortBtn_Click);
+            this.EDEncodedBlocksTxt.Location = new System.Drawing.Point(98, 72);
+            this.EDEncodedBlocksTxt.Name = "EDEncodedBlocksTxt";
+            this.EDEncodedBlocksTxt.Size = new System.Drawing.Size(261, 20);
+            this.EDEncodedBlocksTxt.TabIndex = 28;
+            this.EDEncodedBlocksTxt.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // ModernDecypherIntegerBtn
+            // EDMiddleGlowPnl
             // 
-            this.ModernDecypherIntegerBtn.BackColor = System.Drawing.Color.Transparent;
-            this.ModernDecypherIntegerBtn.DialogResult = System.Windows.Forms.DialogResult.None;
-            this.ModernDecypherIntegerBtn.Location = new System.Drawing.Point(356, 19);
-            this.ModernDecypherIntegerBtn.Name = "ModernDecypherIntegerBtn";
-            this.ModernDecypherIntegerBtn.Size = new System.Drawing.Size(98, 23);
-            this.ModernDecypherIntegerBtn.Skin = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
-            this.ModernDecypherIntegerBtn.TabIndex = 13;
-            this.ModernDecypherIntegerBtn.Text = "Decypher Integer";
-            this.ModernDecypherIntegerBtn.Click += new System.EventHandler(this.ModernDecypherIntegerBtn_Click);
+            this.EDMiddleGlowPnl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
+            this.EDMiddleGlowPnl.Location = new System.Drawing.Point(6, 64);
+            this.EDMiddleGlowPnl.Name = "EDMiddleGlowPnl";
+            this.EDMiddleGlowPnl.Size = new System.Drawing.Size(459, 1);
+            this.EDMiddleGlowPnl.TabIndex = 26;
             // 
-            // ModernIntegerInputTxt
+            // EDShortOutputTxt
             // 
-            this.ModernIntegerInputTxt.Location = new System.Drawing.Point(110, 21);
-            this.ModernIntegerInputTxt.Name = "ModernIntegerInputTxt";
-            this.ModernIntegerInputTxt.Size = new System.Drawing.Size(117, 20);
-            this.ModernIntegerInputTxt.TabIndex = 10;
-            this.ModernIntegerInputTxt.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.EDShortOutputTxt.Location = new System.Drawing.Point(239, 36);
+            this.EDShortOutputTxt.Name = "EDShortOutputTxt";
+            this.EDShortOutputTxt.Size = new System.Drawing.Size(122, 20);
+            this.EDShortOutputTxt.TabIndex = 25;
+            this.EDShortOutputTxt.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // EDIntegerOutputTxt
+            // 
+            this.EDIntegerOutputTxt.Location = new System.Drawing.Point(239, 8);
+            this.EDIntegerOutputTxt.Name = "EDIntegerOutputTxt";
+            this.EDIntegerOutputTxt.Size = new System.Drawing.Size(122, 20);
+            this.EDIntegerOutputTxt.TabIndex = 24;
+            this.EDIntegerOutputTxt.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // EDShortInputTxt
+            // 
+            this.EDShortInputTxt.Location = new System.Drawing.Point(110, 36);
+            this.EDShortInputTxt.Name = "EDShortInputTxt";
+            this.EDShortInputTxt.Size = new System.Drawing.Size(122, 20);
+            this.EDShortInputTxt.TabIndex = 23;
+            this.EDShortInputTxt.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // EDEncodeShortBtn
+            // 
+            this.EDEncodeShortBtn.BackColor = System.Drawing.Color.Transparent;
+            this.EDEncodeShortBtn.DialogResult = System.Windows.Forms.DialogResult.None;
+            this.EDEncodeShortBtn.Location = new System.Drawing.Point(6, 35);
+            this.EDEncodeShortBtn.Name = "EDEncodeShortBtn";
+            this.EDEncodeShortBtn.Size = new System.Drawing.Size(98, 23);
+            this.EDEncodeShortBtn.Skin = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
+            this.EDEncodeShortBtn.TabIndex = 20;
+            this.EDEncodeShortBtn.Text = "Encode Short";
+            this.EDEncodeShortBtn.Click += new System.EventHandler(this.EDCypherShortBtn_Click);
+            // 
+            // EDEncodeIntegerBtn
+            // 
+            this.EDEncodeIntegerBtn.BackColor = System.Drawing.Color.Transparent;
+            this.EDEncodeIntegerBtn.DialogResult = System.Windows.Forms.DialogResult.None;
+            this.EDEncodeIntegerBtn.Location = new System.Drawing.Point(6, 6);
+            this.EDEncodeIntegerBtn.Name = "EDEncodeIntegerBtn";
+            this.EDEncodeIntegerBtn.Size = new System.Drawing.Size(98, 23);
+            this.EDEncodeIntegerBtn.Skin = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
+            this.EDEncodeIntegerBtn.TabIndex = 19;
+            this.EDEncodeIntegerBtn.Text = "Encode Integer";
+            this.EDEncodeIntegerBtn.Click += new System.EventHandler(this.EDCypherIntegerBtn_Click);
+            // 
+            // EDDecodeShortBtn
+            // 
+            this.EDDecodeShortBtn.BackColor = System.Drawing.Color.Transparent;
+            this.EDDecodeShortBtn.DialogResult = System.Windows.Forms.DialogResult.None;
+            this.EDDecodeShortBtn.Location = new System.Drawing.Point(367, 35);
+            this.EDDecodeShortBtn.Name = "EDDecodeShortBtn";
+            this.EDDecodeShortBtn.Size = new System.Drawing.Size(98, 23);
+            this.EDDecodeShortBtn.Skin = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
+            this.EDDecodeShortBtn.TabIndex = 22;
+            this.EDDecodeShortBtn.Text = "Decode Short";
+            this.EDDecodeShortBtn.Click += new System.EventHandler(this.EDDecypherShortBtn_Click);
+            // 
+            // EDDecodeIntegerBtn
+            // 
+            this.EDDecodeIntegerBtn.BackColor = System.Drawing.Color.Transparent;
+            this.EDDecodeIntegerBtn.DialogResult = System.Windows.Forms.DialogResult.None;
+            this.EDDecodeIntegerBtn.Location = new System.Drawing.Point(367, 6);
+            this.EDDecodeIntegerBtn.Name = "EDDecodeIntegerBtn";
+            this.EDDecodeIntegerBtn.Size = new System.Drawing.Size(98, 23);
+            this.EDDecodeIntegerBtn.Skin = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
+            this.EDDecodeIntegerBtn.TabIndex = 21;
+            this.EDDecodeIntegerBtn.Text = "Decode Integer";
+            this.EDDecodeIntegerBtn.Click += new System.EventHandler(this.EDDecypherIntegerBtn_Click);
+            // 
+            // EDIntegerInputTxt
+            // 
+            this.EDIntegerInputTxt.Location = new System.Drawing.Point(110, 8);
+            this.EDIntegerInputTxt.Name = "EDIntegerInputTxt";
+            this.EDIntegerInputTxt.Size = new System.Drawing.Size(122, 20);
+            this.EDIntegerInputTxt.TabIndex = 18;
+            this.EDIntegerInputTxt.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // ToolboxTab
             // 
@@ -1329,8 +1402,7 @@
             this.IFiltersTab.ResumeLayout(false);
             this.IFFilterTabs.ResumeLayout(false);
             this.EncoderDecoderTab.ResumeLayout(false);
-            this.ModernEncodingGrpbx.ResumeLayout(false);
-            this.ModernEncodingGrpbx.PerformLayout();
+            this.EncoderDecoderTab.PerformLayout();
             this.ExtensionsTab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.EExtensionLogoPctbx)).EndInit();
             this.OptionsTab.ResumeLayout(false);
@@ -1361,15 +1433,6 @@
         private System.Windows.Forms.TabPage ITriggersTab;
         private System.Windows.Forms.TabPage IFiltersTab;
         private System.Windows.Forms.ToolStripStatusLabel ExtensionsActiveTxt;
-        private System.Windows.Forms.GroupBox ModernEncodingGrpbx;
-        private System.Windows.Forms.TextBox ModernShortOutputTxt;
-        private System.Windows.Forms.TextBox ModernIntegerOutputTxt;
-        private System.Windows.Forms.TextBox ModernShortInputTxt;
-        private Sulakore.Components.SKoreButton ModernCypherShortBtn;
-        private Sulakore.Components.SKoreButton ModernCypherIntegerBtn;
-        private Sulakore.Components.SKoreButton ModernDecypherShortBtn;
-        private Sulakore.Components.SKoreButton ModernDecypherIntegerBtn;
-        private System.Windows.Forms.TextBox ModernIntegerInputTxt;
         private System.Windows.Forms.TabPage ExtensionsTab;
         private Sulakore.Components.SKoreConstructer ICConstructerLstVw;
         private System.Windows.Forms.Label ICHeaderLbl;
@@ -1447,6 +1510,22 @@
         private System.Windows.Forms.TabPage IFReplaceTab;
         private System.Windows.Forms.TabPage IFBlockTab;
         private System.Windows.Forms.ToolStripStatusLabel TanjiInfoTxt;
+        private System.Windows.Forms.TextBox EDShortOutputTxt;
+        private System.Windows.Forms.TextBox EDIntegerOutputTxt;
+        private System.Windows.Forms.TextBox EDShortInputTxt;
+        private Sulakore.Components.SKoreButton EDEncodeShortBtn;
+        private Sulakore.Components.SKoreButton EDEncodeIntegerBtn;
+        private Sulakore.Components.SKoreButton EDDecodeShortBtn;
+        private Sulakore.Components.SKoreButton EDDecodeIntegerBtn;
+        private System.Windows.Forms.TextBox EDIntegerInputTxt;
+        private System.Windows.Forms.Panel EDMiddleGlowPnl;
+        private System.Windows.Forms.Label EDEncodedBlocksLbl;
+        private System.Windows.Forms.TextBox EDEncodedBlocksTxt;
+        private Sulakore.Components.SKoreButton EDExtractValuesBtn;
+        private Sulakore.Components.SKoreListView EDExtracterLstvw;
+        private System.Windows.Forms.ColumnHeader ValueCol;
+        private System.Windows.Forms.ColumnHeader EncodedCol;
+        private System.Windows.Forms.ColumnHeader PositionCol;
 
     }
 }

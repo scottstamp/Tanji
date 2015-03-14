@@ -423,7 +423,7 @@ namespace Tanji
             try
             {
                 byte[] data = HMessage.ToBytes(IPPacketTxt.Text);
-                if (data.Length > 1)
+                if (data.Length >= 6)
                 {
                     packet = new HMessage(data);
                     isCorrupted = (data.Length < 2 || packet.IsCorrupted);
@@ -461,30 +461,50 @@ namespace Tanji
         #endregion
 
         #region Encode/Decoder Related Methods
-        private void ModernCypherIntegerBtn_Click(object sender, EventArgs e)
+        private void EDCypherIntegerBtn_Click(object sender, EventArgs e)
         {
             int value;
-            if (int.TryParse(ModernIntegerInputTxt.Text, out value))
-                ModernIntegerOutputTxt.Text = HMessage.ToString(BigEndian.CypherInt(value));
+            if (int.TryParse(EDIntegerInputTxt.Text, out value))
+                EDIntegerOutputTxt.Text = HMessage.ToString(BigEndian.CypherInt(value));
             else MessageBox.Show(NotInt32, "Tanji ~ Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
-        private void ModernDecypherIntegerBtn_Click(object sender, EventArgs e)
+        private void EDDecypherIntegerBtn_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(ModernIntegerOutputTxt.Text))
-                ModernIntegerInputTxt.Text = BigEndian.DecypherInt(HMessage.ToBytes(ModernIntegerOutputTxt.Text)).ToString();
+            if (!string.IsNullOrEmpty(EDIntegerOutputTxt.Text))
+                EDIntegerInputTxt.Text = BigEndian.DecypherInt(HMessage.ToBytes(EDIntegerOutputTxt.Text)).ToString();
         }
 
-        private void ModernCypherShortBtn_Click(object sender, EventArgs e)
+        private void EDCypherShortBtn_Click(object sender, EventArgs e)
         {
             ushort value;
-            if (ushort.TryParse(ModernShortInputTxt.Text, out value))
-                ModernShortOutputTxt.Text = HMessage.ToString(BigEndian.CypherShort(value));
+            if (ushort.TryParse(EDShortInputTxt.Text, out value))
+                EDShortOutputTxt.Text = HMessage.ToString(BigEndian.CypherShort(value));
             else MessageBox.Show(NotUInt16, "Tanji ~ Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
-        private void ModernDecypherShortBtn_Click(object sender, EventArgs e)
+        private void EDDecypherShortBtn_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(ModernShortOutputTxt.Text))
-                ModernShortInputTxt.Text = BigEndian.DecypherShort(HMessage.ToBytes(ModernShortOutputTxt.Text)).ToString();
+            if (!string.IsNullOrEmpty(EDShortOutputTxt.Text))
+                EDShortInputTxt.Text = BigEndian.DecypherShort(HMessage.ToBytes(EDShortOutputTxt.Text)).ToString();
+        }
+
+        private void EDExtractValuesBtn_Click(object sender, EventArgs e)
+        {
+            EDExtracterLstvw.Items.Clear();
+            byte[] encodedBlocks = HMessage.ToBytes(EDEncodedBlocksTxt.Text);
+            if (encodedBlocks.Length % 4 == 0)
+            {
+                int value = 0;
+                string encoded = string.Empty;
+                byte[] encodedBlock = new byte[4];
+                for (int i = 0; i < encodedBlocks.Length; i += 4)
+                {
+                    Buffer.BlockCopy(encodedBlocks, i, encodedBlock, 0, 4);
+                    value = BigEndian.DecypherInt(encodedBlock);
+                    encoded = HMessage.ToString(encodedBlock);
+
+                    EDExtracterLstvw.FocusAdd(value.ToString(), encoded, i.ToString());
+                }
+            }
         }
         #endregion
 
