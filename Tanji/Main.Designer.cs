@@ -45,7 +45,7 @@
             this.ISBurstTxt = new System.Windows.Forms.NumericUpDown();
             this.ISIntervalTxt = new System.Windows.Forms.NumericUpDown();
             this.ISDescriptionTxt = new System.Windows.Forms.TextBox();
-            this.ISSchedulesLstVw = new Sulakore.Components.SKoreScheduler();
+            this.ISSchedulerLstvw = new Sulakore.Components.SKoreScheduler();
             this.ISPacketCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ISDestinationCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ISBurstCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -81,7 +81,7 @@
             this.ICHeaderTxt = new System.Windows.Forms.TextBox();
             this.ICValueLbl = new System.Windows.Forms.Label();
             this.ICValueTxt = new System.Windows.Forms.TextBox();
-            this.ICConstructerLstVw = new Sulakore.Components.SKoreConstructer();
+            this.ICConstructerLstvw = new Sulakore.Components.SKoreConstructer();
             this.ICTypeCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ICValueCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ICEncodedCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -102,12 +102,34 @@
             this.IPrimitiveTab = new System.Windows.Forms.TabPage();
             this.IPIsCorruptedLbl = new System.Windows.Forms.Label();
             this.IPPacketInfoLbl = new System.Windows.Forms.Label();
-            this.IPPacketTxt = new System.Windows.Forms.TextBox();
+            this.IPPrimitiveTxt = new System.Windows.Forms.TextBox();
             this.ITriggersTab = new System.Windows.Forms.TabPage();
             this.IFiltersTab = new System.Windows.Forms.TabPage();
-            this.IFFilterTabs = new Sulakore.Components.SKoreTabControl();
-            this.IFReplaceTab = new System.Windows.Forms.TabPage();
+            this.IFFilterModeTabs = new Sulakore.Components.SKoreTabControl();
             this.IFBlockTab = new System.Windows.Forms.TabPage();
+            this.IFBDestinationLbl = new System.Windows.Forms.Label();
+            this.IFBDestinationTxt = new System.Windows.Forms.ComboBox();
+            this.IFBHeaderTxt = new System.Windows.Forms.TextBox();
+            this.IFBHeaderLbl = new System.Windows.Forms.Label();
+            this.IFBUnblockBtn = new Sulakore.Components.SKoreButton();
+            this.IFBBlockBtn = new Sulakore.Components.SKoreButton();
+            this.IFBBlockLstvw = new Sulakore.Components.SKoreListView();
+            this.BDestinationCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.BHeaderCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.BPublisherCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.IFReplaceTab = new System.Windows.Forms.TabPage();
+            this.IFRDestinationLbl = new System.Windows.Forms.Label();
+            this.IFRDestinationTxt = new System.Windows.Forms.ComboBox();
+            this.IFRHeaderTxt = new System.Windows.Forms.TextBox();
+            this.IFRHeaderLbl = new System.Windows.Forms.Label();
+            this.IFRUnreplaceBtn = new Sulakore.Components.SKoreButton();
+            this.IFRReplaceBtn = new Sulakore.Components.SKoreButton();
+            this.IFRReplacementTxt = new System.Windows.Forms.TextBox();
+            this.IFReplacementLbl = new System.Windows.Forms.Label();
+            this.IFRReplaceLstvw = new Sulakore.Components.SKoreListView();
+            this.RDestinationCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.RHeaderCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.RReplacementCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.EncoderDecoderTab = new System.Windows.Forms.TabPage();
             this.EDExtracterLstvw = new Sulakore.Components.SKoreListView();
             this.ValueCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -126,11 +148,13 @@
             this.EDDecodeIntegerBtn = new Sulakore.Components.SKoreButton();
             this.EDIntegerInputTxt = new System.Windows.Forms.TextBox();
             this.ToolboxTab = new System.Windows.Forms.TabPage();
+            this.TRequestLbl = new System.Windows.Forms.LinkLabel();
+            this.TSuggestLbl = new System.Windows.Forms.Label();
             this.ExtensionsTab = new System.Windows.Forms.TabPage();
             this.EMiddleGlowPnl = new System.Windows.Forms.Panel();
             this.EExtensionLogoPctbx = new System.Windows.Forms.PictureBox();
             this.ETopGlowPnl = new System.Windows.Forms.Panel();
-            this.ETanjiExtensionViewer = new Sulakore.Components.SKoreExtensionView();
+            this.EExtensionsLstvw = new Sulakore.Components.SKoreExtensionView();
             this.NameCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.AuthorCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.EVersionCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -140,6 +164,15 @@
             this.OSAlwaysOnTopChckbx = new System.Windows.Forms.CheckBox();
             this.OSCloseOnDisconnectChckbx = new System.Windows.Forms.CheckBox();
             this.OAboutTab = new System.Windows.Forms.TabPage();
+            this.ITSavedTriggers = new System.Windows.Forms.ComboBox();
+            this.sKoreButton1 = new Sulakore.Components.SKoreButton();
+            this.sKoreListView1 = new Sulakore.Components.SKoreListView();
+            this.ITTypePropertyCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ITPosition = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ITPredicate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ITCondition = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.label1 = new System.Windows.Forms.Label();
+            this.ITNotDoneLbl = new System.Windows.Forms.Label();
             this.TanjiStrip.SuspendLayout();
             this.EExtensionMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ISBurstTxt)).BeginInit();
@@ -152,9 +185,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.ICCountTxt)).BeginInit();
             this.ISchedulerTab.SuspendLayout();
             this.IPrimitiveTab.SuspendLayout();
+            this.ITriggersTab.SuspendLayout();
             this.IFiltersTab.SuspendLayout();
-            this.IFFilterTabs.SuspendLayout();
+            this.IFFilterModeTabs.SuspendLayout();
+            this.IFBlockTab.SuspendLayout();
+            this.IFReplaceTab.SuspendLayout();
             this.EncoderDecoderTab.SuspendLayout();
+            this.ToolboxTab.SuspendLayout();
             this.ExtensionsTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.EExtensionLogoPctbx)).BeginInit();
             this.OptionsTab.SuspendLayout();
@@ -310,30 +347,32 @@
             this.TanjiTip.SetToolTip(this.ISDescriptionTxt, "The desciption of the schedule, this will be shown when hovering over the item in" +
         " the list.");
             // 
-            // ISSchedulesLstVw
+            // ISSchedulerLstvw
             // 
-            this.ISSchedulesLstVw.CheckBoxes = true;
-            this.ISSchedulesLstVw.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.ISSchedulerLstvw.CheckBoxes = true;
+            this.ISSchedulerLstvw.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.ISPacketCol,
             this.ISDestinationCol,
             this.ISBurstCol,
             this.ISIntervalCol,
             this.ISStatusCol});
-            this.ISSchedulesLstVw.FullRowSelect = true;
-            this.ISSchedulesLstVw.GridLines = true;
-            this.ISSchedulesLstVw.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.ISSchedulesLstVw.HideSelection = false;
-            this.ISSchedulesLstVw.Location = new System.Drawing.Point(6, 6);
-            this.ISSchedulesLstVw.MultiSelect = false;
-            this.ISSchedulesLstVw.Name = "ISSchedulesLstVw";
-            this.ISSchedulesLstVw.ShowItemToolTips = true;
-            this.ISSchedulesLstVw.Size = new System.Drawing.Size(380, 150);
-            this.ISSchedulesLstVw.TabIndex = 41;
-            this.TanjiTip.SetToolTip(this.ISSchedulesLstVw, "To toggle, double click the selected schedule.");
-            this.ISSchedulesLstVw.UseCompatibleStateImageBehavior = false;
-            this.ISSchedulesLstVw.View = System.Windows.Forms.View.Details;
-            this.ISSchedulesLstVw.ScheduleTriggered += new System.EventHandler<Sulakore.Protocol.HScheduleTriggeredEventArgs>(this.ISSchedulesLstVw_ScheduleTriggered);
-            this.ISSchedulesLstVw.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ISSchedulesLstVw_ItemSelectionChanged);
+            this.ISSchedulerLstvw.FullRowSelect = true;
+            this.ISSchedulerLstvw.GridLines = true;
+            this.ISSchedulerLstvw.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.ISSchedulerLstvw.HideSelection = false;
+            this.ISSchedulerLstvw.Location = new System.Drawing.Point(6, 6);
+            this.ISSchedulerLstvw.MultiSelect = false;
+            this.ISSchedulerLstvw.Name = "ISSchedulerLstvw";
+            this.ISSchedulerLstvw.ShowItemToolTips = true;
+            this.ISSchedulerLstvw.Size = new System.Drawing.Size(380, 150);
+            this.ISSchedulerLstvw.TabIndex = 41;
+            this.TanjiTip.SetToolTip(this.ISSchedulerLstvw, "To toggle, double click the selected schedule.");
+            this.ISSchedulerLstvw.UseCompatibleStateImageBehavior = false;
+            this.ISSchedulerLstvw.View = System.Windows.Forms.View.Details;
+            this.ISSchedulerLstvw.ScheduleTriggered += new System.EventHandler<Sulakore.Protocol.HScheduleTriggeredEventArgs>(this.ISSchedulesLstVw_ScheduleTriggered);
+            this.ISSchedulerLstvw.ItemSelected += new System.EventHandler<System.Windows.Forms.ListViewItemSelectionChangedEventArgs>(this.ISSchedulesLstVw_ItemSelected);
+            this.ISSchedulerLstvw.ItemsDeselected += new System.EventHandler(this.ISSchedulesLstVw_ItemsDeselected);
+            this.ISSchedulerLstvw.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.ISSchedulesLstVw_ItemChecked);
             // 
             // ISPacketCol
             // 
@@ -521,7 +560,7 @@
             this.IConstructerTab.Controls.Add(this.ICHeaderTxt);
             this.IConstructerTab.Controls.Add(this.ICValueLbl);
             this.IConstructerTab.Controls.Add(this.ICValueTxt);
-            this.IConstructerTab.Controls.Add(this.ICConstructerLstVw);
+            this.IConstructerTab.Controls.Add(this.ICConstructerLstvw);
             this.IConstructerTab.Location = new System.Drawing.Point(4, 4);
             this.IConstructerTab.Name = "IConstructerTab";
             this.IConstructerTab.Padding = new System.Windows.Forms.Padding(3);
@@ -652,7 +691,7 @@
             this.ICAppendBooleanBtn.Skin = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
             this.ICAppendBooleanBtn.TabIndex = 16;
             this.ICAppendBooleanBtn.Text = "Append Boolean";
-            this.ICAppendBooleanBtn.Click += new System.EventHandler(this.ICAppendBooleanBtn_Click);
+            this.ICAppendBooleanBtn.Click += new System.EventHandler(this.ICAppendBtn_Click);
             // 
             // ICAppendStringBtn
             // 
@@ -665,7 +704,7 @@
             this.ICAppendStringBtn.Skin = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
             this.ICAppendStringBtn.TabIndex = 15;
             this.ICAppendStringBtn.Text = "Append String";
-            this.ICAppendStringBtn.Click += new System.EventHandler(this.ICAppendStringBtn_Click);
+            this.ICAppendStringBtn.Click += new System.EventHandler(this.ICAppendBtn_Click);
             // 
             // ICAppendIntegerBtn
             // 
@@ -678,7 +717,7 @@
             this.ICAppendIntegerBtn.Skin = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
             this.ICAppendIntegerBtn.TabIndex = 14;
             this.ICAppendIntegerBtn.Text = "Append Integer";
-            this.ICAppendIntegerBtn.Click += new System.EventHandler(this.ICAppendIntegerBtn_Click);
+            this.ICAppendIntegerBtn.Click += new System.EventHandler(this.ICAppendBtn_Click);
             // 
             // ICHeaderLbl
             // 
@@ -717,30 +756,31 @@
             this.ICValueTxt.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.ICValueTxt.TextChanged += new System.EventHandler(this.ICValueTxt_TextChanged);
             // 
-            // ICConstructerLstVw
+            // ICConstructerLstvw
             // 
-            this.ICConstructerLstVw.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.ICConstructerLstvw.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.ICConstructerLstVw.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.ICConstructerLstvw.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.ICTypeCol,
             this.ICValueCol,
             this.ICEncodedCol});
-            this.ICConstructerLstVw.ContextMenuStrip = this.ICConstructMenu;
-            this.ICConstructerLstVw.FullRowSelect = true;
-            this.ICConstructerLstVw.GridLines = true;
-            this.ICConstructerLstVw.Header = ((ushort)(0));
-            this.ICConstructerLstVw.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.ICConstructerLstVw.HideSelection = false;
-            this.ICConstructerLstVw.Location = new System.Drawing.Point(6, 73);
-            this.ICConstructerLstVw.MultiSelect = false;
-            this.ICConstructerLstVw.Name = "ICConstructerLstVw";
-            this.ICConstructerLstVw.ShowItemToolTips = true;
-            this.ICConstructerLstVw.Size = new System.Drawing.Size(380, 161);
-            this.ICConstructerLstVw.TabIndex = 0;
-            this.ICConstructerLstVw.UseCompatibleStateImageBehavior = false;
-            this.ICConstructerLstVw.View = System.Windows.Forms.View.Details;
-            this.ICConstructerLstVw.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ICConstructerLstVw_ItemSelectionChanged);
-            this.ICConstructerLstVw.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ICConstructerLstVw_MouseDoubleClick);
+            this.ICConstructerLstvw.ContextMenuStrip = this.ICConstructMenu;
+            this.ICConstructerLstvw.FullRowSelect = true;
+            this.ICConstructerLstvw.GridLines = true;
+            this.ICConstructerLstvw.Header = ((ushort)(0));
+            this.ICConstructerLstvw.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.ICConstructerLstvw.HideSelection = false;
+            this.ICConstructerLstvw.Location = new System.Drawing.Point(6, 73);
+            this.ICConstructerLstvw.MultiSelect = false;
+            this.ICConstructerLstvw.Name = "ICConstructerLstvw";
+            this.ICConstructerLstvw.ShowItemToolTips = true;
+            this.ICConstructerLstvw.Size = new System.Drawing.Size(380, 161);
+            this.ICConstructerLstvw.TabIndex = 0;
+            this.ICConstructerLstvw.UseCompatibleStateImageBehavior = false;
+            this.ICConstructerLstvw.View = System.Windows.Forms.View.Details;
+            this.ICConstructerLstvw.ItemSelected += new System.EventHandler<System.Windows.Forms.ListViewItemSelectionChangedEventArgs>(this.ICConstructerLstVw_ItemSelected);
+            this.ICConstructerLstvw.ItemsDeselected += new System.EventHandler(this.ICConstructerLstVw_ItemsDeselected);
+            this.ICConstructerLstvw.ItemActivate += new System.EventHandler(this.ICConstructerLstVw_ItemActivate);
             // 
             // ICTypeCol
             // 
@@ -776,7 +816,7 @@
             this.ISchedulerTab.Controls.Add(this.ISStartAllBtn);
             this.ISchedulerTab.Controls.Add(this.ISRemoveBtn);
             this.ISchedulerTab.Controls.Add(this.ISCreateBtn);
-            this.ISchedulerTab.Controls.Add(this.ISSchedulesLstVw);
+            this.ISchedulerTab.Controls.Add(this.ISSchedulerLstvw);
             this.ISchedulerTab.Location = new System.Drawing.Point(4, 4);
             this.ISchedulerTab.Name = "ISchedulerTab";
             this.ISchedulerTab.Padding = new System.Windows.Forms.Padding(3);
@@ -931,7 +971,7 @@
             this.IPrimitiveTab.BackColor = System.Drawing.Color.White;
             this.IPrimitiveTab.Controls.Add(this.IPIsCorruptedLbl);
             this.IPrimitiveTab.Controls.Add(this.IPPacketInfoLbl);
-            this.IPrimitiveTab.Controls.Add(this.IPPacketTxt);
+            this.IPrimitiveTab.Controls.Add(this.IPPrimitiveTxt);
             this.IPrimitiveTab.Location = new System.Drawing.Point(4, 4);
             this.IPrimitiveTab.Name = "IPrimitiveTab";
             this.IPrimitiveTab.Padding = new System.Windows.Forms.Padding(3);
@@ -958,19 +998,24 @@
             this.IPPacketInfoLbl.TabIndex = 1;
             this.IPPacketInfoLbl.Text = "Header: 0 | Length: 0 | Corrupted:";
             // 
-            // IPPacketTxt
+            // IPPrimitiveTxt
             // 
-            this.IPPacketTxt.Location = new System.Drawing.Point(6, 19);
-            this.IPPacketTxt.MaxLength = 2147483647;
-            this.IPPacketTxt.Multiline = true;
-            this.IPPacketTxt.Name = "IPPacketTxt";
-            this.IPPacketTxt.Size = new System.Drawing.Size(379, 243);
-            this.IPPacketTxt.TabIndex = 0;
-            this.IPPacketTxt.TextChanged += new System.EventHandler(this.IPPacketTxt_TextChanged);
+            this.IPPrimitiveTxt.Location = new System.Drawing.Point(6, 19);
+            this.IPPrimitiveTxt.MaxLength = 2147483647;
+            this.IPPrimitiveTxt.Multiline = true;
+            this.IPPrimitiveTxt.Name = "IPPrimitiveTxt";
+            this.IPPrimitiveTxt.Size = new System.Drawing.Size(379, 243);
+            this.IPPrimitiveTxt.TabIndex = 0;
+            this.IPPrimitiveTxt.TextChanged += new System.EventHandler(this.IPPrimitiveTxt_TextChanged);
             // 
             // ITriggersTab
             // 
             this.ITriggersTab.BackColor = System.Drawing.Color.White;
+            this.ITriggersTab.Controls.Add(this.ITNotDoneLbl);
+            this.ITriggersTab.Controls.Add(this.label1);
+            this.ITriggersTab.Controls.Add(this.ITSavedTriggers);
+            this.ITriggersTab.Controls.Add(this.sKoreButton1);
+            this.ITriggersTab.Controls.Add(this.sKoreListView1);
             this.ITriggersTab.Location = new System.Drawing.Point(4, 4);
             this.ITriggersTab.Name = "ITriggersTab";
             this.ITriggersTab.Padding = new System.Windows.Forms.Padding(3);
@@ -981,7 +1026,7 @@
             // IFiltersTab
             // 
             this.IFiltersTab.BackColor = System.Drawing.Color.White;
-            this.IFiltersTab.Controls.Add(this.IFFilterTabs);
+            this.IFiltersTab.Controls.Add(this.IFFilterModeTabs);
             this.IFiltersTab.Location = new System.Drawing.Point(4, 4);
             this.IFiltersTab.Name = "IFiltersTab";
             this.IFiltersTab.Padding = new System.Windows.Forms.Padding(3);
@@ -989,26 +1034,156 @@
             this.IFiltersTab.TabIndex = 4;
             this.IFiltersTab.Text = "Filters";
             // 
-            // IFFilterTabs
+            // IFFilterModeTabs
             // 
-            this.IFFilterTabs.Alignment = System.Windows.Forms.TabAlignment.Left;
-            this.IFFilterTabs.Controls.Add(this.IFReplaceTab);
-            this.IFFilterTabs.Controls.Add(this.IFBlockTab);
-            this.IFFilterTabs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.IFFilterTabs.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
-            this.IFFilterTabs.ItemSize = new System.Drawing.Size(48, 24);
-            this.IFFilterTabs.Location = new System.Drawing.Point(3, 3);
-            this.IFFilterTabs.Multiline = true;
-            this.IFFilterTabs.Name = "IFFilterTabs";
-            this.IFFilterTabs.SelectedIndex = 0;
-            this.IFFilterTabs.Size = new System.Drawing.Size(386, 262);
-            this.IFFilterTabs.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
-            this.IFFilterTabs.Skin = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
-            this.IFFilterTabs.TabIndex = 0;
+            this.IFFilterModeTabs.Alignment = System.Windows.Forms.TabAlignment.Left;
+            this.IFFilterModeTabs.Controls.Add(this.IFBlockTab);
+            this.IFFilterModeTabs.Controls.Add(this.IFReplaceTab);
+            this.IFFilterModeTabs.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.IFFilterModeTabs.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
+            this.IFFilterModeTabs.ItemSize = new System.Drawing.Size(48, 24);
+            this.IFFilterModeTabs.Location = new System.Drawing.Point(3, 3);
+            this.IFFilterModeTabs.Multiline = true;
+            this.IFFilterModeTabs.Name = "IFFilterModeTabs";
+            this.IFFilterModeTabs.SelectedIndex = 0;
+            this.IFFilterModeTabs.Size = new System.Drawing.Size(386, 262);
+            this.IFFilterModeTabs.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
+            this.IFFilterModeTabs.Skin = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
+            this.IFFilterModeTabs.TabIndex = 0;
+            // 
+            // IFBlockTab
+            // 
+            this.IFBlockTab.BackColor = System.Drawing.Color.White;
+            this.IFBlockTab.Controls.Add(this.IFBDestinationLbl);
+            this.IFBlockTab.Controls.Add(this.IFBDestinationTxt);
+            this.IFBlockTab.Controls.Add(this.IFBHeaderTxt);
+            this.IFBlockTab.Controls.Add(this.IFBHeaderLbl);
+            this.IFBlockTab.Controls.Add(this.IFBUnblockBtn);
+            this.IFBlockTab.Controls.Add(this.IFBBlockBtn);
+            this.IFBlockTab.Controls.Add(this.IFBBlockLstvw);
+            this.IFBlockTab.Location = new System.Drawing.Point(52, 4);
+            this.IFBlockTab.Name = "IFBlockTab";
+            this.IFBlockTab.Padding = new System.Windows.Forms.Padding(3);
+            this.IFBlockTab.Size = new System.Drawing.Size(330, 254);
+            this.IFBlockTab.TabIndex = 1;
+            this.IFBlockTab.Text = "Block";
+            // 
+            // IFBDestinationLbl
+            // 
+            this.IFBDestinationLbl.AutoSize = true;
+            this.IFBDestinationLbl.Location = new System.Drawing.Point(76, 3);
+            this.IFBDestinationLbl.Name = "IFBDestinationLbl";
+            this.IFBDestinationLbl.Size = new System.Drawing.Size(60, 13);
+            this.IFBDestinationLbl.TabIndex = 13;
+            this.IFBDestinationLbl.Text = "Destination";
+            // 
+            // IFBDestinationTxt
+            // 
+            this.IFBDestinationTxt.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.IFBDestinationTxt.FormattingEnabled = true;
+            this.IFBDestinationTxt.Items.AddRange(new object[] {
+            "Client",
+            "Server"});
+            this.IFBDestinationTxt.Location = new System.Drawing.Point(79, 18);
+            this.IFBDestinationTxt.Name = "IFBDestinationTxt";
+            this.IFBDestinationTxt.Size = new System.Drawing.Size(71, 21);
+            this.IFBDestinationTxt.TabIndex = 12;
+            // 
+            // IFBHeaderTxt
+            // 
+            this.IFBHeaderTxt.Location = new System.Drawing.Point(6, 19);
+            this.IFBHeaderTxt.MaxLength = 4;
+            this.IFBHeaderTxt.Name = "IFBHeaderTxt";
+            this.IFBHeaderTxt.Size = new System.Drawing.Size(67, 20);
+            this.IFBHeaderTxt.TabIndex = 11;
+            this.IFBHeaderTxt.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.IFBHeaderTxt.TextChanged += new System.EventHandler(this.IFHeaderTxt_TextChanged);
+            // 
+            // IFBHeaderLbl
+            // 
+            this.IFBHeaderLbl.AutoSize = true;
+            this.IFBHeaderLbl.Location = new System.Drawing.Point(3, 3);
+            this.IFBHeaderLbl.Name = "IFBHeaderLbl";
+            this.IFBHeaderLbl.Size = new System.Drawing.Size(42, 13);
+            this.IFBHeaderLbl.TabIndex = 10;
+            this.IFBHeaderLbl.Text = "Header";
+            // 
+            // IFBUnblockBtn
+            // 
+            this.IFBUnblockBtn.BackColor = System.Drawing.Color.Transparent;
+            this.IFBUnblockBtn.DialogResult = System.Windows.Forms.DialogResult.None;
+            this.IFBUnblockBtn.Enabled = false;
+            this.IFBUnblockBtn.Location = new System.Drawing.Point(243, 17);
+            this.IFBUnblockBtn.Name = "IFBUnblockBtn";
+            this.IFBUnblockBtn.Size = new System.Drawing.Size(81, 22);
+            this.IFBUnblockBtn.Skin = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
+            this.IFBUnblockBtn.TabIndex = 9;
+            this.IFBUnblockBtn.Text = "Unblock";
+            this.IFBUnblockBtn.Click += new System.EventHandler(this.IFUnblockBtn_Click);
+            // 
+            // IFBBlockBtn
+            // 
+            this.IFBBlockBtn.BackColor = System.Drawing.Color.Transparent;
+            this.IFBBlockBtn.DialogResult = System.Windows.Forms.DialogResult.None;
+            this.IFBBlockBtn.Enabled = false;
+            this.IFBBlockBtn.Location = new System.Drawing.Point(156, 17);
+            this.IFBBlockBtn.Name = "IFBBlockBtn";
+            this.IFBBlockBtn.Size = new System.Drawing.Size(81, 22);
+            this.IFBBlockBtn.Skin = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
+            this.IFBBlockBtn.TabIndex = 8;
+            this.IFBBlockBtn.Text = "Block";
+            this.IFBBlockBtn.Click += new System.EventHandler(this.IFBlockBtn_Click);
+            // 
+            // IFBBlockLstvw
+            // 
+            this.IFBBlockLstvw.CheckBoxes = true;
+            this.IFBBlockLstvw.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.BDestinationCol,
+            this.BHeaderCol,
+            this.BPublisherCol});
+            this.IFBBlockLstvw.FullRowSelect = true;
+            this.IFBBlockLstvw.GridLines = true;
+            this.IFBBlockLstvw.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.IFBBlockLstvw.HideSelection = false;
+            this.IFBBlockLstvw.Location = new System.Drawing.Point(6, 45);
+            this.IFBBlockLstvw.MultiSelect = false;
+            this.IFBBlockLstvw.Name = "IFBBlockLstvw";
+            this.IFBBlockLstvw.ShowItemToolTips = true;
+            this.IFBBlockLstvw.Size = new System.Drawing.Size(318, 203);
+            this.IFBBlockLstvw.TabIndex = 7;
+            this.IFBBlockLstvw.UseCompatibleStateImageBehavior = false;
+            this.IFBBlockLstvw.View = System.Windows.Forms.View.Details;
+            this.IFBBlockLstvw.ItemSelected += new System.EventHandler<System.Windows.Forms.ListViewItemSelectionChangedEventArgs>(this.IFBlockLstvw_ItemSelected);
+            this.IFBBlockLstvw.ItemsDeselected += new System.EventHandler(this.IFBlockLstvw_ItemsDeselected);
+            this.IFBBlockLstvw.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.IFBlockLstvw_ItemChecked);
+            // 
+            // BDestinationCol
+            // 
+            this.BDestinationCol.Text = "Destination";
+            this.BDestinationCol.Width = 76;
+            // 
+            // BHeaderCol
+            // 
+            this.BHeaderCol.Text = "Header";
+            this.BHeaderCol.Width = 65;
+            // 
+            // BPublisherCol
+            // 
+            this.BPublisherCol.Text = "Publisher(s)";
+            this.BPublisherCol.Width = 156;
             // 
             // IFReplaceTab
             // 
             this.IFReplaceTab.BackColor = System.Drawing.Color.White;
+            this.IFReplaceTab.Controls.Add(this.IFRDestinationLbl);
+            this.IFReplaceTab.Controls.Add(this.IFRDestinationTxt);
+            this.IFReplaceTab.Controls.Add(this.IFRHeaderTxt);
+            this.IFReplaceTab.Controls.Add(this.IFRHeaderLbl);
+            this.IFReplaceTab.Controls.Add(this.IFRUnreplaceBtn);
+            this.IFReplaceTab.Controls.Add(this.IFRReplaceBtn);
+            this.IFReplaceTab.Controls.Add(this.IFRReplacementTxt);
+            this.IFReplaceTab.Controls.Add(this.IFReplacementLbl);
+            this.IFReplaceTab.Controls.Add(this.IFRReplaceLstvw);
             this.IFReplaceTab.Location = new System.Drawing.Point(52, 4);
             this.IFReplaceTab.Name = "IFReplaceTab";
             this.IFReplaceTab.Padding = new System.Windows.Forms.Padding(3);
@@ -1016,15 +1191,127 @@
             this.IFReplaceTab.TabIndex = 0;
             this.IFReplaceTab.Text = "Replace";
             // 
-            // IFBlockTab
+            // IFRDestinationLbl
             // 
-            this.IFBlockTab.BackColor = System.Drawing.Color.White;
-            this.IFBlockTab.Location = new System.Drawing.Point(52, 4);
-            this.IFBlockTab.Name = "IFBlockTab";
-            this.IFBlockTab.Padding = new System.Windows.Forms.Padding(3);
-            this.IFBlockTab.Size = new System.Drawing.Size(330, 254);
-            this.IFBlockTab.TabIndex = 1;
-            this.IFBlockTab.Text = "Block";
+            this.IFRDestinationLbl.AutoSize = true;
+            this.IFRDestinationLbl.Location = new System.Drawing.Point(76, 42);
+            this.IFRDestinationLbl.Name = "IFRDestinationLbl";
+            this.IFRDestinationLbl.Size = new System.Drawing.Size(60, 13);
+            this.IFRDestinationLbl.TabIndex = 19;
+            this.IFRDestinationLbl.Text = "Destination";
+            // 
+            // IFRDestinationTxt
+            // 
+            this.IFRDestinationTxt.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.IFRDestinationTxt.FormattingEnabled = true;
+            this.IFRDestinationTxt.Items.AddRange(new object[] {
+            "Client",
+            "Server"});
+            this.IFRDestinationTxt.Location = new System.Drawing.Point(79, 57);
+            this.IFRDestinationTxt.Name = "IFRDestinationTxt";
+            this.IFRDestinationTxt.Size = new System.Drawing.Size(71, 21);
+            this.IFRDestinationTxt.TabIndex = 18;
+            // 
+            // IFRHeaderTxt
+            // 
+            this.IFRHeaderTxt.Location = new System.Drawing.Point(6, 58);
+            this.IFRHeaderTxt.MaxLength = 4;
+            this.IFRHeaderTxt.Name = "IFRHeaderTxt";
+            this.IFRHeaderTxt.Size = new System.Drawing.Size(67, 20);
+            this.IFRHeaderTxt.TabIndex = 17;
+            this.IFRHeaderTxt.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.IFRHeaderTxt.TextChanged += new System.EventHandler(this.IFRHeaderTxt_TextChanged);
+            // 
+            // IFRHeaderLbl
+            // 
+            this.IFRHeaderLbl.AutoSize = true;
+            this.IFRHeaderLbl.Location = new System.Drawing.Point(3, 42);
+            this.IFRHeaderLbl.Name = "IFRHeaderLbl";
+            this.IFRHeaderLbl.Size = new System.Drawing.Size(42, 13);
+            this.IFRHeaderLbl.TabIndex = 16;
+            this.IFRHeaderLbl.Text = "Header";
+            // 
+            // IFRUnreplaceBtn
+            // 
+            this.IFRUnreplaceBtn.BackColor = System.Drawing.Color.Transparent;
+            this.IFRUnreplaceBtn.DialogResult = System.Windows.Forms.DialogResult.None;
+            this.IFRUnreplaceBtn.Enabled = false;
+            this.IFRUnreplaceBtn.Location = new System.Drawing.Point(243, 56);
+            this.IFRUnreplaceBtn.Name = "IFRUnreplaceBtn";
+            this.IFRUnreplaceBtn.Size = new System.Drawing.Size(81, 22);
+            this.IFRUnreplaceBtn.Skin = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
+            this.IFRUnreplaceBtn.TabIndex = 15;
+            this.IFRUnreplaceBtn.Text = "Unreplace";
+            this.IFRUnreplaceBtn.Click += new System.EventHandler(this.IFRUnreplaceBtn_Click);
+            // 
+            // IFRReplaceBtn
+            // 
+            this.IFRReplaceBtn.BackColor = System.Drawing.Color.Transparent;
+            this.IFRReplaceBtn.DialogResult = System.Windows.Forms.DialogResult.None;
+            this.IFRReplaceBtn.Enabled = false;
+            this.IFRReplaceBtn.Location = new System.Drawing.Point(156, 56);
+            this.IFRReplaceBtn.Name = "IFRReplaceBtn";
+            this.IFRReplaceBtn.Size = new System.Drawing.Size(81, 22);
+            this.IFRReplaceBtn.Skin = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
+            this.IFRReplaceBtn.TabIndex = 14;
+            this.IFRReplaceBtn.Text = "Replace";
+            this.IFRReplaceBtn.Click += new System.EventHandler(this.IFRReplaceBtn_Click);
+            // 
+            // IFRReplacementTxt
+            // 
+            this.IFRReplacementTxt.Location = new System.Drawing.Point(6, 19);
+            this.IFRReplacementTxt.Name = "IFRReplacementTxt";
+            this.IFRReplacementTxt.Size = new System.Drawing.Size(318, 20);
+            this.IFRReplacementTxt.TabIndex = 10;
+            this.IFRReplacementTxt.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.IFRReplacementTxt.TextChanged += new System.EventHandler(this.IFRReplacementTxt_TextChanged);
+            // 
+            // IFReplacementLbl
+            // 
+            this.IFReplacementLbl.AutoSize = true;
+            this.IFReplacementLbl.Location = new System.Drawing.Point(3, 3);
+            this.IFReplacementLbl.Name = "IFReplacementLbl";
+            this.IFReplacementLbl.Size = new System.Drawing.Size(70, 13);
+            this.IFReplacementLbl.TabIndex = 9;
+            this.IFReplacementLbl.Text = "Replacement";
+            // 
+            // IFRReplaceLstvw
+            // 
+            this.IFRReplaceLstvw.CheckBoxes = true;
+            this.IFRReplaceLstvw.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.RDestinationCol,
+            this.RHeaderCol,
+            this.RReplacementCol});
+            this.IFRReplaceLstvw.FullRowSelect = true;
+            this.IFRReplaceLstvw.GridLines = true;
+            this.IFRReplaceLstvw.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.IFRReplaceLstvw.HideSelection = false;
+            this.IFRReplaceLstvw.Location = new System.Drawing.Point(6, 84);
+            this.IFRReplaceLstvw.MultiSelect = false;
+            this.IFRReplaceLstvw.Name = "IFRReplaceLstvw";
+            this.IFRReplaceLstvw.ShowItemToolTips = true;
+            this.IFRReplaceLstvw.Size = new System.Drawing.Size(318, 164);
+            this.IFRReplaceLstvw.TabIndex = 8;
+            this.IFRReplaceLstvw.UseCompatibleStateImageBehavior = false;
+            this.IFRReplaceLstvw.View = System.Windows.Forms.View.Details;
+            this.IFRReplaceLstvw.ItemSelected += new System.EventHandler<System.Windows.Forms.ListViewItemSelectionChangedEventArgs>(this.IFRReplaceLstvw_ItemSelected);
+            this.IFRReplaceLstvw.ItemsDeselected += new System.EventHandler(this.IFRReplaceLstvw_ItemsDeselected);
+            this.IFRReplaceLstvw.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.IFRReplaceLstvw_ItemChecked);
+            // 
+            // RDestinationCol
+            // 
+            this.RDestinationCol.Text = "Destination";
+            this.RDestinationCol.Width = 76;
+            // 
+            // RHeaderCol
+            // 
+            this.RHeaderCol.Text = "Header";
+            this.RHeaderCol.Width = 65;
+            // 
+            // RReplacementCol
+            // 
+            this.RReplacementCol.Text = "Replacement";
+            this.RReplacementCol.Width = 156;
             // 
             // EncoderDecoderTab
             // 
@@ -1204,6 +1491,8 @@
             // ToolboxTab
             // 
             this.ToolboxTab.BackColor = System.Drawing.Color.White;
+            this.ToolboxTab.Controls.Add(this.TRequestLbl);
+            this.ToolboxTab.Controls.Add(this.TSuggestLbl);
             this.ToolboxTab.Location = new System.Drawing.Point(4, 28);
             this.ToolboxTab.Name = "ToolboxTab";
             this.ToolboxTab.Padding = new System.Windows.Forms.Padding(3);
@@ -1211,13 +1500,36 @@
             this.ToolboxTab.TabIndex = 2;
             this.ToolboxTab.Text = "Toolbox";
             // 
+            // TRequestLbl
+            // 
+            this.TRequestLbl.ActiveLinkColor = System.Drawing.Color.Firebrick;
+            this.TRequestLbl.AutoSize = true;
+            this.TRequestLbl.LinkColor = System.Drawing.SystemColors.HotTrack;
+            this.TRequestLbl.Location = new System.Drawing.Point(164, 70);
+            this.TRequestLbl.Name = "TRequestLbl";
+            this.TRequestLbl.Size = new System.Drawing.Size(142, 13);
+            this.TRequestLbl.TabIndex = 1;
+            this.TRequestLbl.TabStop = true;
+            this.TRequestLbl.Text = "Click me to submit a request!";
+            this.TRequestLbl.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
+            this.TRequestLbl.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.TRequestLbl_LinkClicked);
+            // 
+            // TSuggestLbl
+            // 
+            this.TSuggestLbl.AutoSize = true;
+            this.TSuggestLbl.Location = new System.Drawing.Point(94, 57);
+            this.TSuggestLbl.Name = "TSuggestLbl";
+            this.TSuggestLbl.Size = new System.Drawing.Size(282, 13);
+            this.TSuggestLbl.TabIndex = 0;
+            this.TSuggestLbl.Text = "Have any ideas for a \'tool\' that you would like to see here?";
+            // 
             // ExtensionsTab
             // 
             this.ExtensionsTab.BackColor = System.Drawing.Color.White;
             this.ExtensionsTab.Controls.Add(this.EMiddleGlowPnl);
             this.ExtensionsTab.Controls.Add(this.EExtensionLogoPctbx);
             this.ExtensionsTab.Controls.Add(this.ETopGlowPnl);
-            this.ExtensionsTab.Controls.Add(this.ETanjiExtensionViewer);
+            this.ExtensionsTab.Controls.Add(this.EExtensionsLstvw);
             this.ExtensionsTab.Location = new System.Drawing.Point(4, 28);
             this.ExtensionsTab.Name = "ExtensionsTab";
             this.ExtensionsTab.Padding = new System.Windows.Forms.Padding(3);
@@ -1253,31 +1565,31 @@
             this.ETopGlowPnl.Size = new System.Drawing.Size(471, 1);
             this.ETopGlowPnl.TabIndex = 1;
             // 
-            // ETanjiExtensionViewer
+            // EExtensionsLstvw
             // 
-            this.ETanjiExtensionViewer.AllowDrop = true;
-            this.ETanjiExtensionViewer.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.EExtensionsLstvw.AllowDrop = true;
+            this.EExtensionsLstvw.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.NameCol,
             this.AuthorCol,
             this.EVersionCol});
-            this.ETanjiExtensionViewer.ContextMenuStrip = this.EExtensionMenu;
-            this.ETanjiExtensionViewer.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ETanjiExtensionViewer.FullRowSelect = true;
-            this.ETanjiExtensionViewer.GridLines = true;
-            this.ETanjiExtensionViewer.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.ETanjiExtensionViewer.HideSelection = false;
-            this.ETanjiExtensionViewer.Location = new System.Drawing.Point(3, 3);
-            this.ETanjiExtensionViewer.MultiSelect = false;
-            this.ETanjiExtensionViewer.Name = "ETanjiExtensionViewer";
-            this.ETanjiExtensionViewer.ShowItemToolTips = true;
-            this.ETanjiExtensionViewer.Size = new System.Drawing.Size(465, 227);
-            this.ETanjiExtensionViewer.TabIndex = 0;
-            this.ETanjiExtensionViewer.UseCompatibleStateImageBehavior = false;
-            this.ETanjiExtensionViewer.View = System.Windows.Forms.View.Details;
-            this.ETanjiExtensionViewer.ItemActivate += new System.EventHandler(this.ETanjiExtensionViewer_ItemActivate);
-            this.ETanjiExtensionViewer.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ETanjiExtensionViewer_ItemSelectionChanged);
-            this.ETanjiExtensionViewer.DragDrop += new System.Windows.Forms.DragEventHandler(this.ExtensionViewer_DragDrop);
-            this.ETanjiExtensionViewer.DragEnter += new System.Windows.Forms.DragEventHandler(this.ExtensionViewer_DragEnter);
+            this.EExtensionsLstvw.ContextMenuStrip = this.EExtensionMenu;
+            this.EExtensionsLstvw.Dock = System.Windows.Forms.DockStyle.Top;
+            this.EExtensionsLstvw.FullRowSelect = true;
+            this.EExtensionsLstvw.GridLines = true;
+            this.EExtensionsLstvw.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.EExtensionsLstvw.HideSelection = false;
+            this.EExtensionsLstvw.Location = new System.Drawing.Point(3, 3);
+            this.EExtensionsLstvw.MultiSelect = false;
+            this.EExtensionsLstvw.Name = "EExtensionsLstvw";
+            this.EExtensionsLstvw.ShowItemToolTips = true;
+            this.EExtensionsLstvw.Size = new System.Drawing.Size(465, 227);
+            this.EExtensionsLstvw.TabIndex = 0;
+            this.EExtensionsLstvw.UseCompatibleStateImageBehavior = false;
+            this.EExtensionsLstvw.View = System.Windows.Forms.View.Details;
+            this.EExtensionsLstvw.ItemActivate += new System.EventHandler(this.ETanjiExtensionViewer_ItemActivate);
+            this.EExtensionsLstvw.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ETanjiExtensionViewer_ItemSelectionChanged);
+            this.EExtensionsLstvw.DragDrop += new System.Windows.Forms.DragEventHandler(this.ExtensionViewer_DragDrop);
+            this.EExtensionsLstvw.DragEnter += new System.Windows.Forms.DragEventHandler(this.ExtensionViewer_DragEnter);
             // 
             // NameCol
             // 
@@ -1366,6 +1678,87 @@
             this.OAboutTab.TabIndex = 0;
             this.OAboutTab.Text = "About";
             // 
+            // ITSavedTriggers
+            // 
+            this.ITSavedTriggers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ITSavedTriggers.Enabled = false;
+            this.ITSavedTriggers.FormattingEnabled = true;
+            this.ITSavedTriggers.Location = new System.Drawing.Point(6, 19);
+            this.ITSavedTriggers.Name = "ITSavedTriggers";
+            this.ITSavedTriggers.Size = new System.Drawing.Size(283, 21);
+            this.ITSavedTriggers.TabIndex = 0;
+            // 
+            // sKoreButton1
+            // 
+            this.sKoreButton1.BackColor = System.Drawing.Color.Transparent;
+            this.sKoreButton1.DialogResult = System.Windows.Forms.DialogResult.None;
+            this.sKoreButton1.Enabled = false;
+            this.sKoreButton1.Location = new System.Drawing.Point(295, 18);
+            this.sKoreButton1.Name = "sKoreButton1";
+            this.sKoreButton1.Size = new System.Drawing.Size(91, 22);
+            this.sKoreButton1.Skin = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
+            this.sKoreButton1.TabIndex = 3;
+            this.sKoreButton1.Text = "Remove";
+            // 
+            // sKoreListView1
+            // 
+            this.sKoreListView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.ITTypePropertyCol,
+            this.ITPosition,
+            this.ITPredicate,
+            this.ITCondition});
+            this.sKoreListView1.FullRowSelect = true;
+            this.sKoreListView1.GridLines = true;
+            this.sKoreListView1.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.sKoreListView1.HideSelection = false;
+            this.sKoreListView1.Location = new System.Drawing.Point(6, 46);
+            this.sKoreListView1.MultiSelect = false;
+            this.sKoreListView1.Name = "sKoreListView1";
+            this.sKoreListView1.ShowItemToolTips = true;
+            this.sKoreListView1.Size = new System.Drawing.Size(380, 129);
+            this.sKoreListView1.TabIndex = 3;
+            this.sKoreListView1.UseCompatibleStateImageBehavior = false;
+            this.sKoreListView1.View = System.Windows.Forms.View.Details;
+            // 
+            // ITTypePropertyCol
+            // 
+            this.ITTypePropertyCol.Text = "Type/Property";
+            this.ITTypePropertyCol.Width = 121;
+            // 
+            // ITPosition
+            // 
+            this.ITPosition.Text = "Position";
+            this.ITPosition.Width = 61;
+            // 
+            // ITPredicate
+            // 
+            this.ITPredicate.Text = "Predicate";
+            this.ITPredicate.Width = 76;
+            // 
+            // ITCondition
+            // 
+            this.ITCondition.Text = "Condition";
+            this.ITCondition.Width = 101;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(3, 3);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(123, 13);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Active Triggers - Total: 0";
+            // 
+            // ITNotDoneLbl
+            // 
+            this.ITNotDoneLbl.AutoSize = true;
+            this.ITNotDoneLbl.Location = new System.Drawing.Point(82, 200);
+            this.ITNotDoneLbl.Name = "ITNotDoneLbl";
+            this.ITNotDoneLbl.Size = new System.Drawing.Size(229, 39);
+            this.ITNotDoneLbl.TabIndex = 5;
+            this.ITNotDoneLbl.Text = "Hey man, I\'m not done here, sorry.\r\nEnjoy the partially finished UI concept thoug" +
+    "h...\r\nAtleast I finished the filters, sorta.";
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1399,10 +1792,18 @@
             this.ISchedulerTab.PerformLayout();
             this.IPrimitiveTab.ResumeLayout(false);
             this.IPrimitiveTab.PerformLayout();
+            this.ITriggersTab.ResumeLayout(false);
+            this.ITriggersTab.PerformLayout();
             this.IFiltersTab.ResumeLayout(false);
-            this.IFFilterTabs.ResumeLayout(false);
+            this.IFFilterModeTabs.ResumeLayout(false);
+            this.IFBlockTab.ResumeLayout(false);
+            this.IFBlockTab.PerformLayout();
+            this.IFReplaceTab.ResumeLayout(false);
+            this.IFReplaceTab.PerformLayout();
             this.EncoderDecoderTab.ResumeLayout(false);
             this.EncoderDecoderTab.PerformLayout();
+            this.ToolboxTab.ResumeLayout(false);
+            this.ToolboxTab.PerformLayout();
             this.ExtensionsTab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.EExtensionLogoPctbx)).EndInit();
             this.OptionsTab.ResumeLayout(false);
@@ -1434,7 +1835,7 @@
         private System.Windows.Forms.TabPage IFiltersTab;
         private System.Windows.Forms.ToolStripStatusLabel ExtensionsActiveTxt;
         private System.Windows.Forms.TabPage ExtensionsTab;
-        private Sulakore.Components.SKoreConstructer ICConstructerLstVw;
+        private Sulakore.Components.SKoreConstructer ICConstructerLstvw;
         private System.Windows.Forms.Label ICHeaderLbl;
         private System.Windows.Forms.TextBox ICHeaderTxt;
         private System.Windows.Forms.Label ICValueLbl;
@@ -1465,15 +1866,15 @@
         private Sulakore.Components.SKoreButton ISStopAllBtn;
         private Sulakore.Components.SKoreButton ISRemoveBtn;
         private Sulakore.Components.SKoreButton ISCreateBtn;
-        private Sulakore.Components.SKoreScheduler ISSchedulesLstVw;
+        private Sulakore.Components.SKoreScheduler ISSchedulerLstvw;
         private System.Windows.Forms.OpenFileDialog ChooseExtensionDlg;
         private System.Windows.Forms.Label ICCountLbl;
         private System.Windows.Forms.NumericUpDown ICCountTxt;
-        private System.Windows.Forms.TextBox IPPacketTxt;
+        private System.Windows.Forms.TextBox IPPrimitiveTxt;
         private System.Windows.Forms.Label IPPacketInfoLbl;
         private System.Windows.Forms.Label IPIsCorruptedLbl;
         private System.Windows.Forms.CheckBox ISAutoStartChckbx;
-        private Sulakore.Components.SKoreExtensionView ETanjiExtensionViewer;
+        private Sulakore.Components.SKoreExtensionView EExtensionsLstvw;
         private Sulakore.Components.SKoreTabControl OOptionsTab;
         private System.Windows.Forms.TabPage OAboutTab;
         private System.Windows.Forms.ToolTip TanjiTip;
@@ -1481,7 +1882,7 @@
         private System.Windows.Forms.CheckBox OSCloseOnDisconnectChckbx;
         private System.Windows.Forms.ToolStripStatusLabel VersionTxt;
         private System.Windows.Forms.CheckBox OSAlwaysOnTopChckbx;
-        private Sulakore.Components.SKoreTabControl IFFilterTabs;
+        private Sulakore.Components.SKoreTabControl IFFilterModeTabs;
         private System.Windows.Forms.Panel ETopGlowPnl;
         private System.Windows.Forms.PictureBox EExtensionLogoPctbx;
         private System.Windows.Forms.Panel EMiddleGlowPnl;
@@ -1526,6 +1927,39 @@
         private System.Windows.Forms.ColumnHeader ValueCol;
         private System.Windows.Forms.ColumnHeader EncodedCol;
         private System.Windows.Forms.ColumnHeader PositionCol;
+        private System.Windows.Forms.LinkLabel TRequestLbl;
+        private System.Windows.Forms.Label TSuggestLbl;
+        private System.Windows.Forms.Label IFBDestinationLbl;
+        private System.Windows.Forms.ComboBox IFBDestinationTxt;
+        private System.Windows.Forms.TextBox IFBHeaderTxt;
+        private System.Windows.Forms.Label IFBHeaderLbl;
+        private Sulakore.Components.SKoreButton IFBUnblockBtn;
+        private Sulakore.Components.SKoreButton IFBBlockBtn;
+        private Sulakore.Components.SKoreListView IFBBlockLstvw;
+        private System.Windows.Forms.ColumnHeader BDestinationCol;
+        private System.Windows.Forms.ColumnHeader BHeaderCol;
+        private System.Windows.Forms.ColumnHeader BPublisherCol;
+        private Sulakore.Components.SKoreListView IFRReplaceLstvw;
+        private System.Windows.Forms.ColumnHeader RDestinationCol;
+        private System.Windows.Forms.ColumnHeader RHeaderCol;
+        private System.Windows.Forms.ColumnHeader RReplacementCol;
+        private System.Windows.Forms.TextBox IFRReplacementTxt;
+        private System.Windows.Forms.Label IFReplacementLbl;
+        private System.Windows.Forms.Label IFRDestinationLbl;
+        private System.Windows.Forms.ComboBox IFRDestinationTxt;
+        private System.Windows.Forms.TextBox IFRHeaderTxt;
+        private System.Windows.Forms.Label IFRHeaderLbl;
+        private Sulakore.Components.SKoreButton IFRUnreplaceBtn;
+        private Sulakore.Components.SKoreButton IFRReplaceBtn;
+        private System.Windows.Forms.ComboBox ITSavedTriggers;
+        private Sulakore.Components.SKoreButton sKoreButton1;
+        private Sulakore.Components.SKoreListView sKoreListView1;
+        private System.Windows.Forms.ColumnHeader ITTypePropertyCol;
+        private System.Windows.Forms.ColumnHeader ITPosition;
+        private System.Windows.Forms.ColumnHeader ITPredicate;
+        private System.Windows.Forms.ColumnHeader ITCondition;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label ITNotDoneLbl;
 
     }
 }

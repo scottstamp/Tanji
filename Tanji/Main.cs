@@ -14,6 +14,7 @@ using Sulakore.Protocol;
 using Sulakore.Extensions;
 using Sulakore.Communication;
 using Sulakore.Protocol.Encryption;
+using System.Collections.Generic;
 
 namespace Tanji
 {
@@ -35,9 +36,11 @@ namespace Tanji
         private readonly Packetlogger _packetloggerF;
         private readonly Action _initiate, _reinitiate;
 
+        private const string CHUNK_COUNT_FORMAT = "Chunk Count: {0}";
         private const string TITLE_FORMAT = "Tanji ~ Connected[{0}:{1}]";
         private const string SCHEDULES_FORMAT = "Schedules Active: {0}/{1}";
         private const string EXTENSIONS_FORMAT = "Extensions Active: {0}/{1}";
+        private const string TANJI_NEW_ISSUE_PAGE = "https://github.com/ArachisH/Tanji/issues/new";
 
         private const string CorrPack = "The given packet seems to be corrupted.";
         private const string BadHeader = "The header you've specified does not qualify as an UInt16 type.";
@@ -89,6 +92,12 @@ namespace Tanji
             _packetloggerF = new Packetlogger();
             _tanjiConnect = new TanjiConnect(this);
 
+            _inBlockedHeaders = new List<ushort>();
+            _inReplacedHeaders = new List<ushort>();
+
+            _outBlockedHeaders = new List<ushort>();
+            _outReplacedHeaders = new List<ushort>();
+
             OSAlwaysOnTopChckbx.Checked = TanjiSettings.Global.IsAlwaysOnTop;
             OSCloseOnDisconnectChckbx.Checked = TanjiSettings.Global.ShouldCloseOnDisconnect;
 
@@ -97,6 +106,8 @@ namespace Tanji
             _debugging = debugging;
 
             ISDestinationTxt.SelectedIndex = 1;
+            IFBDestinationTxt.SelectedIndex = 1;
+            IFRDestinationTxt.SelectedIndex = 1;
         }
 
         private void Game_Connected(object sender, EventArgs e)
@@ -223,82 +234,92 @@ namespace Tanji
             Process.Start(TanjiUpdater.TANJI_PAGE);
         }
 
-        #region Injection Related Methods
-        #region Constructer Related Methods
-        private void ICAppendIntegerBtn_Click(object sender, EventArgs e)
+        #region Injection | Methods
+        #region Constructer | Methods
+        private void ICClearBtn_Click(object sender, EventArgs e)
         {
-            int value;
-            int count = (int)ICCountTxt.Value;
-            int.TryParse(ICValueTxt.Text, out value);
+            ICConstructerLstvw.ClearItems();
+            ICRemoveBtn.Enabled = ICMoveDownBtn.Enabled = ICMoveUpBtn.Enabled = false;
 
-            ICConstructerLstVw.BeginUpdate();
-            for (int i = 0; i < count; i++)
-                ICConstructerLstVw.Append(value);
-            ICConstructerLstVw.EndUpdate();
+            ICChunkCountLbl.Text = string.Format(CHUNK_COUNT_FORMAT,
+                ICConstructerLstvw.ChunksWritten.Count);
         }
-        private void ICAppendStringBtn_Click(object sender, EventArgs e)
+        private void ICAppendBtn_Click(object sender, EventArgs e)
         {
-            string value = ICValueTxt.Text;
+            object value = null;
             int count = (int)ICCountTxt.Value;
+            switch (((Control)sender).Text.Split(' ')[1])
+            {
+                case "String": value = ICValueTxt.Text; break;
+                case "Integer":
+                {
+                    int outcome = 0;
+                    int.TryParse(ICValueTxt.Text, out outcome);
+                    value = outcome;
+                    break;
+                }
+                case "Boolean":
+                {
+                    if (string.IsNullOrWhiteSpace(ICValueTxt.Text))
+                        value = false;
+                    else
+                    {
+                        char start = ICValueTxt.Text[0];
+                        value = (start == 't' || start == '1');
+                    }
+                    break;
+                }
+            }
 
-            ICConstructerLstVw.BeginUpdate();
-            for (int i = 0; i < count; i++)
-                ICConstructerLstVw.Append(value);
-            ICConstructerLstVw.EndUpdate();
+            var values = new object[count];
+            for (int i = 0; i < values.Length; i++)
+                values[i] = value;
+
+            ICConstructerLstvw.Append(values);
+
+            ICChunkCountLbl.Text = string.Format(CHUNK_COUNT_FORMAT,
+                ICConstructerLstvw.ChunksWritten.Count);
         }
-        private void ICAppendBooleanBtn_Click(object sender, EventArgs e)
+        private void ICRemoveBtn_Click(object sender, EventArgs e)
         {
-            int count = (int)ICCountTxt.Value;
-            bool value = (!string.IsNullOrEmpty(ICValueTxt.Text) && (ICValueTxt.Text[0] == 't' || ICValueTxt.Text[0] == '1'));
+            ICConstructerLstvw.RemoveSelectedItem();
 
-            ICConstructerLstVw.BeginUpdate();
-            for (int i = 0; i < count; i++)
-                ICConstructerLstVw.Append(value);
-            ICConstructerLstVw.EndUpdate();
+            ICChunkCountLbl.Text = string.Format(CHUNK_COUNT_FORMAT,
+                ICConstructerLstvw.ChunksWritten.Count);
         }
 
         private void ICMoveUpBtn_Click(object sender, EventArgs e)
         {
-            ICConstructerLstVw.MoveSelectedItemUp();
+            ICConstructerLstvw.MoveSelectedItemUp();
         }
         private void ICMoveDownBtn_Click(object sender, EventArgs e)
         {
-            ICConstructerLstVw.MoveSelectedItemDown();
+            ICConstructerLstvw.MoveSelectedItemDown();
         }
 
-        private void ICClearBtn_Click(object sender, EventArgs e)
-        {
-            ICConstructerLstVw.ClearItems();
-            ICRemoveBtn.Enabled = ICMoveDownBtn.Enabled = ICMoveUpBtn.Enabled = false;
-        }
-        private void ICRemoveBtn_Click(object sender, EventArgs e)
-        {
-            ICConstructerLstVw.RemoveSelectedItem();
-        }
         private void ICSchedulerBtn_Click(object sender, EventArgs e)
         {
             IInjectionTabs.SelectTab(ISchedulerTab);
-            ISPacketTxt.Text = ICConstructerLstVw.GetString();
+            ISPacketTxt.Text = ICConstructerLstvw.GetString();
         }
         private void ICInjectionBtn_Click(object sender, EventArgs e)
         {
-            IPacketTxt.Text = ICConstructerLstVw.GetString();
+            IPacketTxt.Text = ICConstructerLstvw.GetString();
         }
         private void ICPrimitiveBtn_Click(object sender, EventArgs e)
         {
-            IPacketTxt.Text = ICConstructerLstVw.GetString();
+            IPacketTxt.Text = ICConstructerLstvw.GetString();
             IInjectionTabs.SelectTab(IPrimitiveTab);
         }
-
         private void ICCopyPacketBtn_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText(ICConstructerLstVw.GetString());
+            Clipboard.SetText(ICConstructerLstvw.GetString());
         }
 
         private void ICValueTxt_TextChanged(object sender, EventArgs e)
         {
-            if (ICConstructerLstVw.SelectedItems.Count < 1) return;
-            string typeName = ICConstructerLstVw.SelectedItems[0].SubItems[0].Text;
+            if (ICConstructerLstvw.SelectedItems.Count < 1) return;
+            string typeName = ICConstructerLstvw.SelectedItems[0].SubItems[0].Text;
 
             object chunk = null;
             switch (typeName)
@@ -313,20 +334,20 @@ namespace Tanji
                 case "Boolean": chunk = (!string.IsNullOrEmpty(ICValueTxt.Text) && (ICValueTxt.Text[0] == 't' || ICValueTxt.Text[0] == '1')); break;
                 default: return;
             }
-            ICConstructerLstVw.ReplaceItem(chunk);
+            ICConstructerLstvw.ReplaceItem(chunk);
         }
         private void ICHeaderTxt_TextChanged(object sender, EventArgs e)
         {
             ushort header = 0;
             if (ushort.TryParse(ICHeaderTxt.Text, out header))
-                ICConstructerLstVw.Header = header;
+                ICConstructerLstvw.Header = header;
         }
-        private void ICConstructerLstVw_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void ICConstructerLstVw_ItemActivate(object sender, EventArgs e)
         {
-            if (ICConstructerLstVw.SelectedItems.Count < 1) return;
+            if (ICConstructerLstvw.SelectedItems.Count < 1) return;
 
             object chunk = null;
-            ListViewItem item = ICConstructerLstVw.SelectedItems[0];
+            ListViewItem item = ICConstructerLstvw.SelectedItems[0];
             switch (item.SubItems[0].Text)
             {
                 case "Integer": chunk = ""; break;
@@ -338,29 +359,36 @@ namespace Tanji
             ICValueTxt.Text = chunk.ToString();
             ICValueTxt.TextChanged += ICValueTxt_TextChanged;
 
-            ICConstructerLstVw.ReplaceItem(chunk);
+            ICConstructerLstvw.ReplaceItem(chunk);
             ICValueTxt.Focus();
         }
-        private void ICConstructerLstVw_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        private void ICConstructerLstVw_ItemsDeselected(object sender, EventArgs e)
         {
-            ICRemoveBtn.Enabled = e.IsSelected;
-            ICMoveUpBtn.Enabled = e.IsSelected && e.ItemIndex != 0;
-            ICMoveDownBtn.Enabled = e.IsSelected && e.ItemIndex != ICConstructerLstVw.Items.Count - 1;
-            ICValueTxt.Text = e.IsSelected ? e.Item.SubItems[1].Text : string.Empty;
+            ICRemoveBtn.Enabled = false;
+            ICMoveUpBtn.Enabled = false;
+            ICMoveDownBtn.Enabled = false;
 
-            const string ChunkCountFormat = "Chunk Count: {0}";
-            ICChunkCountLbl.Text = string.Format(ChunkCountFormat, ICConstructerLstVw.ChunksWritten.Count);
+            ICValueTxt.Text = string.Empty;
+        }
+        private void ICConstructerLstVw_ItemSelected(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            ICRemoveBtn.Enabled = true;
+
+            ICMoveUpBtn.Enabled = e.ItemIndex != 0;
+            ICMoveDownBtn.Enabled = e.ItemIndex != ICConstructerLstvw.Items.Count - 1;
+
+            ICValueTxt.Text = e.IsSelected ? e.Item.SubItems[1].Text : string.Empty;
         }
         #endregion
 
-        #region Scheduler Related Methods
+        #region Scheduler | Methods
         private void UpdateSchedulerUI(bool itemSelected)
         {
-            int itemCount = ISSchedulesLstVw.Items.Count;
+            int itemCount = ISSchedulerLstvw.Items.Count;
             bool containsItems = itemCount > 0;
 
             SchedulesTxt.Text = string.Format(SCHEDULES_FORMAT,
-                ISSchedulesLstVw.Running, itemCount);
+                ISSchedulerLstvw.Running, itemCount);
 
             ISRemoveBtn.Enabled = itemSelected;
             ISClearBtn.Enabled = containsItems;
@@ -370,59 +398,64 @@ namespace Tanji
 
         private void ISStopAllBtn_Click(object sender, EventArgs e)
         {
-            ISSchedulesLstVw.StopAllSchedules();
-            UpdateSchedulerUI(ISSchedulesLstVw.SelectedItems.Count > 0);
+            ISSchedulerLstvw.StopAllSchedules();
+            UpdateSchedulerUI(ISSchedulerLstvw.SelectedItems.Count > 0);
         }
         private void ISStartAllBtn_Click(object sender, EventArgs e)
         {
-            ISSchedulesLstVw.StartAllSchedules();
-            UpdateSchedulerUI(ISSchedulesLstVw.SelectedItems.Count > 0);
+            ISSchedulerLstvw.StartAllSchedules();
+            UpdateSchedulerUI(ISSchedulerLstvw.SelectedItems.Count > 0);
         }
 
         private void ISClearBtn_Click(object sender, EventArgs e)
         {
-            ISSchedulesLstVw.ClearItems();
-            UpdateSchedulerUI(false);
+            ISSchedulerLstvw.ClearItems();
         }
         private void ISRemoveBtn_Click(object sender, EventArgs e)
         {
-            ISSchedulesLstVw.RemoveSelectedItem();
-            UpdateSchedulerUI(ISSchedulesLstVw.SelectedItems.Count > 0);
+            ISSchedulerLstvw.RemoveSelectedItem();
+            UpdateSchedulerUI(ISSchedulerLstvw.SelectedItems.Count > 0);
         }
         private void ISCreateBtn_Click(object sender, EventArgs e)
         {
             var packet = new HMessage(ISPacketTxt.Text, (HDestination)ISDestinationTxt.SelectedIndex + 1);
-            ISSchedulesLstVw.AddSchedule(packet, (int)ISBurstTxt.Value, (int)ISIntervalTxt.Value, ISDescriptionTxt.Text);
-            UpdateSchedulerUI(true);
+            ISSchedulerLstvw.AddSchedule(packet, (int)ISBurstTxt.Value, (int)ISIntervalTxt.Value, ISDescriptionTxt.Text);
         }
-
-        private void ISSchedulesLstVw_ScheduleTriggered(object sender, HScheduleTriggeredEventArgs e)
-        {
-            if (!e.Packet.IsCorrupted) SendTo(e.Packet);
-            else e.Cancel = true;
-        }
-        private void ISSchedulesLstVw_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
-        {
-            UpdateSchedulerUI(e.IsSelected);
-        }
-
         private void ISAutoStartChckbx_CheckedChanged(object sender, EventArgs e)
         {
-            ISSchedulesLstVw.AutoStart = ISAutoStartChckbx.Checked;
+            ISSchedulerLstvw.AutoStart = ISAutoStartChckbx.Checked;
+        }
+
+        private void ISSchedulesLstVw_ItemsDeselected(object sender, EventArgs e)
+        {
+            UpdateSchedulerUI(false);
+        }
+        private void ISSchedulesLstVw_ItemChecked(object sender, ItemCheckedEventArgs e)
+        {
+            UpdateSchedulerUI(ISSchedulerLstvw.SelectedItems.Count > 0);
+        }
+        private void ISSchedulesLstVw_ScheduleTriggered(object sender, HScheduleTriggeredEventArgs e)
+        {
+            if (!e.Packet.IsCorrupted && Game.IsConnected) SendTo(e.Packet);
+            else e.Cancel = true;
+        }
+        private void ISSchedulesLstVw_ItemSelected(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            UpdateSchedulerUI(true);
         }
         #endregion
 
-        #region Primitive Related Methods
-        private void IPPacketTxt_TextChanged(object sender, EventArgs e)
+        #region Primitive | Methods
+        private void IPPrimitiveTxt_TextChanged(object sender, EventArgs e)
         {
-            if (IPPacketTxt.TextLength < 1) IPacketTxt.Text = string.Empty;
-            else if (IPPacketTxt.TextLength < 2) return;
+            if (IPPrimitiveTxt.TextLength < 1) IPacketTxt.Text = string.Empty;
+            else if (IPPrimitiveTxt.TextLength < 2) return;
 
             HMessage packet = null;
             bool isCorrupted = false;
             try
             {
-                byte[] data = HMessage.ToBytes(IPPacketTxt.Text);
+                byte[] data = HMessage.ToBytes(IPPrimitiveTxt.Text);
                 if (data.Length >= 6)
                 {
                     packet = new HMessage(data);
@@ -433,10 +466,10 @@ namespace Tanji
             catch { isCorrupted = true; }
             finally
             {
-                IPacketTxt.Text = isCorrupted ? IPPacketTxt.Text : packet.ToString();
+                IPacketTxt.Text = isCorrupted ? IPPrimitiveTxt.Text : packet.ToString();
 
                 const string PacketInfoFormat = "Header: {0} | Length: {1} | Corrupted:";
-                IPPacketInfoLbl.Text = string.Format(PacketInfoFormat, (isCorrupted ? 0 : packet.Header), (isCorrupted ? IPPacketTxt.TextLength : packet.Length));
+                IPPacketInfoLbl.Text = string.Format(PacketInfoFormat, (isCorrupted ? 0 : packet.Header), (isCorrupted ? IPPrimitiveTxt.TextLength : packet.Length));
 
                 IPIsCorruptedLbl.Text = isCorrupted.ToString();
                 IPIsCorruptedLbl.ForeColor = isCorrupted ? Color.Firebrick : SystemColors.HotTrack;
@@ -446,7 +479,210 @@ namespace Tanji
         private void IInjectionTabs_Selected(object sender, TabControlEventArgs e)
         {
             if (IPacketTxt.ReadOnly = (e.TabPage == IPrimitiveTab))
-                IPPacketTxt.Text = IPacketTxt.Text;
+                IPPrimitiveTxt.Text = IPacketTxt.Text;
+        }
+        #endregion
+
+        #region Triggers | Methods
+        #endregion
+
+        #region Filters | Methods
+        private HMessage _replacement;
+        private ushort _headerToBlock, _headerToReplace;
+
+        private readonly IList<ushort> _inBlockedHeaders, _outBlockedHeaders,
+            _inReplacedHeaders, _outReplacedHeaders;
+
+        private void IFRReplacementTxt_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                _replacement = new HMessage(IFRReplacementTxt.Text,
+                    (HDestination)IFRDestinationTxt.SelectedIndex + 1);
+            }
+            catch { _replacement = null; }
+            finally
+            {
+                IFRReplaceBtn.Enabled = (_headerToReplace != 0
+                    && _replacement != null && !_replacement.IsCorrupted);
+            }
+        }
+
+        private void IFBlockBtn_Click(object sender, EventArgs e)
+        {
+            ushort header = _headerToBlock;
+            switch (IFBDestinationTxt.SelectedIndex)
+            {
+                case 0:
+                {
+                    if (_inBlockedHeaders.Contains(header)) return;
+                    _inBlockedHeaders.Add(header);
+                    Game.Filters.InBlock(header); break;
+                }
+                case 1:
+                {
+                    if (_outBlockedHeaders.Contains(header)) return;
+                    _outBlockedHeaders.Add(header);
+                    Game.Filters.OutBlock(header); break;
+                }
+            }
+
+            IFBBlockLstvw.ItemChecked -= IFBlockLstvw_ItemChecked;
+            IFBBlockLstvw.FocusAdd((string)IFBDestinationTxt.SelectedItem, header.ToString(), "MASTER")
+                .Checked = true;
+            IFBBlockLstvw.ItemChecked += IFBlockLstvw_ItemChecked;
+        }
+        private void IFRReplaceBtn_Click(object sender, EventArgs e)
+        {
+            ushort header = _headerToReplace;
+            var replacement = new HMessage(_replacement.ToBytes(), _replacement.Destination);
+
+            switch (_replacement.Destination)
+            {
+                case HDestination.Client:
+                {
+                    if (_inReplacedHeaders.Contains(header)) return;
+                    _inReplacedHeaders.Add(header);
+                    Game.Filters.InReplace(header, replacement);
+                    break;
+                }
+                case HDestination.Server:
+                {
+                    if (_outReplacedHeaders.Contains(header)) return;
+                    _outReplacedHeaders.Add(header);
+                    Game.Filters.OutReplace(header, replacement);
+                    break;
+                }
+            }
+
+            IFRReplaceLstvw.ItemChecked -= IFRReplaceLstvw_ItemChecked;
+            IFRReplaceLstvw.FocusAdd(replacement.Destination.ToString(), header.ToString(), replacement.ToString())
+                .Checked = true;
+            IFRReplaceLstvw.ItemChecked += IFRReplaceLstvw_ItemChecked;
+        }
+
+        private void IFUnblockBtn_Click(object sender, EventArgs e)
+        {
+            ListViewItem item = IFBBlockLstvw.GetSelectedItem();
+            ushort header = ushort.Parse(item.SubItems[1].Text);
+            switch (item.SubItems[0].Text)
+            {
+                case "Client":
+                {
+                    if (!_inBlockedHeaders.Contains(header)) return;
+                    _inBlockedHeaders.Remove(header);
+                    Game.Filters.InUnblock(header);
+                    break;
+                }
+                case "Server":
+                {
+                    if (!_outBlockedHeaders.Contains(header)) return;
+                    _outBlockedHeaders.Remove(header);
+                    Game.Filters.OutUnblock(header);
+                    break;
+                }
+            }
+            IFBBlockLstvw.RemoveSelectedItem();
+        }
+        private void IFRUnreplaceBtn_Click(object sender, EventArgs e)
+        {
+            ListViewItem item = IFRReplaceLstvw.GetSelectedItem();
+            ushort header = ushort.Parse(item.SubItems[1].Text);
+            switch (item.SubItems[0].Text)
+            {
+                case "Client":
+                {
+                    if (!_inReplacedHeaders.Contains(header)) return;
+                    _inReplacedHeaders.Remove(header);
+                    Game.Filters.InUnreplace(header);
+                    break;
+                }
+                case "Server":
+                {
+                    if (!_outReplacedHeaders.Contains(header)) return;
+                    _outReplacedHeaders.Remove(header);
+                    Game.Filters.OutUnreplace(header);
+                    break;
+                }
+            }
+            IFRReplaceLstvw.RemoveSelectedItem();
+        }
+
+        private void IFHeaderTxt_TextChanged(object sender, EventArgs e)
+        {
+            ushort header = 0;
+            bool convertSuccess = ushort.TryParse(IFBHeaderTxt.Text, out header);
+            _headerToBlock = header;
+
+            IFBBlockBtn.Enabled = convertSuccess;
+        }
+        private void IFRHeaderTxt_TextChanged(object sender, EventArgs e)
+        {
+            ushort header = 0;
+            bool convertSuccess = ushort.TryParse(IFRHeaderTxt.Text, out header);
+            _headerToReplace = header;
+
+            IFRReplaceBtn.Enabled = convertSuccess && (_replacement != null && !_replacement.IsCorrupted);
+        }
+
+        private void IFBlockLstvw_ItemsDeselected(object sender, EventArgs e)
+        {
+            IFBUnblockBtn.Enabled = false;
+        }
+        private void IFRReplaceLstvw_ItemsDeselected(object sender, EventArgs e)
+        {
+            IFRUnreplaceBtn.Enabled = false;
+        }
+
+        private void IFBlockLstvw_ItemChecked(object sender, ItemCheckedEventArgs e)
+        {
+            ushort header = ushort.Parse(e.Item.SubItems[1].Text);
+            switch (e.Item.SubItems[0].Text)
+            {
+                case "Client":
+                {
+                    if (e.Item.Checked) Game.Filters.InBlock(header);
+                    else Game.Filters.InUnblock(header);
+                    break;
+                }
+                case "Server":
+                {
+                    if (e.Item.Checked) Game.Filters.OutBlock(header);
+                    else Game.Filters.OutUnblock(header);
+                    break;
+                }
+            }
+        }
+        private void IFRReplaceLstvw_ItemChecked(object sender, ItemCheckedEventArgs e)
+        {
+            ushort header = ushort.Parse(e.Item.SubItems[1].Text);
+            var destination = (HDestination)Enum.Parse(typeof(HDestination), e.Item.SubItems[0].Text);
+            var replacement = new HMessage(e.Item.SubItems[2].Text, destination);
+
+            switch (destination)
+            {
+                case HDestination.Client:
+                {
+                    if (e.Item.Checked) Game.Filters.InReplace(header, replacement);
+                    else Game.Filters.InUnreplace(header);
+                    break;
+                }
+                case HDestination.Server:
+                {
+                    if (e.Item.Checked) Game.Filters.OutReplace(header, replacement);
+                    else Game.Filters.OutUnreplace(header);
+                    break;
+                }
+            }
+        }
+
+        private void IFBlockLstvw_ItemSelected(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            IFBUnblockBtn.Enabled = true;
+        }
+        private void IFRReplaceLstvw_ItemSelected(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            IFRUnreplaceBtn.Enabled = true;
         }
         #endregion
 
@@ -460,7 +696,7 @@ namespace Tanji
         }
         #endregion
 
-        #region Encode/Decoder Related Methods
+        #region Encode/Decoder | Methods
         private void EDCypherIntegerBtn_Click(object sender, EventArgs e)
         {
             int value;
@@ -508,13 +744,21 @@ namespace Tanji
         }
         #endregion
 
-        #region Extension Related Methods
+        #region Toolbox | Methods
+        private void TRequestLbl_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            TRequestLbl.LinkVisited = true;
+            Process.Start(TANJI_NEW_ISSUE_PAGE);
+        }
+        #endregion
+
+        #region Extensions | Methods
         private void UpdateExtensionInfo(bool extensionSelected)
         {
             if (!extensionSelected) EExtensionLogoPctbx.Image = Resources.Tanji;
             else
             {
-                ExtensionBase extension = ETanjiExtensionViewer.GetItemExtension();
+                ExtensionBase extension = EExtensionsLstvw.GetItemExtension();
                 if (extension == null || extension.UIContext == null) return;
 
                 EExtensionLogoPctbx.Image = extension.Logo ?? Resources.Tanji;
@@ -525,6 +769,10 @@ namespace Tanji
 
                 extension.UIContext.BringToFront();
             }
+
+            const string ExtensionFormat = "Extensions Active: {0}/{1}";
+            ExtensionsActiveTxt.Text = string.Format(ExtensionFormat,
+                _contractor.ExtensionsRunning.Count, _contractor.Extensions.Count);
         }
         private void Contractor_CommandReceived(object sender, InvokedEventArgs e)
         {
@@ -538,10 +786,10 @@ namespace Tanji
                         ICHeaderTxt.Text = e.Args[0].ToString();
                         if (e.Args.Length < 2) return;
 
-                        ICConstructerLstVw.BeginUpdate();
+                        ICConstructerLstvw.BeginUpdate();
                         for (int i = 1; i < e.Args.Length; i++)
-                            ICConstructerLstVw.Append(e.Args[i]);
-                        ICConstructerLstVw.EndUpdate();
+                            ICConstructerLstvw.Append(e.Args[i]);
+                        ICConstructerLstvw.EndUpdate();
                         break;
                     }
                 }
@@ -550,14 +798,10 @@ namespace Tanji
             catch { e.Result = false; }
         }
 
-        // TODO: Update the extension info.. properly, next time.
         private void EOpenExtensionBtn_Click(object sender, EventArgs e)
         {
-            ETanjiExtensionViewer.InitializeItemExtension();
-
-            const string ExtensionFormat = "Extensions Active: {0}/{1}";
-            ExtensionsActiveTxt.Text = string.Format(ExtensionFormat,
-                _contractor.ExtensionsRunning.Count, _contractor.Extensions.Count);
+            EExtensionsLstvw.InitializeItemExtension();
+            UpdateExtensionInfo(EExtensionsLstvw.SelectedItems.Count > 1);
         }
         private void EInstallExtensionBtn_Click(object sender, EventArgs e)
         {
@@ -565,21 +809,16 @@ namespace Tanji
             if (ChooseExtensionDlg.ShowDialog() != DialogResult.OK) return;
 
             LoadSingleExtension(ChooseExtensionDlg.FileName);
-
-            const string ExtensionFormat = "Extensions Active: {0}/{1}";
-            ExtensionsActiveTxt.Text = string.Format(ExtensionFormat,
-                _contractor.ExtensionsRunning.Count, _contractor.Extensions.Count);
+            UpdateExtensionInfo(EExtensionsLstvw.SelectedItems.Count > 1);
         }
         private void EUninstallExtensionBtn_Click(object sender, EventArgs e)
         {
-            ETanjiExtensionViewer.RemoveSelectedItem();
-
-            const string ExtensionFormat = "Extensions Active: {0}/{1}";
-            ExtensionsActiveTxt.Text = string.Format(ExtensionFormat,
-                _contractor.ExtensionsRunning.Count, _contractor.Extensions.Count);
+            EExtensionsLstvw.RemoveSelectedItem();
 
             if (_contractor.Extensions.Count < 1)
                 EOpenBtn.Enabled = EUninstallBtn.Enabled = false;
+
+            UpdateExtensionInfo(EExtensionsLstvw.SelectedItems.Count > 1);
         }
 
         private void ExtensionViewer_DragDrop(object sender, DragEventArgs e)
@@ -588,6 +827,8 @@ namespace Tanji
 
             string path = ((string[])(e.Data.GetData(DataFormats.FileDrop)))[0];
             LoadSingleExtension(path);
+
+            UpdateExtensionInfo(EExtensionsLstvw.SelectedItems.Count > 1);
         }
         private void ExtensionViewer_DragEnter(object sender, DragEventArgs e)
         {
@@ -597,7 +838,7 @@ namespace Tanji
 
         private void ETanjiExtensionViewer_ItemActivate(object sender, EventArgs e)
         {
-            ETanjiExtensionViewer.InitializeItemExtension();
+            EExtensionsLstvw.InitializeItemExtension();
             UpdateExtensionInfo(true);
         }
         private void ETanjiExtensionViewer_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
@@ -609,7 +850,7 @@ namespace Tanji
         }
         #endregion
 
-        #region Option Related Methods
+        #region Options | Methods
         private void OSAlwaysOnTopChckbx_CheckedChanged(object sender, EventArgs e)
         {
             TopMost = OSAlwaysOnTopChckbx.Checked;
@@ -638,14 +879,11 @@ namespace Tanji
         {
             if (InvokeRequired) { Invoke(_reinitiate); return; }
 
-            if (_contractor.Extensions.Count > 0)
-            {
-                var extensions = new IExtension[_contractor.Extensions.Count];
-                _contractor.Extensions.CopyTo(extensions, 0);
+            if (ISSchedulerLstvw.Items.Count > 0)
+                ISSchedulerLstvw.StopAllSchedules();
 
-                foreach (ExtensionBase extension in extensions)
-                    _contractor.Dispose(extension);
-            }
+            foreach (ExtensionBase extension in _contractor.Extensions)
+                _contractor.Dispose(extension);
 
             if (_fakeClient != null)
                 _fakeClient.Dispose();
@@ -702,7 +940,7 @@ namespace Tanji
         }
         private void LoadSingleExtension(string path)
         {
-            ETanjiExtensionViewer.Install(_contractor.Install(path));
+            EExtensionsLstvw.Install(_contractor.Install(path));
 
             const string ExtensionFormat = "Extensions Active: {0}/{1}";
             ExtensionsActiveTxt.Text = string.Format(ExtensionFormat,
