@@ -13,7 +13,6 @@ using Sulakore.Communication;
 using Tanji.Utilities;
 
 using Fiddler;
-using Tanji.Properties;
 
 namespace Tanji.Dialogs
 {
