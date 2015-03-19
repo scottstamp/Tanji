@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
@@ -13,19 +12,14 @@ namespace Tanji.Applications
 {
     public partial class Packetlogger : Form
     {
-        #region Private Fields
         private Queue<DataToEventArgs> _dataQueue;
         private bool _loaded, _wasClosed, _queueRunning;
 
-        private readonly object _queuePushLock;
-
-        private const string InfoChunkFormat = "( {0} - {1} )";
-        private const string IncomingFormat = "<- Incoming{0} <- {1}";
-        private const string OutgoingFormat = "-> Outgoing{0} -> {1}";
-        #endregion
+        private const string INFO_CHUNK_FORMAT = "( {0} - {1} )";
+        private const string INCOMING_FORMAT = "<- Incoming{0} <- {1}";
+        private const string OUTGOING_FORMAT = "-> Outgoing{0} -> {1}";
 
         public Color BlockHighlight { get; set; }
-        public Color RepeatHighlight { get; set; }
         public Color ReplaceHighlight { get; set; }
         public Color IncomingHighlight { get; set; }
         public Color OutgoingHighlight { get; set; }
@@ -33,14 +27,14 @@ namespace Tanji.Applications
         public bool ViewOutgoing { get; private set; }
         public bool ViewIncoming { get; private set; }
 
-        public bool DisplayVisualSplit { get; private set; }
+        public bool DisplayBlocked { get; private set; }
+        public bool DisplayReplaced { get; private set; }
+        public bool DisplaySplitter { get; private set; }
 
-        #region Constructor(s)
         public Packetlogger()
         {
             InitializeComponent();
 
-            _queuePushLock = new object();
             _dataQueue = new Queue<DataToEventArgs>();
 
             BlockHighlight = Color.DimGray;
@@ -48,11 +42,10 @@ namespace Tanji.Applications
             IncomingHighlight = Color.Firebrick;
             OutgoingHighlight = SystemColors.HotTrack;
 
-            ViewOutgoing = ViewIncoming = DisplayVisualSplit = true;
+            ViewOutgoing = ViewIncoming = true;
+            DisplayBlocked = DisplayReplaced = DisplaySplitter = true;
         }
-        #endregion
 
-        #region User Interface Event Listeners
         private void ItemClicked(object sender, EventArgs e)
         {
             var item = (ToolStripMenuItem)sender;
@@ -60,27 +53,35 @@ namespace Tanji.Applications
 
             switch (item.Name)
             {
-                case "ToggleIncomingBtn":
+                case "ViewIncomingBtn":
                 {
-                    CapturingINLbl.Text = "Capturing Incoming: " + isChecked;
+                    CaptureIncomingLbl.Text = "Capture Incoming: " + isChecked;
                     ViewIncoming = isChecked;
-
-                    if (!ViewIncoming)
-                        _dataQueue = new Queue<DataToEventArgs>(_dataQueue.Where(x => x.Packet.Destination != HDestination.Client));
-
                     break;
                 }
-                case "ToggleOutgoingBtn":
+                case "ViewOutgoingBtn":
                 {
-                    CapturingOUTLbl.Text = "Capturing Outgoing: " + isChecked;
+                    CaptureOutgoingLbl.Text = "Capture Outgoing: " + isChecked;
                     ViewOutgoing = isChecked;
-
-                    if (!ViewOutgoing)
-                        _dataQueue = new Queue<DataToEventArgs>(_dataQueue.Where(x => x.Packet.Destination != HDestination.Server));
-
                     break;
                 }
-                case "DisplayVisualSplitBtn": DisplayVisualSplit = isChecked; break;
+                case "BlockedBtn":
+                {
+                    DisplayBlockedLbl.Text = "Display Blocked: " + isChecked;
+                    DisplayBlocked = isChecked;
+                    break;
+                }
+                case "ReplacedBtn":
+                {
+                    DisplayReplacedLbl.Text = "Display Replaced: " + isChecked;
+                    DisplayReplaced = isChecked;
+                    break;
+                }
+                case "DisplaySplitterBtn":
+                {
+                    DisplaySplitter = isChecked;
+                    break;
+                }
             }
         }
         private void CopyBtn_Click(object sender, EventArgs e)
@@ -88,13 +89,13 @@ namespace Tanji.Applications
             if (!string.IsNullOrEmpty(LoggerTxt.SelectedText))
                 Clipboard.SetText(LoggerTxt.SelectedText);
         }
-        private void TopMostBtn_Click(object sender, EventArgs e)
-        {
-            TopMost = TopMostBtn.Checked;
-        }
         private void EmptyLogBtn_Click(object sender, EventArgs e)
         {
             LoggerTxt.Clear();
+        }
+        private void AlwaysOnTopBtn_Click(object sender, EventArgs e)
+        {
+            TopMost = AlwaysOnTopBtn.Checked;
         }
 
         private void Packetlogger_Activated(object sender, EventArgs e)
@@ -104,9 +105,9 @@ namespace Tanji.Applications
             {
                 _wasClosed = false;
 
-                ToggleItem(ToggleIncomingBtn, true);
-                ToggleItem(ToggleOutgoingBtn, true);
-                ToggleItem(DisplayVisualSplitBtn, true);
+                ToggleItem(ViewIncomingBtn, true);
+                ToggleItem(ViewOutgoingBtn, true);
+                ToggleItem(DisplaySplitterBtn, true);
             }
         }
         private void Packetlogger_FormClosing(object sender, FormClosingEventArgs e)
@@ -117,33 +118,33 @@ namespace Tanji.Applications
 
             Halt();
         }
-        #endregion
 
-        #region Public Methods
         public void Halt()
         {
             _wasClosed = true;
-            ToggleItem(ToggleIncomingBtn, false);
-            ToggleItem(ToggleOutgoingBtn, false);
-            ToggleItem(DisplayVisualSplitBtn, false);
+            ToggleItem(ViewIncomingBtn, false);
+            ToggleItem(ViewOutgoingBtn, false);
+            ToggleItem(DisplaySplitterBtn, false);
             _dataQueue.Clear();
             LoggerTxt.Clear();
         }
         public void PushToQueue(DataToEventArgs e)
         {
             bool toServer = (e.Replacement.Destination == HDestination.Server);
-            if (!ViewOutgoing && toServer || !ViewIncoming && !toServer) return;
+            if (!ViewOutgoing && toServer || !ViewIncoming && !toServer
+                || e.IsBlocked && !DisplayBlocked || e.IsReplaced && !DisplayReplaced) return;
 
             _dataQueue.Enqueue(e);
-            if (!_queueRunning) Task.Factory.StartNew(RunQueue);
-        }
-        #endregion
 
-        #region Private Methods
+            if (!_queueRunning)
+                Task.Factory.StartNew(RunQueue);
+        }
+
         private void RunQueue()
         {
             if (_queueRunning) return;
             _queueRunning = true;
+
             try
             {
                 while (_dataQueue.Count > 0)
@@ -154,13 +155,14 @@ namespace Tanji.Applications
                     HMessage packet = data.Replacement;
 
                     bool toServer = (packet.Destination == HDestination.Server);
-                    if (!ViewOutgoing && toServer || !ViewIncoming && !toServer) continue;
+                    if (!ViewOutgoing && toServer || !ViewIncoming && !toServer
+                        || data.IsBlocked && !DisplayBlocked || data.IsReplaced && !DisplayReplaced) return;
 
                     var arguments = new object[] { packet.IsCorrupted
                         ? "Corrupted" : packet.Header.ToString(), packet.Length };
 
-                    string info = string.Format(InfoChunkFormat, arguments);
-                    string log = string.Format(toServer ? OutgoingFormat : IncomingFormat, info, packet);
+                    string info = string.Format(INFO_CHUNK_FORMAT, arguments);
+                    string log = string.Format(toServer ? OUTGOING_FORMAT : INCOMING_FORMAT, info, packet);
 
                     while (!_loaded) Thread.Sleep(100);
                     Invoke(new MethodInvoker(() => Display(log, data)));
@@ -174,9 +176,9 @@ namespace Tanji.Applications
                 ? IncomingHighlight : OutgoingHighlight);
 
             if (e.IsBlocked) WriteHighlight("Blocked | ", BlockHighlight);
-            else if (e.Replaced) WriteHighlight("Replaced | ", ReplaceHighlight);
+            else if (e.IsReplaced) WriteHighlight("Replaced | ", ReplaceHighlight);
 
-            WriteHighlight(message + (DisplayVisualSplit ? "\n--------------------\n" : "\n"), highlight);
+            WriteHighlight(message + (DisplaySplitter ? "\n--------------------\n" : "\n"), highlight);
             LoggerTxt.SelectionStart = LoggerTxt.TextLength;
             LoggerTxt.ScrollToCaret();
 
@@ -194,6 +196,5 @@ namespace Tanji.Applications
             LoggerTxt.SelectionColor = highlight;
             LoggerTxt.AppendText(message);
         }
-        #endregion
     }
 }

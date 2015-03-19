@@ -35,17 +35,22 @@
             this.CopyBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.PacketloggerMenu = new System.Windows.Forms.MenuStrip();
             this.OptionsBtn = new System.Windows.Forms.ToolStripMenuItem();
-            this.ToggleOutgoingBtn = new System.Windows.Forms.ToolStripMenuItem();
-            this.ToggleIncomingBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.ViewOutgoingBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.ViewIncomingBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.OptionsSep = new System.Windows.Forms.ToolStripSeparator();
             this.EmptyLogBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.SettingsBtn = new System.Windows.Forms.ToolStripMenuItem();
-            this.DisplayVisualSplitBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.DisplaySplitterBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.SettingsSeperator = new System.Windows.Forms.ToolStripSeparator();
-            this.TopMostBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.AlwaysOnTopBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.PacketloggerStrip = new System.Windows.Forms.StatusStrip();
-            this.CapturingINLbl = new System.Windows.Forms.ToolStripStatusLabel();
-            this.CapturingOUTLbl = new System.Windows.Forms.ToolStripStatusLabel();
+            this.CaptureIncomingLbl = new System.Windows.Forms.ToolStripStatusLabel();
+            this.CaptureOutgoingLbl = new System.Windows.Forms.ToolStripStatusLabel();
+            this.DisplayBlockedLbl = new System.Windows.Forms.ToolStripStatusLabel();
+            this.DisplayReplacedLbl = new System.Windows.Forms.ToolStripStatusLabel();
+            this.DisplayFiltersBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.BlockedBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.ReplacedBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.LoggerMenu.SuspendLayout();
             this.PacketloggerMenu.SuspendLayout();
             this.PacketloggerStrip.SuspendLayout();
@@ -59,7 +64,7 @@
             this.LoggerTxt.DetectUrls = false;
             this.LoggerTxt.Dock = System.Windows.Forms.DockStyle.Fill;
             this.LoggerTxt.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.LoggerTxt.ForeColor = System.Drawing.Color.OrangeRed;
+            this.LoggerTxt.ForeColor = System.Drawing.Color.White;
             this.LoggerTxt.HideSelection = false;
             this.LoggerTxt.Location = new System.Drawing.Point(0, 24);
             this.LoggerTxt.Name = "LoggerTxt";
@@ -97,33 +102,33 @@
             // OptionsBtn
             // 
             this.OptionsBtn.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ToggleOutgoingBtn,
-            this.ToggleIncomingBtn,
+            this.ViewOutgoingBtn,
+            this.ViewIncomingBtn,
             this.OptionsSep,
             this.EmptyLogBtn});
             this.OptionsBtn.Name = "OptionsBtn";
             this.OptionsBtn.Size = new System.Drawing.Size(61, 20);
             this.OptionsBtn.Text = "Options";
             // 
-            // ToggleOutgoingBtn
+            // ViewOutgoingBtn
             // 
-            this.ToggleOutgoingBtn.Checked = true;
-            this.ToggleOutgoingBtn.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.ToggleOutgoingBtn.Name = "ToggleOutgoingBtn";
-            this.ToggleOutgoingBtn.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.ToggleOutgoingBtn.Size = new System.Drawing.Size(196, 22);
-            this.ToggleOutgoingBtn.Text = "View Outgoing";
-            this.ToggleOutgoingBtn.Click += new System.EventHandler(this.ItemClicked);
+            this.ViewOutgoingBtn.Checked = true;
+            this.ViewOutgoingBtn.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ViewOutgoingBtn.Name = "ViewOutgoingBtn";
+            this.ViewOutgoingBtn.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.ViewOutgoingBtn.Size = new System.Drawing.Size(196, 22);
+            this.ViewOutgoingBtn.Text = "View Outgoing";
+            this.ViewOutgoingBtn.Click += new System.EventHandler(this.ItemClicked);
             // 
-            // ToggleIncomingBtn
+            // ViewIncomingBtn
             // 
-            this.ToggleIncomingBtn.Checked = true;
-            this.ToggleIncomingBtn.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.ToggleIncomingBtn.Name = "ToggleIncomingBtn";
-            this.ToggleIncomingBtn.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
-            this.ToggleIncomingBtn.Size = new System.Drawing.Size(196, 22);
-            this.ToggleIncomingBtn.Text = "View Incoming";
-            this.ToggleIncomingBtn.Click += new System.EventHandler(this.ItemClicked);
+            this.ViewIncomingBtn.Checked = true;
+            this.ViewIncomingBtn.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ViewIncomingBtn.Name = "ViewIncomingBtn";
+            this.ViewIncomingBtn.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
+            this.ViewIncomingBtn.Size = new System.Drawing.Size(196, 22);
+            this.ViewIncomingBtn.Text = "View Incoming";
+            this.ViewIncomingBtn.Click += new System.EventHandler(this.ItemClicked);
             // 
             // OptionsSep
             // 
@@ -141,58 +146,106 @@
             // SettingsBtn
             // 
             this.SettingsBtn.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.DisplayVisualSplitBtn,
+            this.DisplayFiltersBtn,
+            this.DisplaySplitterBtn,
             this.SettingsSeperator,
-            this.TopMostBtn});
+            this.AlwaysOnTopBtn});
             this.SettingsBtn.Name = "SettingsBtn";
             this.SettingsBtn.Size = new System.Drawing.Size(61, 20);
             this.SettingsBtn.Text = "Settings";
             // 
-            // DisplayVisualSplitBtn
+            // DisplaySplitterBtn
             // 
-            this.DisplayVisualSplitBtn.Checked = true;
-            this.DisplayVisualSplitBtn.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.DisplayVisualSplitBtn.Name = "DisplayVisualSplitBtn";
-            this.DisplayVisualSplitBtn.Size = new System.Drawing.Size(172, 22);
-            this.DisplayVisualSplitBtn.Text = "Display Visual Split";
-            this.DisplayVisualSplitBtn.Click += new System.EventHandler(this.ItemClicked);
+            this.DisplaySplitterBtn.Checked = true;
+            this.DisplaySplitterBtn.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.DisplaySplitterBtn.Name = "DisplaySplitterBtn";
+            this.DisplaySplitterBtn.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.DisplaySplitterBtn.Size = new System.Drawing.Size(195, 22);
+            this.DisplaySplitterBtn.Text = "Display Splitter";
+            this.DisplaySplitterBtn.Click += new System.EventHandler(this.ItemClicked);
             // 
             // SettingsSeperator
             // 
             this.SettingsSeperator.Name = "SettingsSeperator";
-            this.SettingsSeperator.Size = new System.Drawing.Size(169, 6);
+            this.SettingsSeperator.Size = new System.Drawing.Size(192, 6);
             // 
-            // TopMostBtn
+            // AlwaysOnTopBtn
             // 
-            this.TopMostBtn.CheckOnClick = true;
-            this.TopMostBtn.Name = "TopMostBtn";
-            this.TopMostBtn.Size = new System.Drawing.Size(172, 22);
-            this.TopMostBtn.Text = "Always On Top";
-            this.TopMostBtn.Click += new System.EventHandler(this.TopMostBtn_Click);
+            this.AlwaysOnTopBtn.CheckOnClick = true;
+            this.AlwaysOnTopBtn.Name = "AlwaysOnTopBtn";
+            this.AlwaysOnTopBtn.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
+            this.AlwaysOnTopBtn.Size = new System.Drawing.Size(195, 22);
+            this.AlwaysOnTopBtn.Text = "Always On Top";
+            this.AlwaysOnTopBtn.Click += new System.EventHandler(this.AlwaysOnTopBtn_Click);
             // 
             // PacketloggerStrip
             // 
             this.PacketloggerStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.CapturingINLbl,
-            this.CapturingOUTLbl});
+            this.CaptureOutgoingLbl,
+            this.CaptureIncomingLbl,
+            this.DisplayBlockedLbl,
+            this.DisplayReplacedLbl});
             this.PacketloggerStrip.Location = new System.Drawing.Point(0, 501);
             this.PacketloggerStrip.Name = "PacketloggerStrip";
             this.PacketloggerStrip.Size = new System.Drawing.Size(714, 24);
             this.PacketloggerStrip.TabIndex = 6;
             // 
-            // CapturingINLbl
+            // CaptureIncomingLbl
             // 
-            this.CapturingINLbl.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
-            this.CapturingINLbl.Name = "CapturingINLbl";
-            this.CapturingINLbl.Size = new System.Drawing.Size(148, 19);
-            this.CapturingINLbl.Text = "Capturing Incoming: True";
+            this.CaptureIncomingLbl.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
+            this.CaptureIncomingLbl.Name = "CaptureIncomingLbl";
+            this.CaptureIncomingLbl.Size = new System.Drawing.Size(137, 19);
+            this.CaptureIncomingLbl.Text = "Capture Incoming: True";
             // 
-            // CapturingOUTLbl
+            // CaptureOutgoingLbl
             // 
-            this.CapturingOUTLbl.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
-            this.CapturingOUTLbl.Name = "CapturingOUTLbl";
-            this.CapturingOUTLbl.Size = new System.Drawing.Size(148, 19);
-            this.CapturingOUTLbl.Text = "Capturing Outgoing: True";
+            this.CaptureOutgoingLbl.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
+            this.CaptureOutgoingLbl.Name = "CaptureOutgoingLbl";
+            this.CaptureOutgoingLbl.Size = new System.Drawing.Size(137, 19);
+            this.CaptureOutgoingLbl.Text = "Capture Outgoing: True";
+            // 
+            // DisplayBlockedLbl
+            // 
+            this.DisplayBlockedLbl.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
+            this.DisplayBlockedLbl.Name = "DisplayBlockedLbl";
+            this.DisplayBlockedLbl.Size = new System.Drawing.Size(124, 19);
+            this.DisplayBlockedLbl.Text = "Display Blocked: True";
+            // 
+            // DisplayReplacedLbl
+            // 
+            this.DisplayReplacedLbl.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
+            this.DisplayReplacedLbl.Name = "DisplayReplacedLbl";
+            this.DisplayReplacedLbl.Size = new System.Drawing.Size(130, 19);
+            this.DisplayReplacedLbl.Text = "Display Replaced: True";
+            // 
+            // DisplayFiltersBtn
+            // 
+            this.DisplayFiltersBtn.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.BlockedBtn,
+            this.ReplacedBtn});
+            this.DisplayFiltersBtn.Name = "DisplayFiltersBtn";
+            this.DisplayFiltersBtn.Size = new System.Drawing.Size(195, 22);
+            this.DisplayFiltersBtn.Text = "Display Filters";
+            // 
+            // BlockedBtn
+            // 
+            this.BlockedBtn.Checked = true;
+            this.BlockedBtn.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.BlockedBtn.Name = "BlockedBtn";
+            this.BlockedBtn.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.B)));
+            this.BlockedBtn.Size = new System.Drawing.Size(163, 22);
+            this.BlockedBtn.Text = "Blocked";
+            this.BlockedBtn.Click += new System.EventHandler(this.ItemClicked);
+            // 
+            // ReplacedBtn
+            // 
+            this.ReplacedBtn.Checked = true;
+            this.ReplacedBtn.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ReplacedBtn.Name = "ReplacedBtn";
+            this.ReplacedBtn.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            this.ReplacedBtn.Size = new System.Drawing.Size(163, 22);
+            this.ReplacedBtn.Text = "Replaced";
+            this.ReplacedBtn.Click += new System.EventHandler(this.ItemClicked);
             // 
             // Packetlogger
             // 
@@ -203,7 +256,7 @@
             this.Controls.Add(this.PacketloggerStrip);
             this.Controls.Add(this.PacketloggerMenu);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(434, 298);
+            this.MinimumSize = new System.Drawing.Size(591, 455);
             this.Name = "Packetlogger";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Tanji ~ Packetlogger";
@@ -224,18 +277,23 @@
         private System.Windows.Forms.RichTextBox LoggerTxt;
         private System.Windows.Forms.MenuStrip PacketloggerMenu;
         private System.Windows.Forms.ToolStripMenuItem OptionsBtn;
-        private System.Windows.Forms.ToolStripMenuItem ToggleOutgoingBtn;
-        private System.Windows.Forms.ToolStripMenuItem ToggleIncomingBtn;
+        private System.Windows.Forms.ToolStripMenuItem ViewOutgoingBtn;
+        private System.Windows.Forms.ToolStripMenuItem ViewIncomingBtn;
         private System.Windows.Forms.ToolStripSeparator OptionsSep;
         private System.Windows.Forms.ToolStripMenuItem EmptyLogBtn;
         private System.Windows.Forms.ToolStripMenuItem SettingsBtn;
-        private System.Windows.Forms.ToolStripMenuItem DisplayVisualSplitBtn;
+        private System.Windows.Forms.ToolStripMenuItem DisplaySplitterBtn;
         private System.Windows.Forms.StatusStrip PacketloggerStrip;
-        private System.Windows.Forms.ToolStripStatusLabel CapturingINLbl;
-        private System.Windows.Forms.ToolStripStatusLabel CapturingOUTLbl;
+        private System.Windows.Forms.ToolStripStatusLabel CaptureIncomingLbl;
+        private System.Windows.Forms.ToolStripStatusLabel CaptureOutgoingLbl;
         private System.Windows.Forms.ContextMenuStrip LoggerMenu;
         private System.Windows.Forms.ToolStripMenuItem CopyBtn;
         private System.Windows.Forms.ToolStripSeparator SettingsSeperator;
-        private System.Windows.Forms.ToolStripMenuItem TopMostBtn;
+        private System.Windows.Forms.ToolStripMenuItem AlwaysOnTopBtn;
+        private System.Windows.Forms.ToolStripStatusLabel DisplayBlockedLbl;
+        private System.Windows.Forms.ToolStripStatusLabel DisplayReplacedLbl;
+        private System.Windows.Forms.ToolStripMenuItem DisplayFiltersBtn;
+        private System.Windows.Forms.ToolStripMenuItem BlockedBtn;
+        private System.Windows.Forms.ToolStripMenuItem ReplacedBtn;
     }
 }
