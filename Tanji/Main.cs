@@ -33,13 +33,14 @@ namespace Tanji
         private HKeyExchange _fakeClient, _fakeServer;
 
         private readonly TanjiConnect _tanjiConnect;
-        private readonly Packetlogger _packetloggerF;
+        private readonly Packetlogger _packetlogger;
         private readonly Action _initiate, _reinitiate;
 
         private const string CHUNK_COUNT_FORMAT = "Chunk Count: {0}";
         private const string TITLE_FORMAT = "Tanji ~ Connected[{0}:{1}]";
         private const string SCHEDULES_FORMAT = "Schedules Active: {0}/{1}";
         private const string EXTENSIONS_FORMAT = "Extensions Active: {0}/{1}";
+        private const string PRIMITIVE_INFO_FORMAT = "Header: {0} | Length: {1} | Corrupted:";
         private const string TANJI_NEW_ISSUE_PAGE = "https://github.com/ArachisH/Tanji/issues/new";
 
         private const string CorrPack = "The given packet seems to be corrupted.";
@@ -89,7 +90,7 @@ namespace Tanji
             _game.DataToClient += Game_DataToClient;
             _game.DataToServer += Game_DataToServer;
 
-            _packetloggerF = new Packetlogger();
+            _packetlogger = new Packetlogger();
             _tanjiConnect = new TanjiConnect(this);
 
             _inBlockedHeaders = new List<ushort>();
@@ -159,8 +160,8 @@ namespace Tanji
             catch { }
             finally
             {
-                if (_packetloggerF.ViewOutgoing)
-                    _packetloggerF.PushToQueue(e);
+                if (_packetlogger.ViewOutgoing)
+                    _packetlogger.PushToQueue(e);
 
                 _contractor.ProcessOutgoing(e.Replacement.ToBytes());
             }
@@ -201,8 +202,8 @@ namespace Tanji
             catch { }
             finally
             {
-                if (_packetloggerF.ViewIncoming)
-                    _packetloggerF.PushToQueue(e);
+                if (_packetlogger.ViewIncoming)
+                    _packetlogger.PushToQueue(e);
 
                 _contractor.ProcessIncoming(e.Replacement.ToBytes());
             }
@@ -211,7 +212,11 @@ namespace Tanji
         private void Main_Load(object sender, EventArgs e)
         {
             if (!_debugging) Initiate();
-            else InitializeContractor();
+            else
+            {
+                InitializeContractor();
+                _packetlogger.Show();
+            }
         }
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -468,12 +473,15 @@ namespace Tanji
             {
                 IPacketTxt.Text = isCorrupted ? IPPrimitiveTxt.Text : packet.ToString();
 
-                const string PacketInfoFormat = "Header: {0} | Length: {1} | Corrupted:";
-                IPPacketInfoLbl.Text = string.Format(PacketInfoFormat, (isCorrupted ? 0 : packet.Header), (isCorrupted ? IPPrimitiveTxt.TextLength : packet.Length));
+                IPPacketInfoLbl.Text = string.Format(PRIMITIVE_INFO_FORMAT,
+                    (isCorrupted ? 0 : packet.Header),
+                    (isCorrupted ? IPPrimitiveTxt.TextLength : packet.Length));
 
                 IPIsCorruptedLbl.Text = isCorrupted.ToString();
                 IPIsCorruptedLbl.ForeColor = isCorrupted ? Color.Firebrick : SystemColors.HotTrack;
-                IPIsCorruptedLbl.Location = new Point((IPPacketInfoLbl.Location.X + IPPacketInfoLbl.Width) - 5, IPIsCorruptedLbl.Location.Y);
+
+                IPIsCorruptedLbl.Location = new Point((IPPacketInfoLbl.Location.X + IPPacketInfoLbl.Width) - 5,
+                    IPIsCorruptedLbl.Location.Y);
             }
         }
         private void IInjectionTabs_Selected(object sender, TabControlEventArgs e)
@@ -770,8 +778,7 @@ namespace Tanji
                 extension.UIContext.BringToFront();
             }
 
-            const string ExtensionFormat = "Extensions Active: {0}/{1}";
-            ExtensionsActiveTxt.Text = string.Format(ExtensionFormat,
+            ExtensionsActiveTxt.Text = string.Format(EXTENSIONS_FORMAT,
                 _contractor.ExtensionsRunning.Count, _contractor.Extensions.Count);
         }
         private void Contractor_CommandReceived(object sender, InvokedEventArgs e)
@@ -870,8 +877,8 @@ namespace Tanji
             Show();
             BringToFront();
 
-            _packetloggerF.Show();
-            _packetloggerF.BringToFront();
+            _packetlogger.Show();
+            _packetlogger.BringToFront();
 
             Text = string.Format(TITLE_FORMAT, Game.Host, Game.Port);
         }
@@ -892,8 +899,8 @@ namespace Tanji
                 _fakeServer.Dispose();
 
             Hide();
-            _packetloggerF.Halt();
-            _packetloggerF.Hide();
+            _packetlogger.Halt();
+            _packetlogger.Hide();
 
             Task.Factory.StartNew(Initiate);
         }
@@ -942,8 +949,7 @@ namespace Tanji
         {
             EExtensionsLstvw.Install(_contractor.Install(path));
 
-            const string ExtensionFormat = "Extensions Active: {0}/{1}";
-            ExtensionsActiveTxt.Text = string.Format(ExtensionFormat,
+            ExtensionsActiveTxt.Text = string.Format(EXTENSIONS_FORMAT,
                 _contractor.ExtensionsRunning.Count, _contractor.Extensions.Count);
         }
     }
